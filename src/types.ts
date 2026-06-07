@@ -138,7 +138,7 @@ export interface Stage {
   outro: DialogueLine[];
 }
 
-export type BossGlyphKind = 'mask' | 'chains' | 'wall' | 'silence' | 'wave' | 'overseer';
+export type BossGlyphKind = 'mask' | 'chains' | 'wall' | 'silence' | 'wave' | 'overseer' | 'crack' | 'fog';
 
 export interface BossInfo {
   name: string;

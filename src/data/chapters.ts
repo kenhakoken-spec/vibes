@@ -7,10 +7,12 @@ import { buildChapter3 } from './chapter3';
 import { buildChapter4 } from './chapter4';
 import { buildChapter5 } from './chapter5';
 import { buildChapter6 } from './chapter6';
+import { buildChapter7 } from './chapter7';
+import { buildChapter8 } from './chapter8';
 import { buildChapterF } from './chapterF';
 
 /* =========================================================================
-   章レジストリ。全7章を組み立てる。未実装の予告枠は現在なし。
+   章レジストリ。全章を順に組み立てる。未実装の予告枠は現在なし。
    ========================================================================= */
 
 export interface UpcomingChapter {
@@ -33,6 +35,8 @@ export function buildChapters(edition: Edition): Chapter[] {
     buildChapter4(edition),
     buildChapter5(edition),
     buildChapter6(edition),
+    buildChapter7(edition),
+    buildChapter8(edition),
     buildChapterF(edition),
   ];
 }

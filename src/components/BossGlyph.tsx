@@ -129,6 +129,49 @@ function Body({ kind, eye, uid, down }: { kind: BossGlyphKind; eye: string; uid:
         </g>
       );
 
+    /* リグレッション：崩落 ── ひび割れて崩れ落ちる構造物 */
+    case 'crack':
+      return (
+        <g>
+          {/* 積み上げたブロックが断層でずれ落ちる */}
+          <path d="M16 18 L44 18 L40 40 L12 40 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M46 20 L66 22 L64 44 L42 42 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" transform="translate(2 6)" />
+          <path d="M14 44 L40 44 L36 66 L10 64 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" transform="translate(3 4)" />
+          <path d="M46 48 L68 50 L66 70 L44 68 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" transform="translate(-1 0)" />
+          {/* 走る亀裂 */}
+          <path d="M40 14 L37 30 L45 40 L36 52 L42 70" fill="none" stroke={eye} strokeWidth="3" strokeLinejoin="round" opacity={down ? 0.4 : 1} />
+          {/* 砕けた破片 */}
+          <g fill={eye} opacity={down ? 0.3 : 0.9}>
+            <path d="M54 14 l4 3 l-3 3 z" />
+            <path d="M22 70 l3 -4 l3 4 z" />
+          </g>
+        </g>
+      );
+
+    /* ノイズ：惑わしの霧 ── 信号を覆い隠す渦巻く霧 */
+    case 'fog':
+      return (
+        <g>
+          {/* 渦巻く霧の層 */}
+          <g fill="none" stroke={eye} strokeWidth="3" strokeLinecap="round" opacity={down ? 0.4 : 0.9}>
+            <path d="M14 30 Q26 22 40 30 T66 30" />
+            <path d="M12 42 Q26 34 40 42 T68 42" opacity="0.8" />
+            <path d="M16 54 Q28 46 40 54 T64 54" opacity="0.6" />
+          </g>
+          {/* 霧に飲まれかけた“信号”（中心の点） */}
+          <circle cx="40" cy="42" r="6" fill={ink} stroke={eye} strokeWidth="2" />
+          <circle cx="40" cy="42" r="2" fill={eye} />
+          {/* 散乱するノイズ粒 */}
+          <g fill={eye} opacity={down ? 0.25 : 0.75}>
+            <circle cx="24" cy="24" r="1.4" />
+            <circle cx="58" cy="26" r="1.6" />
+            <circle cx="60" cy="58" r="1.4" />
+            <circle cx="22" cy="60" r="1.5" />
+            <circle cx="50" cy="62" r="1.2" />
+          </g>
+        </g>
+      );
+
     /* 汎用：角張った歪みのマスク */
     default:
       return (
