@@ -266,7 +266,7 @@ export function buildChapter3(edition: Edition): Chapter {
     subtitle: '自動化 ── 反復を断つ',
     recap: '記憶・Git・GitHubで、成果を失わず共有する術を得た。',
     keyTerms: ['rpa', 'playwright', 'headless', 'screenshot'],
-    scene: 'cyber',
+    scene: 'factory',
     boss: { name: 'トイル', title: '反復の鎖', blurb: '同じ作業を永遠に繰り返させる鎖。自動化を知らぬ者を縛り続ける。' },
     stages: [s1, s2, s3, s4],
   };

@@ -20,7 +20,7 @@ import type { Screen } from './types';
 import './App.css';
 
 /** 画面/ステージごとに見せる世界（背景）を決める */
-function sceneFor(screen: Screen, stageScene?: SceneId): SceneId {
+function sceneFor(screen: Screen, stageScene?: SceneId, chapterScene?: SceneId): SceneId {
   switch (screen) {
     case 'title':
       return 'city';
@@ -29,14 +29,14 @@ function sceneFor(screen: Screen, stageScene?: SceneId): SceneId {
     case 'world':
       return 'city';
     case 'map':
-      return 'guild';
+      return chapterScene ?? 'guild';
     case 'story-intro':
     case 'story-outro':
-      return stageScene ?? 'guild';
+      return stageScene ?? chapterScene ?? 'guild';
     case 'challenge':
       return 'cyber';
     case 'result':
-      return 'guild';
+      return chapterScene ?? 'guild';
     case 'chapter-clear':
       return 'city';
     default:
@@ -61,9 +61,10 @@ export default function App() {
 
   const showGlossButton = !['title', 'edition'].includes(screen);
   const stageScene = useGame((s) => s.currentStage()?.scene);
+  const chapterScene = useGame((s) => s.chapter?.scene);
   const chapterIndex = useGame((s) => s.chapterIndex);
   const stageIndex = useGame((s) => s.stageIndex);
-  const scene = sceneFor(screen, stageScene);
+  const scene = sceneFor(screen, stageScene, chapterScene);
   // ステージ毎に確実に再マウントさせ、前の文言が残らないようにする
   const stageKey = `${chapterIndex}-${stageIndex}`;
 

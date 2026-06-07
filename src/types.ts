@@ -122,7 +122,7 @@ export interface Challenge {
 }
 
 /** 場面背景の種類 */
-export type SceneId = 'void' | 'city' | 'guild' | 'cyber';
+export type SceneId = 'void' | 'city' | 'guild' | 'cyber' | 'archive' | 'factory' | 'sky';
 
 export interface Stage {
   id: string;

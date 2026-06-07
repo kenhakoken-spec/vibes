@@ -507,6 +507,105 @@ button {
   mix-blend-mode: screen;
 }
 
+/* archive = 記憶の書庫 */
+.scene__wash--archive {
+  background: radial-gradient(120% 100% at 50% 0%, #241608, #140d06 55%, #080502 100%);
+}
+.scene__shelves {
+  position: absolute;
+  left: -6%;
+  bottom: 0;
+  width: 112%;
+  height: 92%;
+  opacity: 0.85;
+  animation: pan-far 80s ease-in-out infinite alternate;
+}
+.scene__motes {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 22% 40%, rgba(255, 206, 120, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 64% 28%, rgba(255, 206, 120, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 48% 64%, rgba(255, 206, 120, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 82% 52%, rgba(255, 206, 120, 0.4), transparent);
+  animation: rise 16s linear infinite;
+  opacity: 0.7;
+}
+.scene__emblem-soft {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(40% 40% at 50% 45%, rgba(255, 180, 90, 0.12), transparent 70%);
+}
+
+/* factory = 自動人形の工房 */
+.scene__wash--factory {
+  background: radial-gradient(120% 100% at 50% 30%, #161823, #0c0d14 60%, #06060a 100%);
+}
+.scene__gears {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.scene__gear {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.scene__gear--a {
+  animation: spin 26s linear infinite;
+}
+.scene__gear--b {
+  animation: spin 40s linear infinite reverse;
+}
+.scene__belt {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 48%;
+  height: 14px;
+  background-image: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 25%, transparent) 0 14px, transparent 14px 28px);
+  opacity: 0.4;
+  animation: drift-x 6s linear infinite;
+}
+
+/* sky = 雲上のデータセンター */
+.scene__wash--sky {
+  background: linear-gradient(180deg, #0a1430 0%, #142244 38%, #281a3e 72%, #0a0a16 100%);
+}
+.scene__cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(34px);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+.scene__cloud--a {
+  width: 260px;
+  height: 120px;
+  background: #4a6cff;
+  top: 22%;
+  left: -10%;
+  animation: cloud-a 50s linear infinite;
+}
+.scene__cloud--b {
+  width: 320px;
+  height: 140px;
+  background: #7a3cff;
+  top: 48%;
+  right: -14%;
+  animation: cloud-b 64s linear infinite;
+}
+.scene__cloud--c {
+  width: 200px;
+  height: 100px;
+  background: #2a8cff;
+  top: 70%;
+  left: 20%;
+  animation: cloud-a 44s linear infinite;
+}
+@keyframes cloud-a { from { transform: translateX(-10%); } to { transform: translateX(120%); } }
+@keyframes cloud-b { from { transform: translateX(14%); } to { transform: translateX(-120%); } }
+
 @keyframes twinkle { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.3; } }
 @keyframes pan-far { to { transform: translateX(-3%); } }
 @keyframes pan-near { to { transform: translateX(4%); } }

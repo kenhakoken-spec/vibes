@@ -15,7 +15,69 @@ export function SceneBackground({ scene }: { scene: SceneId }) {
       {scene === 'city' && <CityScene />}
       {scene === 'guild' && <GuildScene />}
       {scene === 'cyber' && <CyberScene />}
+      {scene === 'archive' && <ArchiveScene />}
+      {scene === 'factory' && <FactoryScene />}
+      {scene === 'sky' && <SkyScene />}
     </div>
+  );
+}
+
+/** 記憶の書庫：そびえる本棚のシルエットと舞う埃 */
+function ArchiveScene() {
+  return (
+    <>
+      <div className="scene__wash scene__wash--archive" />
+      <svg className="scene__shelves" viewBox="0 0 520 300" preserveAspectRatio="xMidYMax slice">
+        <g fill="#120d08">
+          {[10, 86, 162, 238, 314, 390, 466].map((x) => (
+            <g key={x}>
+              <rect x={x} y="20" width="64" height="280" />
+              {[40, 78, 116, 154, 192, 230, 268].map((y) => (
+                <rect key={y} x={x} y={y} width="64" height="6" fill="#241a10" />
+              ))}
+            </g>
+          ))}
+        </g>
+      </svg>
+      <div className="scene__motes" />
+      <div className="scene__emblem-soft" />
+    </>
+  );
+}
+
+/** 自動人形の工房：歯車とパイプ、流れるベルト */
+function FactoryScene() {
+  return (
+    <>
+      <div className="scene__wash scene__wash--factory" />
+      <svg className="scene__gears" viewBox="0 0 520 300" preserveAspectRatio="xMidYMid slice">
+        <g fill="none" stroke="var(--accent)" strokeOpacity="0.18" strokeWidth="3">
+          <circle className="scene__gear scene__gear--a" cx="90" cy="80" r="46" strokeDasharray="6 10" />
+          <circle className="scene__gear scene__gear--b" cx="430" cy="220" r="62" strokeDasharray="8 12" />
+          <circle className="scene__gear scene__gear--a" cx="380" cy="60" r="30" strokeDasharray="5 8" />
+        </g>
+        <g stroke="#1a1a22" strokeWidth="10">
+          <line x1="0" y1="150" x2="520" y2="150" />
+          <line x1="60" y1="0" x2="60" y2="300" strokeWidth="6" />
+          <line x1="470" y1="0" x2="470" y2="300" strokeWidth="6" />
+        </g>
+      </svg>
+      <div className="scene__belt" />
+    </>
+  );
+}
+
+/** 雲上のデータセンター：空のグラデと流れる雲・データ筋 */
+function SkyScene() {
+  return (
+    <>
+      <div className="scene__wash scene__wash--sky" />
+      <div className="scene__stars" />
+      <div className="scene__cloud scene__cloud--a" />
+      <div className="scene__cloud scene__cloud--b" />
+      <div className="scene__cloud scene__cloud--c" />
+      <div className="scene__datalines" />
+    </>
   );
 }
 
