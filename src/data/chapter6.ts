@@ -144,7 +144,7 @@ export function buildChapter6(edition: Edition): Chapter {
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          '会社で本気で使うなら、安全管理も要る。「Azure OpenAI（AOAI）」なら、企業の管理下で、情報を守りながら高性能なAIを使える。クラウドに、AI付きのサービスを置こう。',
+          '会社で本気で使うなら、安全管理も要る。「Azure OpenAI（AOAI）」なら――これはGCPとは別のクラウド（MicrosoftのAzure）だけど――企業の管理下で、情報を守りながら高性能なAIを使える。クラウドに、AI付きのサービスを置こう。',
           '会社で本気で使うなら安全管理も要る。「Azure OpenAI（AOAI）」は企業の管理下で情報を守りつつ高性能AIを使える。クラウドにAI付きサービスを置くぞ。'
         ),
       },

@@ -146,7 +146,7 @@ export function buildChapterF(edition: Edition): Chapter {
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          'ぼうけんの最初、きみは「指示しただけで動くものができた、面白い」と言ったね。その“面白い”が、OVERSEERに一番効く。さあ、最後の依頼を。',
+          'この旅の最初、きみは「指示しただけで動くものができた、面白い」と言ったね。その“面白い”が、OVERSEERに一番効く。さあ、最後の依頼を。',
           '最初にアンタ言ったろ、「指示しただけで動いた、面白い」って。その“面白い”がOVERSEERに一番刺さる。さあ、最後の指示だ。'
         ),
       },
@@ -180,7 +180,7 @@ export function buildChapterF(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: `よくやった、${'立派なギルドの一員'}だ。……いや、もう“先生”と呼ぶべきかもな。`,
+        text: 'よくやった、立派なギルドの一員だ。……いや、もう“先生”と呼ぶべきかもな。',
       },
       { narration: true, text: `― ${pName} と歩んだ、創造の物語。これにて完。だが、きみの“本当の創作”は、ここから始まる。 ―` },
     ],

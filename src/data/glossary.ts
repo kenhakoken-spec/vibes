@@ -296,7 +296,7 @@ export const GLOSSARY: GlossaryTerm[] = [
     id: 'claude-code',
     term: 'Claude Code',
     short: 'ターミナルに棲むAIコーディング相棒。',
-    body: 'Anthropic製のツール。自然言語で頼むとコードを書く・直す・実行する。導入は公式インストーラ（curl/irm）か npm。起動は `claude`、利用にはPro/Max/API等のアカウントが必要。',
+    body: 'Anthropic製のツール。自然言語で頼むとコードを書く・直す・実行する。導入は公式インストーラ（curl/irm）が簡単。起動は `claude`、利用には Pro / Max などの対象プラン（またはAPI）が必要。',
   },
   {
     id: 'cursor',

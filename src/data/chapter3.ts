@@ -160,7 +160,7 @@ export function buildChapter3(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'Chromium をデバッグ起動して覗くんだ。さあ、自分の言葉で頼んでみろ。',
+        text: 'ブラウザ（Chromium）を画面に表示して動かし、どこで失敗するか覗くんだ。さあ、自分の言葉で頼んでみろ。',
       },
     ],
     challenge: {

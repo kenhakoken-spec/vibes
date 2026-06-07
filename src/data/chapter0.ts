@@ -160,7 +160,7 @@ export function buildChapter0(edition: Edition): Chapter {
         '公式 cursor.com からインストール → サインイン → フォルダを開く → ショートカットで指示。'
       ),
       learn: v(
-        'Claude Codeは「公式インストール → `claude`起動 → ログイン」で導入。Pro/Max/API等のアカウントが要る。',
+        'Claude Codeは「公式インストール → `claude`起動 → ログイン」で導入。Pro / Max などの対象プラン（またはAPI）が要る。',
         'Cursorは「公式サイトから導入 → サインイン → フォルダを開く」。Ctrl/⌘+K・L・I で指示する。'
       ),
       question: v('クロード（Claude Code）の正しい召喚手順は？', 'カーサ（Cursor）の正しい召喚手順は？'),
@@ -176,13 +176,13 @@ export function buildChapter0(edition: Edition): Chapter {
               id: 'b',
               text: '何もインストールせず、無料プランのまま待つ。',
               correct: false,
-              feedback: 'それでは喚べない。Claude CodeはPro/Max/Team/Enterprise/APIのいずれかが必要で、導入も要る。',
+              feedback: 'それでは喚べない。Claude Codeは Pro / Max などの対象プラン（またはAPI）が必要で、導入も要る。',
             },
             {
               id: 'c',
-              text: '`sudo` で強引に入れて、出どころ不明の手順で済ませる。',
+              text: '管理者権限で強引に入れて、出どころ不明の手順で済ませる。',
               correct: false,
-              feedback: 'sudoでのグローバル導入は権限・セキュリティの事故のもと。公式インストーラを使うのが正道。',
+              feedback: '出どころ不明の手順や、強引な導入は権限・セキュリティの事故のもと。公式インストーラを使うのが正道。',
             },
           ]
         : [

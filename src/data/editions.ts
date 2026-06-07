@@ -20,7 +20,7 @@ export const EDITIONS: Record<EditionId, Edition> = {
     partner: {
       id: 'claude',
       name: 'クロード',
-      role: '相棒AI / 思索する knowledge',
+      role: '相棒AI / 思索する知性',
       portrait: 'claude',
       color: '#ff5c6e',
     },
