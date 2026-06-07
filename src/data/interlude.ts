@@ -396,6 +396,7 @@ export function buildInterlude(edition: Edition): Chapter {
     title: '幕間',
     subtitle: '心得 ── バイブコーディングの作法',
     recap: '初依頼で、自分の言葉からページを創り上げた。',
+    keyTerms: ['model', 'opus', 'sonnet', 'haiku'],
     scene: 'guild',
     boss: {
       name: 'ステレオ',

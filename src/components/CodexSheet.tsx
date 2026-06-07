@@ -1,12 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
+import { useGlossary } from '../store/glossaryStore';
+import { TERM_BY_ID } from '../data/glossary';
 
 /**
- * 学びの記録（コーデックス）。この作品で学べることの一覧＋習得チェック。
- * 学習素材としての「何が身につくか」を可視化する。
+ * 学びの記録（コーデックス）。この作品で学べることの一覧＋習得チェック＋重要用語。
+ * 学習素材としての「何が身につくか」を可視化し、用語はタップで解説できる。
  */
 export function CodexSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { chapters, results } = useGame();
+  const openTerm = useGlossary((s) => s.openTerm);
 
   const total = chapters.reduce((n, c) => n + c.stages.length, 0);
   const done = chapters.reduce((n, c) => n + c.stages.filter((s) => results[s.id]?.cleared).length, 0);
@@ -51,6 +54,17 @@ export function CodexSheet({ open, onClose }: { open: boolean; onClose: () => vo
                       </div>
                     );
                   })}
+                  {ch.keyTerms && ch.keyTerms.length > 0 && (
+                    <div className="codex__terms">
+                      {ch.keyTerms.map((id) =>
+                        TERM_BY_ID[id] ? (
+                          <button key={id} className="codex__termchip" onClick={() => openTerm(id)}>
+                            {TERM_BY_ID[id].term}
+                          </button>
+                        ) : null,
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -236,6 +236,7 @@ export function buildChapter2(edition: Edition): Chapter {
     title: '第2章',
     subtitle: '記憶と航跡 ── 失わないために',
     recap: '心得を学び、思い込みの影「ステレオ」を退けた。',
+    keyTerms: ['memory', 'git', 'commit', 'repository', 'github', 'readme'],
     scene: 'guild',
     boss: {
       name: 'アムネシア',

@@ -153,6 +153,8 @@ export interface Chapter {
   boss?: BossInfo;
   /** 章開始時に出す「前回までの振り返り」 */
   recap?: string;
+  /** この章で学ぶ重要用語（glossaryのid）。コーデックスでタップ解説に使う */
+  keyTerms?: string[];
   stages: Stage[];
 }
 

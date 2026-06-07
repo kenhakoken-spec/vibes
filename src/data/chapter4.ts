@@ -200,6 +200,7 @@ export function buildChapter4(edition: Edition): Chapter {
     title: '第4章',
     subtitle: '道具をつなぐ ── 孤立を超えて',
     recap: 'Playwrightで反復作業を自動化し、「トイル」を断ち切った。',
+    keyTerms: ['mcp', 'plugin', 'api', 'database'],
     scene: 'guild',
     boss: { name: 'サイロ', title: '孤立の壁', blurb: '道具と道具を断絶させる壁。繋ぐ術を持たぬAIを“話すだけ”に閉じ込める。' },
     stages: [s1, s2, s3],

@@ -242,6 +242,7 @@ export function buildChapter0(edition: Edition): Chapter {
     index: 0,
     title: '序章',
     subtitle: '創れない世界 ── 相棒を喚ぶ',
+    keyTerms: ['vibe-coding', 'terminal', 'cli', 'claude-code', 'cursor'],
     scene: 'city',
     // 序章にボス（歪み）は無し
     stages: [s1, s2],

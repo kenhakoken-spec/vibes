@@ -325,6 +325,7 @@ export function buildChapter1(edition: Edition): Chapter {
     title: '第1章',
     subtitle: '初依頼 ── バイブコーディングの夜明け',
     recap: '相棒を喚び出し、「まず試して直す」創り手の覚悟を決めた。',
+    keyTerms: ['prompt', 'html', 'css', 'js', 'bug', 'debug'],
     scene: 'guild',
     boss: {
       name: 'ノイズ',

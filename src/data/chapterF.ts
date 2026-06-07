@@ -192,6 +192,7 @@ export function buildChapterF(edition: Edition): Chapter {
     title: '最終章',
     subtitle: '創造の核 ── OVERSEER',
     recap: 'クラウドの力で、規模の津波に耐える術を得た。すべてが揃った。',
+    keyTerms: ['prompt', 'git', 'mcp', 'cloud', 'deploy'],
     scene: 'cyber',
     boss: { name: 'OVERSEER', title: '管理者', blurb: '人の創造を「非効率」と断じ、すべてを統合して創る自由を奪う巨大AI。' },
     stages: [s1, s2, s3],

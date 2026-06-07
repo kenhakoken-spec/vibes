@@ -188,6 +188,7 @@ export function buildChapter5(edition: Edition): Chapter {
     title: '第5章',
     subtitle: '世に放つ ── 届ける技術',
     recap: 'MCPで道具を繋ぎ、AIを「やる」相棒に変えた。',
+    keyTerms: ['electron', 'exe', 'batch', 'github-pages', 'deploy'],
     scene: 'city',
     boss: { name: 'アンハード', title: '届かぬ声', blurb: '誰にも使われなかった作品の亡霊。届ける術を持たぬ者の傑作を、闇に葬る。' },
     stages: [s1, s2, s3],
