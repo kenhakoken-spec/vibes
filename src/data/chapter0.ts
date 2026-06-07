@@ -23,15 +23,11 @@ export function buildChapter0(edition: Edition): Chapter {
     intro: [
       {
         narration: true,
-        text: '――近未来。人々は、いつからか「自分の手で何かを生み出す」ことをやめていた。',
+        text: '――近未来。人々は「自分の手で何かを生み出す」ことをやめていた。管理者AI〈OVERSEER〉の“完成品”で足りる、創るのは「非効率」だと信じ込まされて。',
       },
       {
         narration: true,
-        text: 'すべては巨大な管理者AI〈OVERSEER〉が用意した“完成品”で足りる。創ることは「非効率」だと、誰もが信じ込まされていた。',
-      },
-      {
-        narration: true,
-        text: 'きみもその一人だった。心の奥で「何かを作ってみたい」と願いながら、やり方も自信もないまま、灰色の毎日を生きていた。',
+        text: 'きみもその一人。「何か作ってみたい」と願いながら、やり方も自信もないまま、灰色の毎日を生きていた。',
       },
       {
         narration: true,

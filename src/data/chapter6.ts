@@ -175,6 +175,15 @@ export function buildChapter6(edition: Edition): Chapter {
         ),
       },
       {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'ここまで、ずっと一緒だったね。あいさつページ一枚から、世界に届くサービスまで。……次はいよいよ、あいつ――OVERSEERだ。きみとなら、行ける。',
+          'ここまでずっと一緒だったな。あいさつページ一枚から、世界に届くサービスまで。……次はいよいよ、あいつ――OVERSEERだ。アンタとなら行ける。'
+        ),
+      },
+      {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
