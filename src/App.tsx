@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useGame } from './store/gameStore';
+import { useSettings } from './store/settingsStore';
 import { bgm } from './engine/bgm';
 import { TitleScreen } from './screens/TitleScreen';
 import { EditionSelect } from './screens/EditionSelect';
@@ -49,6 +50,8 @@ const DEBUG = typeof window !== 'undefined' && window.location.search.includes('
 export default function App() {
   const screen = useGame((s) => s.screen);
   const edition = useGame((s) => s.edition);
+  // アプリ内モーションOFF→常に低減 / ON→OSの設定(prefers-reduced-motion)を尊重
+  const motionOn = useSettings((s) => s.motion);
 
   // 編が決まったら、その色をテーマ全体に流し込む
   const themeVars = edition
@@ -78,6 +81,7 @@ export default function App() {
   }, [screen]);
 
   return (
+    <MotionConfig reducedMotion={motionOn ? 'user' : 'always'}>
     <div className="app" style={themeVars}>
       {/* 背景はクロスフェードで切替（瞬間切替のちらつき防止） */}
       <AnimatePresence>
@@ -127,5 +131,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </MotionConfig>
   );
 }
