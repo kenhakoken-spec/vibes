@@ -16,7 +16,7 @@ export function buildChapter3(edition: Edition): Chapter {
     index: 0,
     title: '反復の鎖',
     subtitle: '何を自動化する？',
-    scene: 'cyber',
+    scene: 'factory',
     intro: [
       { narration: true, text: '記憶も履歴も手に入れた。失敗はもう怖くない。――だが今度は別の影が、きみの“時間”を奪い始めていた。' },
       { narration: true, text: '無数の人影が、同じ書類を延々と書き写している。鎖の名は「トイル」。' },
@@ -82,7 +82,7 @@ export function buildChapter3(edition: Edition): Chapter {
     index: 1,
     title: '台本を書く',
     subtitle: 'ブラウザを操る',
-    scene: 'cyber',
+    scene: 'factory',
     intro: [
       {
         speaker: partnerId,
@@ -145,7 +145,7 @@ export function buildChapter3(edition: Edition): Chapter {
     index: 2,
     title: '見えない不調',
     subtitle: '覗いて直す',
-    scene: 'cyber',
+    scene: 'factory',
     intro: [
       { narration: true, text: 'だが自動操作が途中で止まった。何が起きたのか、画面の外からは分からない。' },
       {
@@ -203,7 +203,7 @@ export function buildChapter3(edition: Edition): Chapter {
     index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ自動化',
-    scene: 'cyber',
+    scene: 'factory',
     intro: [
       {
         speaker: 'mentor',

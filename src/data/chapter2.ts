@@ -19,7 +19,7 @@ export function buildChapter2(edition: Edition): Chapter {
     index: 0,
     title: '記憶の書庫',
     subtitle: '忘れない仕組み',
-    scene: 'guild',
+    scene: 'archive',
     intro: [
       { narration: true, text: '初依頼を、やり遂げた。動くページを、自分の言葉で創れた。――だが「創ったものを失う」恐怖を、きみはまだ知らない。' },
       { narration: true, text: 'ギルドの書庫。棚という棚の文字が、霧に触れて次々と消えていく。' },
@@ -99,7 +99,7 @@ export function buildChapter2(edition: Edition): Chapter {
     index: 1,
     title: '航跡を刻む',
     subtitle: 'いつでも戻れる',
-    scene: 'cyber',
+    scene: 'archive',
     intro: [
       { narration: true, text: 'アムネシアが反撃。作りかけのコードが、ぐにゃりと巻き戻り、壊れる。' },
       {
@@ -169,7 +169,7 @@ export function buildChapter2(edition: Edition): Chapter {
     index: 2,
     title: '世界に刻む',
     subtitle: '共有という光',
-    scene: 'city',
+    scene: 'archive',
     intro: [
       { narration: true, text: 'アムネシアが膨れ上がる。「記録など、お前一人の中で消えるもの」と嗤う。' },
       {
@@ -236,7 +236,7 @@ export function buildChapter2(edition: Edition): Chapter {
     index: 3,
     title: '仕上げ',
     subtitle: '航跡を残す練習',
-    scene: 'cyber',
+    scene: 'archive',
     intro: [
       {
         speaker: 'mentor',

@@ -16,7 +16,7 @@ export function buildChapter6(edition: Edition): Chapter {
     index: 0,
     title: '無限の負荷',
     subtitle: '手軽な自動化',
-    scene: 'cyber',
+    scene: 'sky',
     intro: [
       { narration: true, text: '作品を世に放った――その途端、世界中から人が殺到した。アクセス、依頼、データ。嬉しい悲鳴。だが。' },
       { narration: true, text: 'きみの一台のPCでは、もう到底さばけない。処理の津波が押し寄せる。「サージ」。' },
@@ -82,7 +82,7 @@ export function buildChapter6(edition: Edition): Chapter {
     index: 1,
     title: '雲を選ぶ',
     subtitle: '規模に合う道具',
-    scene: 'cyber',
+    scene: 'sky',
     intro: [
       {
         speaker: partnerId,
@@ -137,7 +137,7 @@ export function buildChapter6(edition: Edition): Chapter {
     index: 2,
     title: '企業の盾',
     subtitle: '安全にAIを',
-    scene: 'cyber',
+    scene: 'sky',
     intro: [
       {
         speaker: partnerId,
@@ -192,7 +192,7 @@ export function buildChapter6(edition: Edition): Chapter {
     index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ雲に乗せる',
-    scene: 'cyber',
+    scene: 'sky',
     intro: [
       {
         speaker: 'mentor',
