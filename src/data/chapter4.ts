@@ -189,6 +189,62 @@ export function buildChapter4(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
+        text: '道具を一つ束ねたか。だが本領は“いくつも繋ぐ”ところからだ。最後に、もう一つ繋いでみせろ。',
+      },
+    ],
+  };
+
+  const s4: Stage = {
+    id: 'c4s4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: 'もう一つ繋ぐ',
+    scene: 'cyber',
+    intro: [
+      { narration: true, text: '壁は崩れた。だが向こうには、まだ繋がれていない道具が静かに眠っている。' },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'やり方はもう知ってるね。「どの道具を」「MCPで繋いで」「何ができるようにしたいか」。今度はカレンダー以外――メールでも、社内ドキュメント検索でも、きみが繋ぎたい道具を自由に頼んで。',
+          'やり方はもう分かるな。「どの道具を」「MCPで繋いで」「何ができるようにしたいか」。今度はカレンダー以外だ――メールでも社内ドキュメント検索でも、繋ぎたい道具を自由にぶつけろ。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST ── 別の道具も繋ぐ',
+      diagram: 'mcp',
+      goal: 'カレンダー以外の道具（例：メール／社内ドキュメント検索）をMCPで繋ぎ、AIに何をさせたいかを、自分の言葉で頼もう。正解は一つじゃない。',
+      hint: '“どの道具を MCPで繋ぐ/接続” ＋ “繋いだら何をさせたいか” を具体的に伝えよう。',
+      learn: '繋ぐ道具を増やすほど、AIの「やれること」は広がる。道具と目的をセットで頼むのがコツ。',
+      placeholder: '例）メールもMCPで繋いで、未読の重要メールを要約して教えられるようにして。社内ドキュメント検索とも連携して、資料も探せるように。',
+      keywords: ['mcp', 'つな', '繋', '接続', '連携', 'メール', 'ツール', 'カレンダー', 'ドキュメント', 'プラグイン'],
+      minKeywords: 2,
+      sampleAnswer: 'メールもMCPで繋いで、未読の重要メールを要約できるようにして。社内ドキュメント検索とも連携して、資料を探せるように。',
+      successResponse:
+        'いいね、その通りに繋いだよ。メールから今朝の重要な3件を拾って要約できたし、ドキュメント検索で例の資料もすぐ見つかった。道具が増えるほど、ぼくはきみの実務に深く手を出せる。',
+      artifact: { title: 'mcp.json', body: ['✓ メール接続 完了', '✓ ドキュメント検索 連携', '✓ カレンダー（既存）'], fixed: true },
+    },
+    outro: [
+      {
+        narration: true,
+        text: '繋がれた道具が一つ、また一つと灯をともす。孤立していた壁の向こうが、ひとつながりの仕事場になった。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'カレンダー、メール、ドキュメント――きみの言葉で、ぼくは次々と道具を手にした。もう「話すだけ」のぼくじゃない。',
+          'カレンダーにメール、ドキュメント――アンタの言葉で、アタシは道具を次々握った。もう「話すだけ」のアタシじゃねぇ。'
+        ),
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
         text: '道具を束ねたか。…OVERSEER は、あらゆる道具を独占しようとする。お前の力、いよいよ試されるぞ。',
       },
     ],
@@ -203,6 +259,6 @@ export function buildChapter4(edition: Edition): Chapter {
     keyTerms: ['mcp', 'plugin', 'api', 'database'],
     scene: 'guild',
     boss: { name: 'サイロ', title: '孤立の壁', blurb: '道具と道具を断絶させる壁。繋ぐ術を持たぬAIを“話すだけ”に閉じ込める。' },
-    stages: [s1, s2, s3],
+    stages: [s1, s2, s3, s4],
   };
 }

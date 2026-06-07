@@ -225,6 +225,72 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
+        text: '見事だ。だが“分かった”と“できる”は別物だ。最後に、今のひと続きを自分の手でやってみろ。',
+      },
+    ],
+  };
+
+  /* ---- STAGE 4 : 応用練習（記憶・Git・GitHubを総動員、自由記述） ---- */
+  const s4: Stage = {
+    id: 'c2s4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: '航跡を残す練習',
+    scene: 'cyber',
+    intro: [
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: 'まだ霧の残り香がある。アムネシアを二度と寄せつけぬよう、今日の流れを自分の言葉で回してみせろ。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          '流れはシンプルだよ。何か手を加えて、こまめにコミットして、GitHubへ上げる――READMEも一言添えるといい。きみの“こうしたい”を、自由に言葉にして。',
+          '流れは単純だ。ちょい手を加えて、こまめにコミット、GitHubに上げる――READMEも一言添えとけ。アンタの“こうしたい”を、自由にぶつけろ。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST ── 自分で記録・共有',
+      goal: 'ページに小さな変更を加えて、こまめにコミットし、GitHubへ上げて共有しよう。READMEの更新も添えると良い。自分の言葉でAIに頼もう。',
+      hint: '“変更を加える” ＋ “コミットする” ＋ “GitHubに上げる/READMEを更新” を、自分の言葉でつなげて頼もう。',
+      learn: 'メモリ・Git・GitHub――学んだ全部を一続きにすれば、成果は失われず世界に残る。',
+      placeholder: '例）あいさつの下に一行足して、その変更をコミットして、GitHubに上げて。READMEに更新内容も書き足して。',
+      keywords: ['コミット', 'git', 'github', '公開', 'readme', 'push', '上げ', '共有', '記録', 'プッシュ'],
+      minKeywords: 2,
+      sampleAnswer:
+        'あいさつの下に一行足して、その変更をコミットして。終わったらGitHubに上げて、READMEにも更新内容を書き足して。',
+      successResponse:
+        'いいね、その通りに進めたよ。変更をコミットして、GitHubへプッシュ。READMEも更新した。新しい航跡が一本、世界に刻まれた――これがきみ自身の手で回せた一周だ。',
+      artifact: {
+        title: 'github.com/you/vibe-guild',
+        body: ['● 変更をコミット', '● GitHubへプッシュ', '📄 README.md 更新', '✓ 共有しました'],
+        fixed: true,
+      },
+    },
+    outro: [
+      {
+        narration: true,
+        text: '新しいコミットの光が、書庫の隅々まで届く。霧の残り香は、もうどこにも無い。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'やったね。記憶し、記録し、共有する――その一周を、きみは自分の手で回した。もうアムネシアはきみに触れられない。',
+          'やるじゃん。記憶して、記録して、共有する――その一周を自分の手で回したな。もうアムネシアはアンタに手出しできねぇ。'
+        ),
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
         text: '……だが忘れるな。これらは皆、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎん。',
       },
     ],
@@ -243,6 +309,6 @@ export function buildChapter2(edition: Edition): Chapter {
       title: '健忘の亡霊',
       blurb: '進捗も文脈も消し去る霧。記憶と履歴を持たぬ者から、すべてを奪う。',
     },
-    stages: [s1, s2, s3],
+    stages: [s1, s2, s3, s4],
   };
 }

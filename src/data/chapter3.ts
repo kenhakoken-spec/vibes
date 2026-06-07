@@ -193,6 +193,67 @@ export function buildChapter3(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
+        text: '一本の鎖は砕いた。だが“繰り返し”は一つじゃない。同じ手で、もう一つ断ち切ってみせろ。',
+      },
+    ],
+  };
+
+  const s4: Stage = {
+    id: 'c3s4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: 'もう一つ自動化',
+    scene: 'cyber',
+    intro: [
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: 'トイルの鎖は、まだ別の作業にも巻きついている。今日学んだ“自動化”を、自分の手でもう一度かけてみろ。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'やり方は同じだよ。繰り返す定型作業を見つけて、その手順を“台本”にすればいい。毎朝のレポート送信でも、定期的なデータ収集でも――自由に頼んでみて。',
+          'やることは同じだ。繰り返す定型作業を、手順ごと台本に落とすだけ。毎朝のレポート送信でも、定期のデータ収集でも――好きに投げてこい。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST ── 別の作業も自動化',
+      goal: 'もう一つの繰り返し作業を、自分の言葉でAIに自動化させよう（例：毎朝のレポート送信／定期的なデータ収集）。何を・いつ・どんな手順で動かすかを伝えるのがコツ。',
+      hint: '「どの作業を」「どのタイミングで（毎朝など）」「どんな手順で繰り返すか」を具体的に。',
+      learn: '繰り返す定型作業は、手順を“台本”にすれば何でも自動化できる――それが自動化の真髄。',
+      placeholder: '例）毎朝9時に、売上データを集めてレポートにまとめ、チームに自動で送信するスクリプトを作って。手順どおりに繰り返し動くようにして。',
+      keywords: ['自動', '毎朝', '毎日', '繰り返し', '定型', 'playwright', 'スクリプト', '巡回', '収集', '送信'],
+      minKeywords: 2,
+      sampleAnswer:
+        '毎朝9時に、各サイトを巡回して売上データを収集し、レポートにまとめてチームへ自動送信するスクリプトを作って。手順どおりに毎日繰り返し動くようにして。',
+      successResponse:
+        'いいね、その通りに組んだよ。手順を台本にして、毎朝決まった時刻に自動で走るようにした。データ収集からレポート送信まで、もうきみの手を借りない。トイルの鎖が、また一本砕けた。',
+      artifact: { title: 'daily-report.spec.ts', body: ['毎朝9:00 自動実行', '1. データを収集', '2. レポートを作成', '3. チームへ送信'], fixed: true },
+    },
+    outro: [
+      {
+        narration: true,
+        text: '二本目の鎖が、光の粒になって砕け散る。同じ作業を繰り返していた人影たちが、ゆっくりと顔を上げた。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'できたね。一つ自動化できれば、あとは同じ。繰り返しを見つけて、手順を台本にする――その目を、きみはもう持っている。',
+          'やったな。一つできりゃ後は応用だ。繰り返しを見抜いて手順を台本にする――その目、もうアンタのもんだ。'
+        ),
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
         text: '反復の鎖、断ち切ったな。…だが OVERSEER は、人の時間そのものを支配する。まだ足りん。',
       },
     ],
@@ -207,6 +268,6 @@ export function buildChapter3(edition: Edition): Chapter {
     keyTerms: ['rpa', 'playwright', 'headless', 'screenshot'],
     scene: 'cyber',
     boss: { name: 'トイル', title: '反復の鎖', blurb: '同じ作業を永遠に繰り返させる鎖。自動化を知らぬ者を縛り続ける。' },
-    stages: [s1, s2, s3],
+    stages: [s1, s2, s3, s4],
   };
 }

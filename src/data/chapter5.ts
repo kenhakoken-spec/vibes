@@ -178,6 +178,58 @@ export function buildChapter5(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
+        text: 'よく届けた。…ならば最後の仕上げだ。一度きりで終わらせるな。今度は“きみ自身の作品”を、もう一つ世に出してみろ。',
+      },
+    ],
+  };
+
+  const s4: Stage = {
+    id: 'c5s4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: 'もう一つ世に出す',
+    scene: 'city',
+    intro: [
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '習った手順をなぞるだけなら誰でもできる。本当に身についたかは、自分の作品で試して分かる。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'きみが前に作った道具やページを、一つ思い浮かべて。それを「どう届けるか」――EXEで配るのか、GitHub Pagesで公開するのか、自分の言葉でぼくに頼んで。',
+          'アンタが前に作った道具かページ、一つ思い浮かべろ。それを「どう届けるか」――EXEで配るか、GitHub Pagesで公開するか、自分の言葉で頼め。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST ── 自分の作品を届ける',
+      diagram: 'ship-flow',
+      goal: '自分が作ったもの（ツールやページ）を「届ける／公開する」よう、自分の言葉でAIに頼もう。配る手段は自由だ。',
+      hint: '“何を” ＋ “どう届けるか（EXEで配る／GitHub Pagesで公開）” を入れて頼もう。',
+      learn: '作って終わりにせず「届ける」までやる――それが、学んだ技術を本当に活かす最後の一歩。',
+      placeholder: '例）自分で作ったメモ帳ツールを EXE にして、チームの全員がダウンロードして使えるように配って。',
+      keywords: ['配', '公開', 'exe', 'pages', 'github', '共有', 'url', '届け', 'ダウンロード', '配布'],
+      minKeywords: 2,
+      sampleAnswer: '自分が作ったツールを EXE にして、チームみんながダウンロードして使えるように配って。',
+      successResponse:
+        'いいね、その通りにしたよ。きみの作品が、きみの手元を離れて誰かのもとへ届いていく。「作って終わり」じゃなく「届けて完成」――もう、きみはそれを自分でできる。',
+      artifact: { title: 'dist/ → 世界へ', body: ['📦 きみの作品', '✓ 配布・公開ずみ', '👥 使う人のもとへ'], fixed: true },
+    },
+    outro: [
+      {
+        narration: true,
+        text: 'きみの作品が、誰かの画面で動き出す。届ける技術を、きみは確かに自分のものにした。',
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
         text: 'よく届けた。…だが OVERSEER は、規模の暴力で押し潰しに来る。次は“雲の力”が要る。',
       },
     ],
@@ -192,6 +244,6 @@ export function buildChapter5(edition: Edition): Chapter {
     keyTerms: ['electron', 'exe', 'batch', 'github-pages', 'deploy'],
     scene: 'city',
     boss: { name: 'アンハード', title: '届かぬ声', blurb: '誰にも使われなかった作品の亡霊。届ける術を持たぬ者の傑作を、闇に葬る。' },
-    stages: [s1, s2, s3],
+    stages: [s1, s2, s3, s4],
   };
 }

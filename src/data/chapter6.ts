@@ -166,6 +166,10 @@ export function buildChapter6(edition: Edition): Chapter {
     },
     outro: [
       {
+        narration: true,
+        text: 'サージの津波が、いくつもの水路に分かれて勢いを失い――やがて、引いていく。',
+      },
+      {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
@@ -173,6 +177,58 @@ export function buildChapter6(edition: Edition): Chapter {
           'やった。手軽なGASから、巨大なクラウドまで。波の大きさに合わせて道具を選べる。きみはもう、規模に飲まれない。',
           'やったな。手軽なGASから巨大クラウドまで。波のサイズで道具を選べる。もう規模に飲まれやしない。'
         ),
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: 'よくやった。だが“選べる”と“使いこなす”は別だ。最後に、もう一つ――自分の波を、自分の手で雲に乗せてみろ。',
+      },
+    ],
+  };
+
+  const s4: Stage = {
+    id: 'c6s4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: 'もう一つ雲に乗せる',
+    scene: 'cyber',
+    intro: [
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: 'もう一つ、雲に乗せたい処理があるはずだ。今日学んだ“波の大きさで道具を選ぶ”を、自分で使ってみせろ。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'やり方は同じだよ。軽い自動処理ならGAS、大量集計ならBigQuery、常時動くAIサービスならCloud Run＋Azure OpenAI。「何を」「どの規模で」雲に乗せたいか、自由に言葉にして。',
+          'やり方は同じだ。軽い自動処理はGAS、大量集計はBigQuery、常時動くAIサービスはCloud Run＋Azure OpenAI。「何を」「どの規模で」雲に乗せたいか、自由にぶつけろ。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST ── 規模に合わせて雲に乗せる',
+      diagram: 'cloud',
+      goal: 'もう一つの処理を、規模に合った道具で雲に乗せるよう、自分の言葉でAIに頼もう（例：軽い自動処理はGAS／大量集計はBigQuery／常時動くAIサービスはCloud Run＋Azure OpenAI）。正解は一つじゃない。',
+      hint: '「何を」「どの規模で」やりたいか＋「どの道具に乗せるか」を具体的に。小さな波はGAS、大きな波はクラウドへ。',
+      learn: '波の大きさで道具を選ぶ――規模に合わせて、GAS / BigQuery / Cloud Run などを自分で選べる。',
+      placeholder: '例）毎朝の問い合わせ件数の集計は軽いからGASで自動化して。月次の全ログ分析はBigQueryに、常時動く要約AIはCloud Run＋Azure OpenAIで公開して。',
+      keywords: ['クラウド', 'デプロイ', '公開', 'cloud run', 'gas', 'bigquery', 'azure', '自動', 'サービス', '稼働', '集計'],
+      minKeywords: 2,
+      sampleAnswer: '軽い件数集計はGASで自動化して。大量のログ分析はBigQueryに、常時動く要約AIサービスはCloud Run＋Azure OpenAIにデプロイして公開して。',
+      successResponse:
+        'いいね、その通りに乗せたよ。軽い波はGASがさばき、大きな波はBigQueryとCloud Runが受け止める。規模に合わせて道具を選ぶ――きみはもう、自分でそれができる。',
+      artifact: { title: 'cloud', body: ['⚙ 軽い自動処理 → GAS', '📊 大量集計 → BigQuery', '☁ 常時稼働AI → Cloud Run + AOAI'], fixed: true },
+    },
+    outro: [
+      {
+        narration: true,
+        text: '小さな波も、大きな波も、それぞれの雲が受け止める。きみの作品は、もう世界のどんな規模にも応える。',
       },
       {
         speaker: partnerId,
@@ -201,6 +257,6 @@ export function buildChapter6(edition: Edition): Chapter {
     keyTerms: ['gas', 'gcp', 'bigquery', 'cloud-run', 'vertex-ai', 'aoai', 'cloud'],
     scene: 'cyber',
     boss: { name: 'サージ', title: '無限の負荷', blurb: '押し寄せる処理の津波。規模を捌く力を持たぬ者を、容赦なく飲み込む。' },
-    stages: [s1, s2, s3],
+    stages: [s1, s2, s3, s4],
   };
 }
