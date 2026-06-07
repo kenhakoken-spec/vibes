@@ -62,7 +62,8 @@ export type DiagramKind =
   | 'cloud'
   | 'vary'
   | 'models'
-  | 'delegate';
+  | 'delegate'
+  | 'web-parts';
 
 export interface ChoiceOption {
   id: string;

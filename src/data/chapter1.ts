@@ -167,10 +167,20 @@ export function buildChapter1(edition: Edition): Chapter {
         side: 'right',
         text: '（“ボタン足して”だけじゃ伝わらない、ってことか……。）',
       },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'ちなみに豆知識。Webページは3つの部品でできてる――骨組み(HTML)・見た目(CSS)・動き(JS)。ボタンも同じで、形と見た目と「押した時の動き」を足すんだ。',
+          'ちな豆知識。Webページは3部品――骨組み(HTML)・見た目(CSS)・動き(JS)。ボタンも同じ、形と見た目と「押した時の動き」を足す。'
+        ),
+      },
     ],
     challenge: {
       kind: 'choice',
       brief: 'QUEST 02 ── 入口のボタンを足せ',
+      diagram: 'web-parts',
       goal: 'さっきのページに「ギルドに入る」ボタンを追加する、文脈の伝わる指示を選べ。',
       hint: '“対象（どのページ）・場所（どこ）・ラベル（何のボタン）”が揃っているか？',
       learn: 'AIは文脈を覚えていないことがある。『どれに・どこに・何を』を補って指示する。',

@@ -216,6 +216,42 @@ const RENDER: Record<DiagramKind, (uid: string) => React.ReactElement> = {
       </text>
     </svg>
   ),
+  'web-parts': () => (
+    <svg className="dgm__svg" viewBox="0 0 320 160" role="img" aria-label="Webページの3部品の図">
+      <text x="160" y="18" textAnchor="middle" fontSize="11" fill="#f5f5f7">
+        Webページは3つの部品でできている
+      </text>
+      {/* HTML = 骨組み（ワイヤーフレーム） */}
+      <g>
+        <rect x="14" y="34" width="90" height="86" rx="4" fill="none" stroke="#888" strokeWidth="2" strokeDasharray="4 3" />
+        <rect x="24" y="44" width="70" height="12" fill="none" stroke="#888" strokeWidth="1.5" />
+        <rect x="24" y="62" width="70" height="30" fill="none" stroke="#888" strokeWidth="1.5" />
+        <rect x="24" y="98" width="40" height="14" fill="none" stroke="#888" strokeWidth="1.5" />
+        <text x="59" y="135" textAnchor="middle" fontSize="10" fontWeight="700" fill="#f5f5f7">HTML</text>
+        <text x="59" y="150" textAnchor="middle" fontSize="9" fill="var(--ink-faint)">骨組み</text>
+      </g>
+      <text x="116" y="80" textAnchor="middle" fontSize="16" fill="var(--ink-faint)">＋</text>
+      {/* CSS = 見た目（色がつく） */}
+      <g>
+        <rect x="130" y="34" width="90" height="86" rx="4" fill="#1a1422" stroke="var(--accent)" strokeWidth="2" />
+        <rect x="140" y="44" width="70" height="12" rx="2" fill="var(--accent)" opacity="0.8" />
+        <rect x="140" y="62" width="70" height="30" rx="3" fill="#2a2238" />
+        <rect x="140" y="98" width="40" height="14" rx="7" fill="var(--accent)" />
+        <text x="175" y="135" textAnchor="middle" fontSize="10" fontWeight="700" fill="#f5f5f7">CSS</text>
+        <text x="175" y="150" textAnchor="middle" fontSize="9" fill="var(--ink-faint)">見た目</text>
+      </g>
+      <text x="232" y="80" textAnchor="middle" fontSize="16" fill="var(--ink-faint)">＋</text>
+      {/* JS = 動き（押すと反応） */}
+      <g>
+        <rect x="246" y="34" width="60" height="86" rx="4" fill="#10182a" stroke="#00e5ff" strokeWidth="2" />
+        <rect x="256" y="74" width="40" height="16" rx="8" fill="#00e5ff" />
+        <text x="276" y="86" textAnchor="middle" fontSize="8" fontWeight="700" fill="#000">押す</text>
+        <path d="M276 60 l4 8 l-8 0 z" fill="#ffce3a" />
+        <text x="276" y="135" textAnchor="middle" fontSize="10" fontWeight="700" fill="#f5f5f7">JS</text>
+        <text x="276" y="150" textAnchor="middle" fontSize="9" fill="var(--ink-faint)">動き</text>
+      </g>
+    </svg>
+  ),
   delegate: () => (
     <svg className="dgm__svg" viewBox="0 0 320 160" role="img" aria-label="任せる量の図">
       <text x="80" y="20" textAnchor="middle" fontSize="11" fill="var(--ink-faint)">
