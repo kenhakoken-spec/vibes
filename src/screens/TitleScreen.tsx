@@ -80,7 +80,8 @@ export function TitleScreen() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        言葉で、ものを作る。AIと組んで“作れる”自分になる物語。
+        コード未経験から、言葉でものを作れる自分へ。<br />
+        Claude / Cursor と学ぶ、スタイリッシュな学習アドベンチャー。
       </motion.p>
     </motion.div>
   );
