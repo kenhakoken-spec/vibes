@@ -7,7 +7,7 @@ import { ComicBurst } from '../components/ComicBurst';
 import { ScrollCue } from '../components/ScrollCue';
 
 export function ChapterClear() {
-  const { chapter, chapters, chapterIndex, edition, learned, results, toWorld, nextChapter, backToTitle } =
+  const { chapter, chapters, chapterIndex, edition, learned, results, toWorld, nextChapter, selectEdition, backToTitle } =
     useGame();
   if (!chapter || !edition) return null;
 
@@ -112,7 +112,14 @@ export function ChapterClear() {
       </motion.p>
 
       {isFinal ? (
-        <AngledButton onClick={backToTitle}>タイトルへ ▶</AngledButton>
+        <div className="chapclear__btns">
+          <AngledButton onClick={() => selectEdition(edition.id === 'claude' ? 'cursor' : 'claude')} sound="confirm">
+            {edition.id === 'claude' ? 'CURSOR編' : 'CLAUDE編'}で挑む ▶
+          </AngledButton>
+          <AngledButton variant="ghost" onClick={backToTitle} sound="back">
+            タイトルへ
+          </AngledButton>
+        </div>
       ) : (
         <div className="chapclear__btns">
           <AngledButton onClick={nextChapter} sound="confirm">
