@@ -308,13 +308,70 @@ export function buildChapter1(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '……新人。お前、見どころがある。第1章は、ここまでだ。',
+        text: '……新人。お前、見どころがある。最後にもう一つ、今日の総仕上げといこう。',
+      },
+    ],
+  };
+
+  /* ---- STAGE 4 : 応用練習（学びを総動員・自由記述） ----------------- */
+  const stage4: Stage = {
+    id: 's4',
+    index: 3,
+    title: '仕上げ',
+    subtitle: '学びを総動員',
+    intro: [
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '動くページはできた。だが“あと一歩”の魅力が欲しい。今日学んだ全部を使って、自分で仕上げてみろ。',
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'やり方は同じだよ。「どこに」「何を」「どうしたいか」を具体的に。うまくいかなければ、見て、直す。きみの“こうしたい”を、自由に言葉にして。',
+          'やり方は同じだ。「どこに・何を・どうしたい」を具体的に言え。コケたら見て直す。アンタの“こうしたい”を、自由にぶつけろ。'
+        ),
+      },
+    ],
+    challenge: {
+      kind: 'freeText',
+      brief: 'QUEST 04 ── 自分で仕上げる',
+      goal: '完成したギルドページに、もう一工夫。自分の言葉で改善をAIに頼もう（例：歓迎の一行を足す／色を変える／ボタンを目立たせる）。正解は一つじゃない。',
+      hint: '「どこに・何を・どうしたいか」を具体的に。一発で完璧じゃなくていい――頼んで、見て、直す。',
+      learn: '具体化・文脈・反復改善――学んだ全部を組み合わせれば、もっと良くできる。',
+      placeholder: '例）あいさつの下に「一緒に創ろう」と小さく一行足して。ボタンはもう少し大きく目立たせて。',
+      keywords: ['足し', '追加', '変え', '色', '大き', '目立', '文言', 'メッセージ', '一行', '下に', '上に', 'ボタン', '背景', '整え', '画像'],
+      minKeywords: 1,
+      sampleAnswer: 'あいさつの下に「一緒に創ろう」と一行足して、ボタンをもう少し大きく目立たせて。',
+      successResponse:
+        'いいね、その通りに直したよ。短い一行が温かさを足して、ボタンも押したくなる見た目になった。きみの“ひと工夫”が、ページに命を吹き込んだ。',
+      artifact: {
+        title: 'guild.html',
+        body: ['ようこそ VIBE GUILD へ', '一緒に創ろう'],
+        hasButton: true,
+        buttonLabel: 'ギルドに入る',
+        fixed: true,
+      },
+    },
+    outro: [
+      {
+        narration: true,
+        text: '小さな一行と、押したくなるボタン。きみの手で、ページが“きみのもの”になった。',
+      },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '……見事だ。具体化・文脈・反復改善――もう全部、使いこなしてる。第1章は、ここまでだ。',
       },
       {
         speaker: 'hero',
         portrait: 'hero',
         side: 'right',
-        text: '（あいさつページに、動くボタン。小さいけど――確かに、僕が“作った”ものだ。）',
+        text: '（あいさつページに、動くボタン、そして僕のひと工夫。小さいけど――確かに、僕が“作った”ものだ。）',
       },
     ],
   };
@@ -332,7 +389,7 @@ export function buildChapter1(edition: Edition): Chapter {
       title: '群れバグ',
       blurb: '無数の小さな不具合の群れ。曖昧な指示につけ込み、作りかけを濁らせる。',
     },
-    stages: [stage1, stage2, stage3],
+    stages: [stage1, stage2, stage3, stage4],
   };
 }
 
