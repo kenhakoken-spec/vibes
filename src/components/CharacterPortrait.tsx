@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import type { PortraitVariant } from '../types';
+import type { Expression, PortraitVariant } from '../types';
 
 /* =========================================================================
    スタイライズド・キャラ肖像（SVG）— マンガ風の硬い陰影・インク輪郭・網点・
@@ -12,9 +12,10 @@ interface Props {
   accent?: string;
   imageSrc?: string;
   className?: string;
+  expr?: Expression;
 }
 
-export function CharacterPortrait({ variant, accent = '#ff2d4a', imageSrc, className }: Props) {
+export function CharacterPortrait({ variant, accent = '#ff2d4a', imageSrc, className, expr = 'neutral' }: Props) {
   const raw = useId();
   const uid = raw.replace(/[^a-zA-Z0-9]/g, '');
   if (imageSrc) {
@@ -23,7 +24,7 @@ export function CharacterPortrait({ variant, accent = '#ff2d4a', imageSrc, class
   const Svg = PORTRAITS[variant];
   return (
     <div className={className}>
-      <Svg accent={accent} uid={uid} />
+      <Svg accent={accent} uid={uid} expr={expr} />
     </div>
   );
 }
@@ -31,9 +32,80 @@ export function CharacterPortrait({ variant, accent = '#ff2d4a', imageSrc, class
 interface SvgProps {
   accent: string;
   uid: string;
+  expr: Expression;
 }
 
-function Defs({ accent, uid }: SvgProps) {
+/* ---- 表情パーツ：眉と口で感情を出し分ける（はっきり大きめに） -------- */
+type Brow = { ox: number; oy: number; ix: number; iy: number };
+
+/** 眉。outer(耳側)→inner(鼻側)を表情ごとに上下させる。 */
+function Brows({ L, R, sw, expr, color = INK }: { L: Brow; R: Brow; sw: number; expr: Expression; color?: string }) {
+  // [outerΔy, innerΔy] 正=下げる
+  const delta: Record<Expression, [number, number]> = {
+    neutral: [0, 0],
+    smile: [-2, -3],
+    serious: [-2, 7],
+    surprised: [-8, -8],
+    worried: [4, -6],
+  };
+  const [od, idd] = delta[expr];
+  const path = (b: Brow) => {
+    const oy = b.oy + od;
+    const iy = b.iy + idd;
+    if (expr === 'surprised') {
+      const mx = (b.ox + b.ix) / 2;
+      const my = Math.min(oy, iy) - 7;
+      return `M${b.ox} ${oy} Q${mx} ${my} ${b.ix} ${iy}`;
+    }
+    return `M${b.ox} ${oy} L${b.ix} ${iy}`;
+  };
+  return (
+    <g fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round">
+      <path d={path(L)} />
+      <path d={path(R)} />
+    </g>
+  );
+}
+
+/** 口。表情ごとに曲げ/開きを変える。 */
+function Mouth({
+  x,
+  y,
+  w,
+  expr,
+  color,
+  sw = 2.4,
+  op = 1,
+}: {
+  x: number;
+  y: number;
+  w: number;
+  expr: Expression;
+  color: string;
+  sw?: number;
+  op?: number;
+}) {
+  if (expr === 'surprised') {
+    return <ellipse cx={x} cy={y + 2} rx={w * 0.5} ry={w * 0.52} fill="#180c10" stroke={color} strokeOpacity={op} strokeWidth={1.5} />;
+  }
+  let d: string;
+  switch (expr) {
+    case 'smile':
+      d = `M${x - w - 1} ${y - 1} Q${x} ${y + 10} ${x + w + 1} ${y - 1}`;
+      break;
+    case 'serious':
+      d = `M${x - w} ${y + 1} L${x + w} ${y + 1}`;
+      break;
+    case 'worried':
+      d = `M${x - w} ${y + 2} Q${x} ${y - 6} ${x + w} ${y + 2}`;
+      break;
+    default:
+      d = `M${x - w} ${y} Q${x} ${y + 3} ${x + w} ${y}`;
+  }
+  return <path d={d} fill="none" stroke={color} strokeOpacity={op} strokeWidth={sw} strokeLinecap="round" />;
+}
+
+function Defs({ accent, uid }: { accent: string; uid: string }) {
   return (
     <defs>
       {/* 背景グロー */}
@@ -79,7 +151,7 @@ function Defs({ accent, uid }: SvgProps) {
   );
 }
 
-function Frame({ children, accent, uid }: SvgProps & { children: React.ReactNode }) {
+function Frame({ children, accent, uid }: { children: React.ReactNode; accent: string; uid: string }) {
   return (
     <svg viewBox="0 0 300 420" width="100%" height="100%" preserveAspectRatio="xMidYMax meet">
       <Defs accent={accent} uid={uid} />
@@ -98,7 +170,7 @@ function CastShadow({ d, opacity = 0.32 }: { d: string; opacity?: number }) {
 
 /* ---- HERO ----------------------------------------------------------- */
 /* フード付き・うつむき加減で決意のある新人。アクセントは白（中立）。 */
-function HeroSvg({ accent, uid }: SvgProps) {
+function HeroSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
       {/* 肩・フードの外側 */}
@@ -131,12 +203,12 @@ function HeroSvg({ accent, uid }: SvgProps) {
         <circle cx="134.2" cy="175.2" r="0.8" fill="#fff" />
         <circle cx="164.2" cy="175.2" r="0.8" fill="#fff" />
       </g>
-      {/* 眉（強い・への字気味） */}
-      <path d="M120 166 L144 162" fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />
-      <path d="M180 166 L156 162" fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />
-      {/* 鼻・口 */}
+      {/* 眉（表情） */}
+      <Brows L={{ ox: 120, oy: 166, ix: 144, iy: 162 }} R={{ ox: 180, oy: 166, ix: 156, iy: 162 }} sw={3} expr={expr} />
+      {/* 鼻 */}
       <path d="M150 184 L153 196 L147 197" fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M140 208 Q150 213 160 208" fill="none" stroke="#000" strokeOpacity={0.55} strokeWidth="2.2" strokeLinecap="round" />
+      {/* 口（表情） */}
+      <Mouth x={150} y={210} w={10} expr={expr} color="#000" op={0.55} sw={2.2} />
       {/* 襟元の留め具（白アクセント） */}
       <g fill={accent} stroke={INK} strokeWidth="1.5">
         <path d="M150 300 L138 320 L150 330 L162 320 Z" />
@@ -152,7 +224,7 @@ function HeroSvg({ accent, uid }: SvgProps) {
 
 /* ---- CLAUDE --------------------------------------------------------- */
 /* 落ち着いた知性派。アクセント色（赤系）を使う。整った前髪と細い目。 */
-function ClaudeSvg({ accent, uid }: SvgProps) {
+function ClaudeSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
       {/* 後光リング */}
@@ -195,12 +267,12 @@ function ClaudeSvg({ accent, uid }: SvgProps) {
         <circle cx="130.2" cy="130" r="1" />
         <circle cx="168.2" cy="130" r="1" />
       </g>
-      {/* 眉（穏やか・水平） */}
-      <path d="M114 122 L138 117" fill="none" stroke={INK} strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M186 122 L162 117" fill="none" stroke={INK} strokeWidth="2.6" strokeLinecap="round" />
-      {/* 鼻・落ち着いた口 */}
+      {/* 眉（表情） */}
+      <Brows L={{ ox: 114, oy: 122, ix: 138, iy: 117 }} R={{ ox: 186, oy: 122, ix: 162, iy: 117 }} sw={2.6} expr={expr} />
+      {/* 鼻 */}
       <path d="M150 138 L153 152 L147 153" fill="none" stroke="#000" strokeOpacity={0.4} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M138 168 Q150 174 162 168" fill="none" stroke="#caa" strokeWidth="2.4" strokeLinecap="round" />
+      {/* 口（表情） */}
+      <Mouth x={150} y={170} w={12} expr={expr} color="#caa" sw={2.4} />
       {/* ローブの襟（V字・幾何的） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
         <path d="M150 296 L110 322 L126 396 L150 358 Z" fill="#1a1a24" />
@@ -219,7 +291,7 @@ function ClaudeSvg({ accent, uid }: SvgProps) {
 
 /* ---- CURSOR --------------------------------------------------------- */
 /* 鋭く速いパンク。アクセントはシアン。逆立つスパイク髪。 */
-function CursorSvg({ accent, uid }: SvgProps) {
+function CursorSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
       <g stroke={INK} strokeWidth="3" strokeLinejoin="round">
@@ -266,12 +338,12 @@ function CursorSvg({ accent, uid }: SvgProps) {
         <circle cx="129" cy="132.5" r="1" />
         <circle cx="171" cy="132.5" r="1" />
       </g>
-      {/* 鋭い眉 */}
-      <path d="M112 130 L142 121" fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />
-      <path d="M188 130 L158 121" fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />
-      {/* 鼻・斜めの口（不敵） */}
+      {/* 鋭い眉（表情） */}
+      <Brows L={{ ox: 112, oy: 130, ix: 142, iy: 121 }} R={{ ox: 188, oy: 130, ix: 158, iy: 121 }} sw={3} expr={expr} />
+      {/* 鼻 */}
       <path d="M150 146 L154 158 L148 159" fill="none" stroke="#000" strokeOpacity={0.4} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M134 174 L166 168" fill="none" stroke={accent} strokeWidth="3" strokeLinecap="round" />
+      {/* 口（表情・差し色） */}
+      <Mouth x={150} y={171} w={16} expr={expr} color={accent} sw={3} />
       {/* ジャケット襟（鋭角ラペル） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
         <path d="M150 300 L106 318 L128 394 L150 352 Z" fill="#15151e" />
@@ -290,7 +362,7 @@ function CursorSvg({ accent, uid }: SvgProps) {
 
 /* ---- MENTOR --------------------------------------------------------- */
 /* 厳格な老練の指南役。金（ゴールド）を内部で使う。顎髭・冠の帯。 */
-function MentorSvg({ uid }: SvgProps) {
+function MentorSvg({ uid, expr }: SvgProps) {
   const gold = '#ffce3a';
   return (
     <Frame accent={gold} uid={uid}>
@@ -310,9 +382,8 @@ function MentorSvg({ uid }: SvgProps) {
       {/* 後退した生え際＆白髪のツヤ */}
       <path d="M102 112 Q108 56 150 54 Q192 56 198 112 Q172 86 150 90 Q128 86 102 112 Z" fill="#23200f" stroke={INK} strokeWidth="2" />
       <path d="M118 64 Q150 52 182 64" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.28" />
-      {/* 厳しい眉（太く下がる） */}
-      <path d="M112 118 L142 114" fill="none" stroke={INK} strokeWidth="3.4" strokeLinecap="round" />
-      <path d="M188 118 L158 114" fill="none" stroke={INK} strokeWidth="3.4" strokeLinecap="round" />
+      {/* 厳しい眉（表情・太く） */}
+      <Brows L={{ ox: 112, oy: 118, ix: 142, iy: 114 }} R={{ ox: 188, oy: 118, ix: 158, iy: 114 }} sw={3.4} expr={expr} />
       {/* 鋭い目（金の輝き） */}
       <g fill={gold} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
         <path d="M114 128 L142 122 L141 134 L116 138 Z" />
@@ -328,8 +399,8 @@ function MentorSvg({ uid }: SvgProps) {
       </g>
       {/* 鼻（高く厳格） */}
       <path d="M150 134 L156 156 L148 158" fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      {/* 口元（髭の中に結んだ口） */}
-      <path d="M134 172 Q150 178 166 172" fill="none" stroke="#000" strokeOpacity={0.55} strokeWidth="2.2" strokeLinecap="round" />
+      {/* 口元（表情・髭の中） */}
+      <Mouth x={150} y={173} w={16} expr={expr} color="#000" op={0.55} sw={2.2} />
       {/* 顎髭の毛束ライン */}
       <g fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="2" strokeLinecap="round">
         <path d="M118 300 Q126 340 150 360" />

@@ -623,10 +623,10 @@
 .story__portrait {
   position: absolute;
   bottom: 0;
-  height: min(72vh, 560px);
-  width: min(48vw, 360px);
-  opacity: 0.95;
-  filter: drop-shadow(0 0 30px color-mix(in srgb, var(--accent) 35%, transparent));
+  height: min(80vh, 640px);
+  width: min(58vw, 430px);
+  opacity: 1;
+  filter: drop-shadow(0 0 32px color-mix(in srgb, var(--accent) 38%, transparent));
 }
 .story__portrait--left {
   left: clamp(-30px, -2vw, 0px);
@@ -1394,22 +1394,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1px;
-  padding: 0.7rem 0.45rem;
+  gap: 0px;
+  padding: 0.36rem 0.24rem;
   background: var(--accent);
   color: #000;
   font-family: var(--f-head);
   font-weight: 700;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
   writing-mode: vertical-rl;
-  border-radius: 10px 0 0 10px;
-  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 2px #000;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -2px 3px 10px rgba(0, 0, 0, 0.5), 0 0 0 1.5px #000;
   animation: tab-nudge 3s ease-in-out infinite;
 }
 .glossfab span {
   writing-mode: horizontal-tb;
-  font-size: 1rem;
+  font-size: 0.72rem;
 }
 @keyframes tab-nudge {
   0%, 100% { transform: translateX(0); }
@@ -1663,4 +1663,80 @@
 .abtn {
   white-space: normal;
   line-height: 1.4;
+}
+
+/* =========================================================================
+   PC / 大画面の最適化 — 縦長スマホ専用UIを、中央の“端末フレーム”に収める。
+   余白は雰囲気のある暗い背景にし、横に間延びさせない。
+   ========================================================================= */
+@media (min-width: 760px) {
+  body {
+    /* 端末の外側＝奥行きのある暗がり（中央に向け淡い差し色） */
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--accent, #ff2d4a) 12%, transparent), transparent 60%),
+      radial-gradient(80% 80% at 50% 120%, #150a10, transparent 70%),
+      #060608;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #root {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .app {
+    width: min(440px, 96vw);
+    max-width: 440px;
+    height: min(94dvh, 904px);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 110px rgba(0, 0, 0, 0.7),
+      0 0 0 2px rgba(255, 255, 255, 0.05),
+      0 0 0 11px #0b0b10,
+      0 0 0 13px rgba(0, 0, 0, 0.9),
+      0 0 60px color-mix(in srgb, var(--accent, #ff2d4a) 22%, transparent);
+  }
+  /* 背景・質感レイヤーは fixed だと枠外へ広がるため、枠内に収める */
+  .scene-layer,
+  .scene,
+  .fx {
+    position: absolute;
+  }
+  /* フレーム内は1カラムを維持（2カラムだと窮屈） */
+  .edition__cards {
+    grid-template-columns: 1fr;
+  }
+  /* 端末上部のスピーカー風スリット（雰囲気づけ） */
+  .app::after {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    width: 86px;
+    height: 5px;
+    margin-left: -43px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.14);
+    z-index: 70;
+    pointer-events: none;
+  }
+  /* マウス操作向けに当たり判定の心地よさを少しだけ */
+  .node,
+  .worldnode,
+  .abtn,
+  .glossfab,
+  .map__back {
+    cursor: pointer;
+  }
+}
+
+/* 横長でも縦が十分あるPCでは「縦にして」ヒントは出さない（フレーム表示のため） */
+@media (min-width: 760px) and (orientation: landscape) and (min-height: 521px) {
+  .rotate-hint {
+    display: none !important;
+  }
 }

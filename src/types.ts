@@ -37,6 +37,9 @@ export interface Edition {
   techNote: string;
 }
 
+/** 立ち絵の表情。眉と口で感情を出し分ける。 */
+export type Expression = 'neutral' | 'smile' | 'serious' | 'surprised' | 'worried';
+
 /** One line of visual-novel dialogue. */
 export interface DialogueLine {
   /** character id (resolved against the edition roster) or undefined for narration */
@@ -49,6 +52,8 @@ export interface DialogueLine {
   text: string;
   /** narration (centered, no nameplate) */
   narration?: boolean;
+  /** 立ち絵の表情（未指定なら本文から自動推定） */
+  expr?: Expression;
 }
 
 export type ChallengeKind = 'choice' | 'freeText';
