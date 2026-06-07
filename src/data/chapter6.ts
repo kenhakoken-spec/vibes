@@ -256,7 +256,7 @@ export function buildChapter6(edition: Edition): Chapter {
     recap: '作品を配布・公開し、世界へ届けられるようになった。',
     keyTerms: ['gas', 'gcp', 'bigquery', 'cloud-run', 'vertex-ai', 'aoai', 'cloud'],
     scene: 'sky',
-    boss: { name: 'サージ', title: '無限の負荷', blurb: '押し寄せる処理の津波。規模を捌く力を持たぬ者を、容赦なく飲み込む。' },
+    boss: { name: 'サージ', glyph: 'wave', title: '無限の負荷', blurb: '押し寄せる処理の津波。規模を捌く力を持たぬ者を、容赦なく飲み込む。' },
     stages: [s1, s2, s3, s4],
   };
 }

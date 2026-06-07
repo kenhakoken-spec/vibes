@@ -138,10 +138,14 @@ export interface Stage {
   outro: DialogueLine[];
 }
 
+export type BossGlyphKind = 'mask' | 'chains' | 'wall' | 'silence' | 'wave' | 'overseer';
+
 export interface BossInfo {
   name: string;
   title: string;
   blurb: string;
+  /** ボス固有のシルエット種別（未指定なら汎用マスク） */
+  glyph?: BossGlyphKind;
 }
 
 export interface Chapter {

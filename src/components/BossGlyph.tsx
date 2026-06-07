@@ -1,8 +1,18 @@
 import { useId } from 'react';
+import type { BossGlyphKind } from '../types';
 
-/* 章ボス（歪み）を表す不穏なマスク・シルエット。P5の“シャドウ”的な気配。 */
-export function BossGlyph({ accent = '#ff2d4a', down = false }: { accent?: string; down?: boolean }) {
-  const eye = down ? '#888' : accent;
+/* 章ボス（歪み）を表す不穏なシルエット。ボスごとに固有の意匠を持たせる。
+   P5の“シャドウ”的な気配を、各ボスの「概念」で描き分ける。 */
+export function BossGlyph({
+  accent = '#ff2d4a',
+  down = false,
+  kind = 'mask',
+}: {
+  accent?: string;
+  down?: boolean;
+  kind?: BossGlyphKind;
+}) {
+  const eye = down ? '#7a7a82' : accent;
   const raw = useId();
   const uid = raw.replace(/[^a-zA-Z0-9]/g, '');
   return (
@@ -11,26 +21,124 @@ export function BossGlyph({ accent = '#ff2d4a', down = false }: { accent?: strin
         <pattern id={`bght-${uid}`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
           <circle cx="1" cy="1" r="0.9" fill={eye} opacity="0.5" />
         </pattern>
-        <radialGradient id={`bgglow-${uid}`} cx="50%" cy="42%" r="55%">
-          <stop offset="0%" stopColor={eye} stopOpacity={down ? 0.2 : 0.6} />
+        <radialGradient id={`bgglow-${uid}`} cx="50%" cy="44%" r="58%">
+          <stop offset="0%" stopColor={eye} stopOpacity={down ? 0.18 : 0.55} />
           <stop offset="100%" stopColor={eye} stopOpacity="0" />
         </radialGradient>
       </defs>
-      <circle cx="40" cy="38" r="36" fill={`url(#bgglow-${uid})`} />
-      {/* マスク本体（角張った歪み） */}
-      <path
-        d="M40 8 L66 26 L58 52 L40 72 L22 52 L14 26 Z"
-        fill="#0a0a0f"
-        stroke={eye}
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path d="M40 8 L66 26 L58 52 L40 72 Z" fill={`url(#bght-${uid})`} opacity="0.25" />
-      {/* 釣り上がった眼 */}
-      <path d="M26 34 L40 30 L38 42 L27 42 Z" fill={eye} />
-      <path d="M54 34 L40 30 L42 42 L53 42 Z" fill={eye} />
-      {/* ギザの口 */}
-      <path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" fill="none" stroke={eye} strokeWidth="2" strokeLinecap="round" />
+      <circle cx="40" cy="40" r="38" fill={`url(#bgglow-${uid})`} />
+      <Body kind={kind} eye={eye} uid={uid} down={down} />
     </svg>
   );
+}
+
+function Body({ kind, eye, uid, down }: { kind: BossGlyphKind; eye: string; uid: string; down: boolean }) {
+  const ink = '#0a0a0f';
+  const ht = `url(#bght-${uid})`;
+  switch (kind) {
+    /* トイル：反復の鎖 ── 噛み合う鎖の輪が循環する */
+    case 'chains':
+      return (
+        <g fill="none" stroke={eye} strokeWidth="4" strokeLinecap="round">
+          <ellipse cx="31" cy="34" rx="13" ry="9" transform="rotate(-28 31 34)" />
+          <ellipse cx="49" cy="46" rx="13" ry="9" transform="rotate(-28 49 46)" />
+          <ellipse cx="40" cy="40" rx="9" ry="6" transform="rotate(-28 40 40)" stroke={ink} strokeWidth="6" />
+          <ellipse cx="40" cy="40" rx="13" ry="9" transform="rotate(-28 40 40)" />
+          {/* 循環の矢印 */}
+          <path d="M58 24 A22 22 0 0 1 60 50" strokeWidth="2.5" opacity={down ? 0.3 : 0.8} />
+          <path d="M60 50 l4 -6 m-4 6 l-6 -3" strokeWidth="2.5" opacity={down ? 0.3 : 0.8} />
+        </g>
+      );
+
+    /* サイロ：孤立の壁 ── 積まれた煉瓦と中央の断絶 */
+    case 'wall':
+      return (
+        <g>
+          <rect x="14" y="16" width="52" height="50" fill={ink} stroke={eye} strokeWidth="2" />
+          <g stroke={eye} strokeWidth="1.6" opacity="0.7">
+            <line x1="14" y1="29" x2="66" y2="29" />
+            <line x1="14" y1="41" x2="66" y2="41" />
+            <line x1="14" y1="53" x2="66" y2="53" />
+            <line x1="27" y1="16" x2="27" y2="29" />
+            <line x1="53" y1="16" x2="53" y2="29" />
+            <line x1="40" y1="29" x2="40" y2="41" />
+            <line x1="27" y1="41" x2="27" y2="53" />
+            <line x1="53" y1="41" x2="53" y2="53" />
+            <line x1="40" y1="53" x2="40" y2="66" />
+          </g>
+          {/* 中央を裂く断絶 */}
+          <path d="M40 16 L36 30 L44 42 L37 54 L42 66" fill="none" stroke={eye} strokeWidth="3" strokeLinejoin="round" opacity={down ? 0.4 : 1} />
+          <rect x="14" y="16" width="52" height="50" fill={ht} opacity="0.18" />
+        </g>
+      );
+
+    /* アンハード：届かぬ声 ── 消音されたスピーカー */
+    case 'silence':
+      return (
+        <g>
+          <path d="M20 32 L30 32 L42 22 L42 58 L30 48 L20 48 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" />
+          <g fill="none" stroke={eye} strokeWidth="2.5" strokeLinecap="round" opacity={down ? 0.25 : 0.85}>
+            <path d="M50 31 A12 12 0 0 1 50 49" />
+            <path d="M56 25 A20 20 0 0 1 56 55" opacity="0.6" />
+          </g>
+          {/* 沈黙の打ち消し線 */}
+          <line x1="18" y1="20" x2="62" y2="60" stroke={eye} strokeWidth="3.5" strokeLinecap="round" />
+        </g>
+      );
+
+    /* サージ：無限の負荷 ── 押し寄せる津波の渦 */
+    case 'wave':
+      return (
+        <g>
+          <path
+            d="M10 56 C18 56 20 40 34 40 C46 40 44 54 54 54 C60 54 60 44 56 40 C66 36 70 50 70 58 L70 70 L10 70 Z"
+            fill={ink}
+            stroke={eye}
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+          />
+          {/* 巻き込む渦 */}
+          <path d="M56 40 A9 9 0 1 1 47 49" fill="none" stroke={eye} strokeWidth="3" strokeLinecap="round" />
+          <path d="M10 56 C18 56 20 40 34 40 C46 40 44 54 54 54" fill={ht} opacity="0.2" />
+          {/* 飛沫 */}
+          <g fill={eye} opacity={down ? 0.3 : 0.9}>
+            <circle cx="30" cy="30" r="2" />
+            <circle cx="40" cy="24" r="1.6" />
+            <circle cx="48" cy="30" r="1.4" />
+          </g>
+        </g>
+      );
+
+    /* OVERSEER：管理者 ── すべてを見通す単眼の監視塔 */
+    case 'overseer':
+      return (
+        <g>
+          {/* 角張った塔体 */}
+          <path d="M40 6 L70 26 L62 70 L18 70 L10 26 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M40 6 L70 26 L62 70 L40 70 Z" fill={ht} opacity="0.2" />
+          {/* 監視の単眼 */}
+          <path d="M22 40 Q40 26 58 40 Q40 54 22 40 Z" fill={ink} stroke={eye} strokeWidth="2.5" />
+          <circle cx="40" cy="40" r="8" fill={eye} />
+          <circle cx="40" cy="40" r="3.4" fill={ink} />
+          {/* 監視光線 */}
+          <g stroke={eye} strokeWidth="1.6" opacity={down ? 0.2 : 0.65} strokeLinecap="round">
+            <line x1="40" y1="40" x2="40" y2="14" />
+            <line x1="40" y1="40" x2="18" y2="60" />
+            <line x1="40" y1="40" x2="62" y2="60" />
+          </g>
+        </g>
+      );
+
+    /* 汎用：角張った歪みのマスク */
+    default:
+      return (
+        <g>
+          <path d="M40 8 L66 26 L58 52 L40 72 L22 52 L14 26 Z" fill={ink} stroke={eye} strokeWidth="2" strokeLinejoin="round" />
+          <path d="M40 8 L66 26 L58 52 L40 72 Z" fill={ht} opacity="0.25" />
+          <path d="M26 34 L40 30 L38 42 L27 42 Z" fill={eye} />
+          <path d="M54 34 L40 30 L42 42 L53 42 Z" fill={eye} />
+          <path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" fill="none" stroke={eye} strokeWidth="2" strokeLinecap="round" />
+        </g>
+      );
+  }
 }

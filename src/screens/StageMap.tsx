@@ -47,7 +47,7 @@ export function StageMap() {
           animate={{ opacity: 1, x: 0 }}
         >
           <div className="bossbar__glyph">
-            <BossGlyph accent={edition.accent} down={clearedAll} />
+            <BossGlyph accent={edition.accent} down={clearedAll} kind={chapter.boss.glyph} />
           </div>
           <span className="bossbar__tag">{clearedAll ? '撃破' : '歪み'}</span>
           <div className="bossbar__info">

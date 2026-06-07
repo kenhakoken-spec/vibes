@@ -243,7 +243,7 @@ export function buildChapter5(edition: Edition): Chapter {
     recap: 'MCPで道具を繋ぎ、AIを「やる」相棒に変えた。',
     keyTerms: ['electron', 'exe', 'batch', 'github-pages', 'deploy'],
     scene: 'city',
-    boss: { name: 'アンハード', title: '届かぬ声', blurb: '誰にも使われなかった作品の亡霊。届ける術を持たぬ者の傑作を、闇に葬る。' },
+    boss: { name: 'アンハード', glyph: 'silence', title: '届かぬ声', blurb: '誰にも使われなかった作品の亡霊。届ける術を持たぬ者の傑作を、闇に葬る。' },
     stages: [s1, s2, s3, s4],
   };
 }

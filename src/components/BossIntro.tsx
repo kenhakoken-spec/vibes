@@ -36,7 +36,7 @@ export function BossIntro({ boss, accent }: { boss: BossInfo; accent: string }) 
         animate={{ scale: 1, rotate: -6, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 220, damping: 14 }}
       >
-        <BossGlyph accent={accent} />
+        <BossGlyph accent={accent} kind={boss.glyph} />
       </motion.div>
 
       <motion.div
