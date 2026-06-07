@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 const W = Number(process.argv[2] || 412);
 mkdirSync('shots', { recursive: true });
-const BASE = 'http://localhost:5173';
+const BASE = process.argv[3] || 'http://localhost:5173';
 
 const targets = [
   ['title', `${BASE}/`, 0],
