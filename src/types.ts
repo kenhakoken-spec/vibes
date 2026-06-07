@@ -63,7 +63,9 @@ export type DiagramKind =
   | 'vary'
   | 'models'
   | 'delegate'
-  | 'web-parts';
+  | 'web-parts'
+  | 'rpa-flow'
+  | 'ship-flow';
 
 export interface ChoiceOption {
   id: string;

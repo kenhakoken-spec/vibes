@@ -103,6 +103,7 @@ export function buildChapter3(edition: Edition): Chapter {
     challenge: {
       kind: 'choice',
       brief: 'QUEST ── 自動操作の台本',
+      diagram: 'rpa-flow',
       goal: 'ブラウザ自動操作の台本に書くべき内容として、いちばん適切なのは？',
       hint: '人が実際にやる操作（開く→入力→押す→読む）を、順番どおりに。',
       learn: '自動操作は「人がやる手順」を、開く→操作→確認の順に並べること。',

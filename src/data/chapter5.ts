@@ -98,6 +98,7 @@ export function buildChapter5(edition: Edition): Chapter {
     challenge: {
       kind: 'choice',
       brief: 'QUEST ── 配布の形',
+      diagram: 'ship-flow',
       goal: '相手が迷わず使える配布の形はどれ？',
       hint: 'インストールや環境構築を相手にさせず、クリックで起動できる形が理想。',
       learn: 'EXEやbatchにまとめれば、受け取った人はクリックするだけで起動できる。',

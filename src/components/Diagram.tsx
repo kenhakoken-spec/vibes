@@ -216,6 +216,57 @@ const RENDER: Record<DiagramKind, (uid: string) => React.ReactElement> = {
       </text>
     </svg>
   ),
+  'rpa-flow': (uid) => (
+    <svg className="dgm__svg" viewBox="0 0 320 130" role="img" aria-label="自動化の流れの図">
+      <ArrowDefs uid={uid} />
+      <text x="160" y="18" textAnchor="middle" fontSize="11" fill="#f5f5f7">
+        人の手順を台本にして、機械に代行させる
+      </text>
+      {[
+        { x: 8, t: '毎朝の', t2: '手作業', c: '#2a2a34' },
+        { x: 116, t: 'Playwright', t2: 'の台本に', c: '#1a1422' },
+        { x: 224, t: '自動で', t2: '実行', c: '#3a1530' },
+      ].map((b, i) => (
+        <g key={i}>
+          <rect x={b.x} y="38" width="88" height="46" rx="5" fill={b.c} stroke="var(--accent)" strokeOpacity="0.5" />
+          <text x={b.x + 44} y="60" textAnchor="middle" fontSize="11" fill="#f5f5f7">{b.t}</text>
+          <text x={b.x + 44} y="76" textAnchor="middle" fontSize="11" fill="#f5f5f7">{b.t2}</text>
+          {i < 2 && (
+            <path d={`M${b.x + 88} 61 L${b.x + 116} 61`} stroke="var(--accent)" strokeWidth="2" markerEnd={`url(#mk-${uid})`} />
+          )}
+        </g>
+      ))}
+      <text x="160" y="108" textAnchor="middle" fontSize="9.5" fill="var(--ink-faint)">
+        一度書けば、寝ている間に毎朝終わっている
+      </text>
+    </svg>
+  ),
+  'ship-flow': (uid) => (
+    <svg className="dgm__svg" viewBox="0 0 320 130" role="img" aria-label="配布の流れの図">
+      <ArrowDefs uid={uid} />
+      <text x="160" y="18" textAnchor="middle" fontSize="11" fill="#f5f5f7">
+        作る → 配れる形に → 世に出す → 使われる
+      </text>
+      {[
+        { x: 4, t: '作る', s: 'Electron' },
+        { x: 84, t: 'EXEに', s: 'batch' },
+        { x: 164, t: '公開', s: 'Pages' },
+        { x: 244, t: '使われる', s: '🎉' },
+      ].map((b, i) => (
+        <g key={i}>
+          <rect x={b.x} y="40" width="68" height="44" rx="5" fill="#16131d" stroke="var(--accent)" strokeOpacity="0.5" />
+          <text x={b.x + 34} y="62" textAnchor="middle" fontSize="11" fontWeight="700" fill="#f5f5f7">{b.t}</text>
+          <text x={b.x + 34} y="77" textAnchor="middle" fontSize="8.5" fill="var(--ink-faint)">{b.s}</text>
+          {i < 3 && (
+            <path d={`M${b.x + 68} 62 L${b.x + 80} 62`} stroke="var(--accent)" strokeWidth="2" markerEnd={`url(#mk-${uid})`} />
+          )}
+        </g>
+      ))}
+      <text x="160" y="108" textAnchor="middle" fontSize="9.5" fill="var(--ink-faint)">
+        作って終わりじゃない。届けて初めて価値になる
+      </text>
+    </svg>
+  ),
   'web-parts': () => (
     <svg className="dgm__svg" viewBox="0 0 320 160" role="img" aria-label="Webページの3部品の図">
       <text x="160" y="18" textAnchor="middle" fontSize="11" fill="#f5f5f7">
