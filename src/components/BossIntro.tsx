@@ -30,6 +30,8 @@ export function BossIntro({ boss, accent }: { boss: BossInfo; accent: string }) 
         />
       </div>
 
+      <div className="bossintro__speed" />
+
       <motion.div
         className="bossintro__glyph"
         initial={{ scale: 0.3, rotate: -25, opacity: 0 }}
