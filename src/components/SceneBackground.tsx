@@ -18,7 +18,82 @@ export function SceneBackground({ scene }: { scene: SceneId }) {
       {scene === 'archive' && <ArchiveScene />}
       {scene === 'factory' && <FactoryScene />}
       {scene === 'sky' && <SkyScene />}
+      {scene === 'lab' && <LabScene />}
+      {scene === 'data' && <DataScene />}
     </div>
+  );
+}
+
+/** 品質の検査場：補強された足場（青図）と、降りてくる検査の走査線、漂う✓。 */
+function LabScene() {
+  return (
+    <>
+      <div className="scene__wash scene__wash--lab" />
+      {/* 補強された足場・梁（ブループリント） */}
+      <svg className="scene__scaffold" viewBox="0 0 520 300" preserveAspectRatio="xMidYMid slice">
+        <g stroke="#1d3a44" strokeWidth="3">
+          <line x1="40" y1="0" x2="40" y2="300" />
+          <line x1="180" y1="0" x2="180" y2="300" />
+          <line x1="340" y1="0" x2="340" y2="300" />
+          <line x1="480" y1="0" x2="480" y2="300" />
+          <line x1="0" y1="70" x2="520" y2="70" />
+          <line x1="0" y1="160" x2="520" y2="160" />
+          <line x1="0" y1="250" x2="520" y2="250" />
+        </g>
+        {/* 筋交い（補強） */}
+        <g stroke="#27525e" strokeWidth="2" strokeOpacity="0.7">
+          <line x1="40" y1="70" x2="180" y2="160" />
+          <line x1="180" y1="70" x2="40" y2="160" />
+          <line x1="340" y1="160" x2="480" y2="250" />
+          <line x1="480" y1="160" x2="340" y2="250" />
+        </g>
+      </svg>
+      {/* 漂う合格チェック */}
+      <svg className="scene__checks" viewBox="0 0 520 300" preserveAspectRatio="xMidYMid slice">
+        <g fill="none" stroke="#3fe0a0" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.5">
+          <path className="scene__check scene__check--a" d="M120 90 l10 12 l20 -26" />
+          <path className="scene__check scene__check--b" d="M380 120 l10 12 l20 -26" />
+          <path className="scene__check scene__check--c" d="M260 210 l10 12 l20 -26" />
+        </g>
+      </svg>
+      {/* 検査の走査線 */}
+      <div className="scene__scanline" />
+    </>
+  );
+}
+
+/** データの観測室：立ち上がる棒グラフ、上昇する折れ線、瞬く数値の星々。 */
+function DataScene() {
+  return (
+    <>
+      <div className="scene__wash scene__wash--data" />
+      <div className="scene__stars" />
+      <svg className="scene__charts" viewBox="0 0 520 300" preserveAspectRatio="xMidYMax slice">
+        {/* 棒グラフ（下からせり上がる） */}
+        <g className="scene__bars" fill="var(--accent)" fillOpacity="0.16">
+          <rect className="scene__bar scene__bar--a" x="40" y="150" width="40" height="150" />
+          <rect className="scene__bar scene__bar--b" x="110" y="110" width="40" height="190" />
+          <rect className="scene__bar scene__bar--c" x="180" y="180" width="40" height="120" />
+          <rect className="scene__bar scene__bar--b" x="250" y="90" width="40" height="210" />
+          <rect className="scene__bar scene__bar--a" x="320" y="140" width="40" height="160" />
+          <rect className="scene__bar scene__bar--c" x="390" y="70" width="40" height="230" />
+          <rect className="scene__bar scene__bar--b" x="460" y="120" width="40" height="180" />
+        </g>
+        {/* 上昇する折れ線 */}
+        <polyline
+          className="scene__trend"
+          points="20,230 90,200 160,210 230,150 300,170 370,100 440,120 510,60"
+          fill="none"
+          stroke="#5fb0ff"
+          strokeWidth="3"
+          strokeOpacity="0.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      {/* 瞬く数値の星々 */}
+      <div className="scene__datadots" />
+    </>
   );
 }
 

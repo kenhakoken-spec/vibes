@@ -16,7 +16,7 @@ export function buildChapter8(edition: Edition): Chapter {
     index: 0,
     title: '惑わしの霧',
     subtitle: '問いを立てる',
-    scene: 'cyber',
+    scene: 'data',
     intro: [
       { narration: true, text: '壊れない仕組みも整えた。利用者が増え、数字が日々たまっていく。アクセス、売上、ログ――データの山。' },
       { narration: true, text: 'だが、山が大きいほど、視界は白く濁る。意味ありげな数字が、間違った道を指さす。霧の名は「ノイズ」。' },
@@ -82,7 +82,7 @@ export function buildChapter8(edition: Edition): Chapter {
     index: 1,
     title: '霧を晴らす',
     subtitle: '可視化で掴む',
-    scene: 'cyber',
+    scene: 'data',
     intro: [
       {
         speaker: partnerId,
@@ -136,7 +136,7 @@ export function buildChapter8(edition: Edition): Chapter {
     index: 2,
     title: '計器盤',
     subtitle: '一目で分かる場所',
-    scene: 'cyber',
+    scene: 'data',
     intro: [
       {
         speaker: partnerId,
@@ -192,7 +192,7 @@ export function buildChapter8(edition: Edition): Chapter {
     index: 3,
     title: '仕上げ',
     subtitle: '自分の数字で決める',
-    scene: 'cyber',
+    scene: 'data',
     intro: [
       {
         speaker: 'mentor',
@@ -254,7 +254,7 @@ export function buildChapter8(edition: Edition): Chapter {
     subtitle: 'データを読む ── 数字から決める',
     recap: 'テスト・型・CIで、変更しても壊れない仕組みを手に入れた。',
     keyTerms: ['data-analysis', 'chart', 'dashboard', 'kpi'],
-    scene: 'cyber',
+    scene: 'data',
     boss: { name: 'ノイズ', glyph: 'fog', title: '惑わしの霧', blurb: '数字の山に紛れ、意味ありげな嘘で間違った判断へ誘う歪み。読む目を持たぬ者の視界を白く濁らせる。' },
     stages: [s1, s2, s3, s4],
   };

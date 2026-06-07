@@ -16,7 +16,7 @@ export function buildChapter7(edition: Edition): Chapter {
     index: 0,
     title: '崩落の予兆',
     subtitle: '壊れに気づく',
-    scene: 'cyber',
+    scene: 'lab',
     intro: [
       { narration: true, text: '規模を捌く力も得た。きみの作品は、大きく、強くなった。――だが、大きいものほど、足元から崩れる。' },
       { narration: true, text: '新しい機能を一つ足すたび、関係ないはずの古い機能が、音もなく壊れていく。瓦礫の影が囁く――「崩落（リグレッション）」。' },
@@ -82,7 +82,7 @@ export function buildChapter7(edition: Edition): Chapter {
     index: 1,
     title: '書けなくする',
     subtitle: '型で守る',
-    scene: 'cyber',
+    scene: 'lab',
     intro: [
       {
         speaker: partnerId,
@@ -136,7 +136,7 @@ export function buildChapter7(edition: Edition): Chapter {
     index: 2,
     title: '関所をつくる',
     subtitle: '自動で見張る',
-    scene: 'cyber',
+    scene: 'lab',
     intro: [
       { narration: true, text: 'だが、テストも型も「自分が走らせなければ」意味がない。人は、忙しいと確認を飛ばす。' },
       {
@@ -193,7 +193,7 @@ export function buildChapter7(edition: Edition): Chapter {
     index: 3,
     title: '仕上げ',
     subtitle: '自分の作品に安全網',
-    scene: 'cyber',
+    scene: 'lab',
     intro: [
       {
         speaker: 'mentor',
@@ -246,7 +246,7 @@ export function buildChapter7(edition: Edition): Chapter {
     subtitle: '品質を守る ── 壊れない仕組み',
     recap: 'GASから巨大クラウドまで、規模に合わせて道具を選べるようになった。',
     keyTerms: ['regression', 'test', 'typescript', 'ci'],
-    scene: 'cyber',
+    scene: 'lab',
     boss: { name: 'リグレッション', glyph: 'crack', title: '崩落', blurb: '作るほどに過去の成果を崩し落とす歪み。守る仕組みを持たぬ者の土台を、静かに砕く。' },
     stages: [s1, s2, s3, s4],
   };
