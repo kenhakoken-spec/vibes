@@ -72,12 +72,16 @@ export interface ChoiceOption {
   feedback: string;
 }
 
+/** 成果物の見せ方 */
+export type ArtifactKind = 'web' | 'file' | 'terminal' | 'note';
+
 /** A snapshot of the artifact being built, shown in the live preview. */
 export interface ArtifactState {
   title: string;
-  /** lines of "what exists now" — rendered in the mock browser */
+  /** lines of "what exists now" */
   body: string[];
-  /** accent for the artifact */
+  /** 描き分けの種類（省略時は title/body から推定） */
+  kind?: ArtifactKind;
   hasButton?: boolean;
   buttonLabel?: string;
   fixed?: boolean;

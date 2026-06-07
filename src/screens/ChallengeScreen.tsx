@@ -7,6 +7,7 @@ import { AngledButton } from '../components/AngledButton';
 import { RichText } from '../components/RichText';
 import { ComicBurst } from '../components/ComicBurst';
 import { Diagram } from '../components/Diagram';
+import { ScrollCue } from '../components/ScrollCue';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { sfx } from '../engine/sfx';
 import type { ChoiceOption } from '../types';
@@ -25,13 +26,14 @@ export function ChallengeScreen() {
   const [input, setInput] = useState('');
   const [pickedWrong, setPickedWrong] = useState<string[]>([]);
   const [showHint, setShowHint] = useState(false);
-  const logRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // 会話が増えたら自動で最新までスクロール（“続きがある”分かりにくさを解消）
+  // 会話が増えた/クリア時だけ最新へスクロール。初回は図や設問を頭から見せたいので動かさない。
   useEffect(() => {
-    const el = logRef.current;
+    if (messages.length === 0 && !cleared) return;
+    const el = rootRef.current;
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
-  }, [messages.length, busy, cleared]);
+  }, [messages.length, cleared]);
 
   if (!stage || !edition) return null;
   const ch = stage.challenge;
@@ -79,12 +81,14 @@ export function ChallengeScreen() {
 
   return (
     <motion.div
+      ref={rootRef}
       className="screen challenge"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, transition: { duration: 0.25 } }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
     >
       {cleared && <ComicBurst label="達成" sub="QUEST CLEAR" />}
+      <ScrollCue targetRef={rootRef} />
 
       {/* TOP: compact quest brief */}
       <aside className="ch__brief slab">
@@ -117,7 +121,7 @@ export function ChallengeScreen() {
 
       {/* RIGHT: chat + interaction */}
       <section className="ch__main">
-        <div className="ch__log scroll" ref={logRef}>
+        <div className="ch__log">
           {ch.diagram && <Diagram kind={ch.diagram} />}
           <div className="ch__qbubble">
             <CharacterPortrait variant={partner.portrait} accent={edition.accent} />

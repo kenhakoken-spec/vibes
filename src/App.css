@@ -3,6 +3,13 @@
    モバイル(Pixel 8 Pro)優先。広い画面では2カラム等に展開。
    ========================================================================= */
 
+.scene-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+}
+
 .app {
   position: relative;
   width: 100%;
@@ -675,9 +682,10 @@
 
 /* ============================ CHALLENGE ================================ */
 .challenge {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.7rem;
+  /* 画面全体を一本のスクロールにする（長い図でも詰まらない） */
 }
 .ch__brief {
   padding: 0.8rem 0.9rem;
@@ -733,16 +741,13 @@
 .ch__main {
   display: flex;
   flex-direction: column;
-  min-height: 0;
   gap: 0.8rem;
 }
 .ch__log {
-  flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
 }
 .ch__qbubble {
   display: flex;
@@ -1092,10 +1097,103 @@
 .artifact {
   margin-top: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #fff;
-  color: #111;
+  background: var(--bg-1);
+  color: var(--ink);
   overflow: hidden;
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
+}
+.artifact--empty {
+  display: grid;
+  place-items: center;
+  min-height: 110px;
+}
+/* file（エディタ風） */
+.artifact__tabbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.8rem;
+  background: #16161c;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.artifact__tab {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.74rem;
+  color: var(--accent);
+}
+.artifact__saved {
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  color: var(--gold);
+}
+.artifact__code {
+  margin: 0;
+  padding: 0.7rem 0.6rem;
+  background: #08080d;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: #cdd3de;
+  overflow-x: auto;
+}
+.artifact__codeline {
+  display: flex;
+  gap: 0.7rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.artifact__ln {
+  color: var(--ink-faint);
+  user-select: none;
+  min-width: 1.2em;
+  text-align: right;
+  flex: 0 0 auto;
+}
+/* terminal（黒画面） */
+.artifact__bar--term {
+  background: #000;
+}
+.artifact__term {
+  margin: 0;
+  padding: 0.8rem;
+  background: #05050a;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: #7fe0a8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+/* note（メモ/カード） */
+.artifact__note {
+  padding: 1rem 1.1rem;
+  background: linear-gradient(150deg, var(--bg-2), var(--bg-1));
+  border-left: 3px solid var(--accent);
+}
+.artifact__note-title {
+  display: inline-block;
+  font-family: var(--f-head);
+  font-weight: 700;
+  color: #000;
+  background: var(--accent);
+  padding: 0.25em 0.9em;
+  margin-bottom: 0.6rem;
+  transform: skewX(-7deg);
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+  font-size: 0.8rem;
+}
+.artifact__note ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.artifact__note li {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink);
+  overflow-wrap: anywhere;
 }
 .artifact__bar {
   display: flex;

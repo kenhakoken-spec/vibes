@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useGame } from './store/gameStore';
 import { bgm } from './engine/bgm';
 import { TitleScreen } from './screens/TitleScreen';
@@ -78,10 +78,22 @@ export default function App() {
 
   return (
     <div className="app" style={themeVars}>
-      <SceneBackground scene={scene} />
+      {/* 背景はクロスフェードで切替（瞬間切替のちらつき防止） */}
+      <AnimatePresence>
+        <motion.div
+          key={scene}
+          className="scene-layer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <SceneBackground scene={scene} />
+        </motion.div>
+      </AnimatePresence>
       <Particles />
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {screen === 'title' && <TitleScreen key="title" />}
         {screen === 'edition' && <EditionSelect key="edition" />}
         {screen === 'world' && <WorldMap key="world" />}
