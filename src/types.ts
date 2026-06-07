@@ -1,0 +1,174 @@
+/* =========================================================================
+   Core domain types for VIBE GUILD
+   ========================================================================= */
+
+export type EditionId = 'claude' | 'cursor';
+
+export type PortraitVariant = 'claude' | 'cursor' | 'mentor' | 'hero';
+
+/** A speaking / appearing character. */
+export interface Character {
+  id: string;
+  name: string;
+  role: string;
+  /** which SVG portrait to render */
+  portrait: PortraitVariant;
+  /** accent color for the nameplate */
+  color: string;
+}
+
+/** A playable "route" chosen on the title screen. */
+export interface Edition {
+  id: EditionId;
+  /** e.g. "CLAUDE 編" */
+  label: string;
+  tagline: string;
+  description: string;
+  /** main accent color, drives the whole theme */
+  accent: string;
+  accent2: string;
+  /** the anthropomorphised AI partner */
+  partner: Character;
+  /** the guild master / mentor */
+  mentor: Character;
+  /** flavor word shown around the UI */
+  guildName: string;
+  /** 初見でも“何の編か”が分かる技術的な一言 */
+  techNote: string;
+}
+
+/** One line of visual-novel dialogue. */
+export interface DialogueLine {
+  /** character id (resolved against the edition roster) or undefined for narration */
+  speaker?: string;
+  /** which portrait sits on screen for this line */
+  portrait?: PortraitVariant;
+  /** which side the speaker stands on */
+  side?: 'left' | 'right';
+  /** the spoken / narrated text (typewritered in) */
+  text: string;
+  /** narration (centered, no nameplate) */
+  narration?: boolean;
+}
+
+export type ChallengeKind = 'choice' | 'freeText';
+
+/** 構造説明用の図解の種類 */
+export type DiagramKind =
+  | 'setup-claude'
+  | 'setup-cursor'
+  | 'mcp'
+  | 'git'
+  | 'cloud'
+  | 'vary'
+  | 'models'
+  | 'delegate';
+
+export interface ChoiceOption {
+  id: string;
+  text: string;
+  correct: boolean;
+  /** shown after the player picks this option */
+  feedback: string;
+}
+
+/** A snapshot of the artifact being built, shown in the live preview. */
+export interface ArtifactState {
+  title: string;
+  /** lines of "what exists now" — rendered in the mock browser */
+  body: string[];
+  /** accent for the artifact */
+  hasButton?: boolean;
+  buttonLabel?: string;
+  fixed?: boolean;
+}
+
+export interface Challenge {
+  kind: ChallengeKind;
+  /** the guild request headline */
+  brief: string;
+  /** what the player has to accomplish, in plain words */
+  goal: string;
+  hint: string;
+  /** one-line lesson the player walks away with */
+  learn: string;
+  /** 構造説明の図解（任意）。課題画面に表示される */
+  diagram?: DiagramKind;
+
+  /* choice mode */
+  question?: string;
+  options?: ChoiceOption[];
+
+  /* free-text mode */
+  placeholder?: string;
+  /** keywords that should appear in a good prompt */
+  keywords?: string[];
+  /** how many distinct keywords are required to pass */
+  minKeywords?: number;
+  /** a model answer revealed as a hint / after success */
+  sampleAnswer?: string;
+
+  /** the simulated "AI build result" shown on success */
+  successResponse: string;
+  /** how the live artifact looks after this stage clears */
+  artifact: ArtifactState;
+}
+
+/** 場面背景の種類 */
+export type SceneId = 'void' | 'city' | 'guild' | 'cyber';
+
+export interface Stage {
+  id: string;
+  index: number;
+  title: string;
+  subtitle: string;
+  /** この物語パートで見せる背景（省略時は画面から自動） */
+  scene?: SceneId;
+  /** story before the challenge */
+  intro: DialogueLine[];
+  challenge: Challenge;
+  /** story after the challenge clears */
+  outro: DialogueLine[];
+}
+
+export interface BossInfo {
+  name: string;
+  title: string;
+  blurb: string;
+}
+
+export interface Chapter {
+  id: string;
+  index: number;
+  title: string;
+  subtitle: string;
+  /** ワールドマップ等で見せる背景 */
+  scene?: SceneId;
+  /** 章ボス（歪み） */
+  boss?: BossInfo;
+  /** 章開始時に出す「前回までの振り返り」 */
+  recap?: string;
+  stages: Stage[];
+}
+
+/* ---- runtime / progress -------------------------------------------- */
+
+export type Screen =
+  | 'title'
+  | 'edition'
+  | 'world'
+  | 'map'
+  | 'story-intro'
+  | 'challenge'
+  | 'story-outro'
+  | 'result'
+  | 'chapter-clear';
+
+export interface StageResult {
+  cleared: boolean;
+  /** 0..1 quality, drives the rank */
+  score: number;
+  attempts: number;
+}
+
+export type Rank = 'S' | 'A' | 'B' | 'C';
