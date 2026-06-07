@@ -107,7 +107,7 @@ export function ChapterClear() {
         transition={{ delay: 0.6 }}
       >
         {isFinal
-          ? '── 言葉で、ものを作る。その力は、もうきみのものだ。 ──'
+          ? '── 言葉で、ものを作る力は、もうきみのものだ。次は“現実”で。相棒（Claude / Cursor）を呼んで、きみの「作りたい」を形にしよう。 ──'
           : '── ワールドマップに、次なる地が開かれた。OVERSEER への道は続く。 ──'}
       </motion.p>
 
