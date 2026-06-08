@@ -114,11 +114,12 @@ function Defs({ accent, uid }: { accent: string; uid: string }) {
         <stop offset="55%" stopColor={accent} stopOpacity="0.1" />
         <stop offset="100%" stopColor={accent} stopOpacity="0" />
       </radialGradient>
-      {/* 肌（暗いベース・上から光） */}
-      <linearGradient id={`skin-${uid}`} x1="0.35" y1="0" x2="0.65" y2="1">
-        <stop offset="0%" stopColor="#2b2b36" />
-        <stop offset="45%" stopColor="#191921" />
-        <stop offset="100%" stopColor="#0a0a10" />
+      {/* 肌（明るめのライト面→クールな影。顔がはっきり読める“キャラ”の質感） */}
+      <linearGradient id={`skin-${uid}`} x1="0.3" y1="0" x2="0.72" y2="1">
+        <stop offset="0%" stopColor="#d8b4a6" />
+        <stop offset="42%" stopColor="#a9838a" />
+        <stop offset="78%" stopColor="#5d4654" />
+        <stop offset="100%" stopColor="#2c2030" />
       </linearGradient>
       {/* 髪（深い・上に少し明るさ） */}
       <linearGradient id={`hair-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
@@ -238,9 +239,9 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
       </g>
       {/* 顔 */}
       <path d="M100 128 Q100 70 150 62 Q200 70 200 128 Q200 196 150 214 Q100 196 100 128 Z" fill={`url(#skin-${uid})`} stroke={INK} strokeWidth="2" />
-      {/* 右半分キャストシャドウ */}
-      <CastShadow d="M150 62 Q200 70 200 128 Q200 196 150 214 Z" opacity={0.3} />
-      <path d="M150 86 Q196 96 196 130 Q194 190 150 206 Z" fill={`url(#halftone-${uid})`} opacity="0.16" />
+      {/* 右半分キャストシャドウ（顔が読めるよう控えめに） */}
+      <CastShadow d="M150 62 Q200 70 200 128 Q200 196 150 214 Z" opacity={0.16} />
+      <path d="M150 86 Q196 96 196 130 Q194 190 150 206 Z" fill={`url(#halftone-${uid})`} opacity="0.08" />
       {/* 前髪（中央分け・きれいな毛束） */}
       <g fill={`url(#hair-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round">
         <path d="M150 54 Q120 60 100 110 Q98 78 116 64 Q132 54 150 54 Z" />
@@ -250,22 +251,23 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
       </g>
       {/* 髪のツヤ（白ハイライト帯） */}
       <path d="M118 70 Q132 60 146 60 L142 96 Q126 86 118 70 Z" fill={`url(#sheen-${uid})`} opacity="0.5" />
-      {/* 細く理知的な目 */}
-      <g stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M114 132 L138 126 L139 134 L116 138 Z" fill="#f4f4f8" />
-        <path d="M186 132 L162 126 L161 134 L184 138 Z" fill="#f4f4f8" />
-      </g>
-      <g fill={accent}>
-        <path d="M128 129 L136 127 L136 134 L128 135 Z" />
-        <path d="M172 129 L164 127 L164 134 L172 135 Z" />
-      </g>
-      <g fill="#0c0c12">
-        <circle cx="131" cy="131" r="1.8" />
-        <circle cx="169" cy="131" r="1.8" />
-      </g>
-      <g fill="#fff" opacity="0.95">
-        <circle cx="130.2" cy="130" r="1" />
-        <circle cx="168.2" cy="130" r="1" />
+      {/* 涼やかで大きめのアーモンド・アイ（イケメン寄り） */}
+      <g>
+        {/* 白目 */}
+        <path d="M112 134 Q126 123 142 130 Q130 140 113 137 Z" fill="#f6f5f9" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
+        <path d="M188 134 Q174 123 158 130 Q170 140 187 137 Z" fill="#f6f5f9" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
+        {/* 虹彩（アクセント色） */}
+        <circle cx="127" cy="132" r="3.4" fill={accent} />
+        <circle cx="173" cy="132" r="3.4" fill={accent} />
+        {/* 瞳孔 */}
+        <circle cx="127" cy="132.4" r="1.7" fill="#0b0b12" />
+        <circle cx="173" cy="132.4" r="1.7" fill="#0b0b12" />
+        {/* 大きなキャッチライト */}
+        <circle cx="125.4" cy="130.6" r="1.5" fill="#fff" />
+        <circle cx="171.4" cy="130.6" r="1.5" fill="#fff" />
+        {/* 上まぶた（くっきりした二重のライン） */}
+        <path d="M111 133 Q126 121 143 129" fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M189 133 Q174 121 157 129" fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
       </g>
       {/* 眉（表情） */}
       <Brows L={{ ox: 114, oy: 122, ix: 138, iy: 117 }} R={{ ox: 186, oy: 122, ix: 162, iy: 117 }} sw={2.6} expr={expr} />
@@ -316,27 +318,29 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       </g>
       {/* 顔 */}
       <path d="M104 130 Q104 84 150 76 Q196 84 196 130 Q196 192 150 210 Q104 192 104 130 Z" fill={`url(#skin-${uid})`} stroke={INK} strokeWidth="2" />
-      {/* キャストシャドウ（攻めた逆三角の影） */}
-      <CastShadow d="M150 76 Q196 84 196 130 Q196 192 150 210 Z" opacity={0.34} />
-      <path d="M150 100 L192 132 L168 188 L150 196 Z" fill={`url(#halftone-${uid})`} opacity="0.2" />
+      {/* キャストシャドウ（攻めた逆三角の影・控えめに） */}
+      <CastShadow d="M150 76 Q196 84 196 130 Q196 192 150 210 Z" opacity={0.18} />
+      <path d="M150 100 L192 132 L168 188 L150 196 Z" fill={`url(#halftone-${uid})`} opacity="0.1" />
       {/* 前髪のとがった毛束（顔にかかる） */}
       <g fill={`url(#hair-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round">
         <path d="M116 84 L108 134 L128 100 Z" />
         <path d="M150 80 L142 124 L162 98 Z" />
         <path d="M184 84 L192 134 L172 100 Z" />
       </g>
-      {/* 鋭い吊り目 */}
-      <g fill={accent} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M112 138 L142 126 L141 138 L114 144 Z" />
-        <path d="M188 138 L158 126 L159 138 L186 144 Z" />
-      </g>
-      <g fill="#0c0c12">
-        <path d="M126 132 L138 129 L138 137 L127 138 Z" />
-        <path d="M174 132 L162 129 L162 137 L173 138 Z" />
-      </g>
-      <g fill="#fff" opacity="0.95">
-        <circle cx="129" cy="132.5" r="1" />
-        <circle cx="171" cy="132.5" r="1" />
+      {/* 鋭い吊り目（白目→アクセント虹彩→瞳、クールな男前） */}
+      <g>
+        <path d="M112 140 L142 126 L142 134 L116 144 Z" fill="#eef3f6" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
+        <path d="M188 140 L158 126 L158 134 L184 144 Z" fill="#eef3f6" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
+        {/* アクセント虹彩 */}
+        <circle cx="130" cy="134" r="3.1" fill={accent} />
+        <circle cx="170" cy="134" r="3.1" fill={accent} />
+        <circle cx="130" cy="134.4" r="1.5" fill="#0b0b12" />
+        <circle cx="170" cy="134.4" r="1.5" fill="#0b0b12" />
+        <circle cx="128.6" cy="132.6" r="1.4" fill="#fff" />
+        <circle cx="168.6" cy="132.6" r="1.4" fill="#fff" />
+        {/* 鋭い上まぶたライン */}
+        <path d="M111 139 L143 125" fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M189 139 L157 125" fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
       </g>
       {/* 鋭い眉（表情） */}
       <Brows L={{ ox: 112, oy: 130, ix: 142, iy: 121 }} R={{ ox: 188, oy: 130, ix: 158, iy: 121 }} sw={3} expr={expr} />
