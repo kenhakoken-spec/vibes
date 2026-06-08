@@ -16,7 +16,6 @@ export function buildChapter0(edition: Edition): Chapter {
   /* ---- STAGE 1 : 創れない世界（プロローグ） ----------------------- */
   const s1: Stage = {
     id: 'c0s1',
-    index: 0,
     title: '序章',
     subtitle: '創れない世界',
     scene: 'city',
@@ -108,7 +107,6 @@ export function buildChapter0(edition: Edition): Chapter {
   /* ---- STAGE 2 : 相棒を喚ぶ（セットアップ） ----------------------- */
   const s2: Stage = {
     id: 'c0s2',
-    index: 1,
     title: '序章',
     subtitle: '相棒を喚ぶ',
     scene: 'cyber',
@@ -239,7 +237,6 @@ export function buildChapter0(edition: Edition): Chapter {
 
   return {
     id: 'ch0',
-    index: 0,
     title: '序章',
     subtitle: '創れない世界 ── 相棒を喚ぶ',
     keyTerms: ['vibe-coding', 'terminal', 'cli', 'claude-code', 'cursor'],

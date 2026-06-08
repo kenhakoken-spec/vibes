@@ -13,7 +13,6 @@ export function buildChapter7(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c7s1',
-    index: 0,
     title: '崩落の予兆',
     subtitle: '壊れに気づく',
     scene: 'lab',
@@ -79,7 +78,6 @@ export function buildChapter7(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c7s2',
-    index: 1,
     title: '書けなくする',
     subtitle: '型で守る',
     scene: 'lab',
@@ -133,7 +131,6 @@ export function buildChapter7(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c7s3',
-    index: 2,
     title: '関所をつくる',
     subtitle: '自動で見張る',
     scene: 'lab',
@@ -190,7 +187,6 @@ export function buildChapter7(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c7s4',
-    index: 3,
     title: '仕上げ',
     subtitle: '自分の作品に安全網',
     scene: 'lab',
@@ -241,7 +237,6 @@ export function buildChapter7(edition: Edition): Chapter {
 
   return {
     id: 'ch7',
-    index: 6,
     title: '第7章',
     subtitle: '品質を守る ── 壊れない仕組み',
     recap: 'GASから巨大クラウドまで、規模に合わせて道具を選べるようになった。',

@@ -13,7 +13,6 @@ export function buildChapter4(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c4s1',
-    index: 0,
     title: '孤立の壁',
     subtitle: 'AIに道具を',
     scene: 'guild',
@@ -89,7 +88,6 @@ export function buildChapter4(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c4s2',
-    index: 1,
     title: '実務の差し込み口',
     subtitle: '何を繋ぐ？',
     scene: 'guild',
@@ -148,7 +146,6 @@ export function buildChapter4(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c4s3',
-    index: 2,
     title: '壁を越える',
     subtitle: '繋いで動かす',
     scene: 'cyber',
@@ -196,7 +193,6 @@ export function buildChapter4(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c4s4',
-    index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ繋ぐ',
     scene: 'cyber',
@@ -252,7 +248,6 @@ export function buildChapter4(edition: Edition): Chapter {
 
   return {
     id: 'ch4',
-    index: 3,
     title: '第4章',
     subtitle: '道具をつなぐ ── 孤立を超えて',
     recap: 'Playwrightで反復作業を自動化し、「トイル」を断ち切った。',

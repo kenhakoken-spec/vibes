@@ -16,7 +16,6 @@ export function buildChapter2(edition: Edition): Chapter {
   /* ---- STAGE 1 : メモリ（記憶を育てる） ---------------------------- */
   const s1: Stage = {
     id: 'c2s1',
-    index: 0,
     title: '記憶の書庫',
     subtitle: '忘れない仕組み',
     scene: 'archive',
@@ -96,7 +95,6 @@ export function buildChapter2(edition: Edition): Chapter {
   /* ---- STAGE 2 : Git（履歴＝セーブ） ------------------------------- */
   const s2: Stage = {
     id: 'c2s2',
-    index: 1,
     title: '航跡を刻む',
     subtitle: 'いつでも戻れる',
     scene: 'archive',
@@ -166,7 +164,6 @@ export function buildChapter2(edition: Edition): Chapter {
   /* ---- STAGE 3 : GitHub（共有・公開、自由記述） ------------------- */
   const s3: Stage = {
     id: 'c2s3',
-    index: 2,
     title: '世界に刻む',
     subtitle: '共有という光',
     scene: 'archive',
@@ -233,7 +230,6 @@ export function buildChapter2(edition: Edition): Chapter {
   /* ---- STAGE 4 : 応用練習（記憶・Git・GitHubを総動員、自由記述） ---- */
   const s4: Stage = {
     id: 'c2s4',
-    index: 3,
     title: '仕上げ',
     subtitle: '航跡を残す練習',
     scene: 'archive',
@@ -298,7 +294,6 @@ export function buildChapter2(edition: Edition): Chapter {
 
   return {
     id: 'ch2',
-    index: 1,
     title: '第2章',
     subtitle: '記憶と航跡 ── 失わないために',
     recap: '心得を学び、思い込みの影「ステレオ」を退けた。',

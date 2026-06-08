@@ -169,6 +169,17 @@ function CastShadow({ d, opacity = 0.32 }: { d: string; opacity?: number }) {
   return <path d={d} fill="#000" opacity={opacity} />;
 }
 
+/** 瞳：虹彩（アクセント色）＋瞳孔＋キャッチライトの3点セット。左右で共用。 */
+function Iris({ cx, cy, r, color }: { cx: number; cy: number; r: number; color: string }) {
+  return (
+    <g>
+      <circle cx={cx} cy={cy} r={r} fill={color} />
+      <circle cx={cx} cy={cy + 0.4} r={r * 0.48} fill="#0b0b12" />
+      <circle cx={cx - 1.4} cy={cy - 1.4} r={r * 0.44} fill="#fff" />
+    </g>
+  );
+}
+
 /* ---- HERO ----------------------------------------------------------- */
 /* フード付き・うつむき加減で決意のある新人。アクセントは白（中立）。 */
 function HeroSvg({ accent, uid, expr }: SvgProps) {
@@ -256,15 +267,9 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
         {/* 白目 */}
         <path d="M112 134 Q126 123 142 130 Q130 140 113 137 Z" fill="#f6f5f9" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
         <path d="M188 134 Q174 123 158 130 Q170 140 187 137 Z" fill="#f6f5f9" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
-        {/* 虹彩（アクセント色） */}
-        <circle cx="127" cy="132" r="3.4" fill={accent} />
-        <circle cx="173" cy="132" r="3.4" fill={accent} />
-        {/* 瞳孔 */}
-        <circle cx="127" cy="132.4" r="1.7" fill="#0b0b12" />
-        <circle cx="173" cy="132.4" r="1.7" fill="#0b0b12" />
-        {/* 大きなキャッチライト */}
-        <circle cx="125.4" cy="130.6" r="1.5" fill="#fff" />
-        <circle cx="171.4" cy="130.6" r="1.5" fill="#fff" />
+        {/* 瞳（虹彩＋瞳孔＋キャッチライト） */}
+        <Iris cx={127} cy={132} r={3.4} color={accent} />
+        <Iris cx={173} cy={132} r={3.4} color={accent} />
         {/* 上まぶた（くっきりした二重のライン） */}
         <path d="M111 133 Q126 121 143 129" fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
         <path d="M189 133 Q174 121 157 129" fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
@@ -331,13 +336,9 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       <g>
         <path d="M112 140 L142 126 L142 134 L116 144 Z" fill="#eef3f6" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
         <path d="M188 140 L158 126 L158 134 L184 144 Z" fill="#eef3f6" stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
-        {/* アクセント虹彩 */}
-        <circle cx="130" cy="134" r="3.1" fill={accent} />
-        <circle cx="170" cy="134" r="3.1" fill={accent} />
-        <circle cx="130" cy="134.4" r="1.5" fill="#0b0b12" />
-        <circle cx="170" cy="134.4" r="1.5" fill="#0b0b12" />
-        <circle cx="128.6" cy="132.6" r="1.4" fill="#fff" />
-        <circle cx="168.6" cy="132.6" r="1.4" fill="#fff" />
+        {/* 瞳（虹彩＋瞳孔＋キャッチライト） */}
+        <Iris cx={130} cy={134} r={3.1} color={accent} />
+        <Iris cx={170} cy={134} r={3.1} color={accent} />
         {/* 鋭い上まぶたライン */}
         <path d="M111 139 L143 125" fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
         <path d="M189 139 L157 125" fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />

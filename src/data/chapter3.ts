@@ -13,7 +13,6 @@ export function buildChapter3(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c3s1',
-    index: 0,
     title: '反復の鎖',
     subtitle: '何を自動化する？',
     scene: 'factory',
@@ -79,7 +78,6 @@ export function buildChapter3(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c3s2',
-    index: 1,
     title: '台本を書く',
     subtitle: 'ブラウザを操る',
     scene: 'factory',
@@ -142,7 +140,6 @@ export function buildChapter3(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c3s3',
-    index: 2,
     title: '見えない不調',
     subtitle: '覗いて直す',
     scene: 'factory',
@@ -200,7 +197,6 @@ export function buildChapter3(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c3s4',
-    index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ自動化',
     scene: 'factory',
@@ -261,7 +257,6 @@ export function buildChapter3(edition: Edition): Chapter {
 
   return {
     id: 'ch3',
-    index: 2,
     title: '第3章',
     subtitle: '自動化 ── 反復を断つ',
     recap: '記憶・Git・GitHubで、成果を失わず共有する術を得た。',

@@ -13,7 +13,6 @@ export function buildChapter5(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c5s1',
-    index: 0,
     title: '届かぬ声',
     subtitle: '道具を“アプリ”に',
     scene: 'guild',
@@ -79,7 +78,6 @@ export function buildChapter5(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c5s2',
-    index: 1,
     title: '配り方',
     subtitle: 'EXEとして渡す',
     scene: 'cyber',
@@ -134,7 +132,6 @@ export function buildChapter5(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c5s3',
-    index: 2,
     title: '世界へ',
     subtitle: '無料で公開',
     scene: 'city',
@@ -185,7 +182,6 @@ export function buildChapter5(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c5s4',
-    index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ世に出す',
     scene: 'city',
@@ -237,7 +233,6 @@ export function buildChapter5(edition: Edition): Chapter {
 
   return {
     id: 'ch5',
-    index: 4,
     title: '第5章',
     subtitle: '世に放つ ── 届ける技術',
     recap: 'MCPで道具を繋ぎ、AIを「やる」相棒に変えた。',

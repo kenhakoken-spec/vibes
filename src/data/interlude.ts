@@ -19,7 +19,6 @@ export function buildInterlude(edition: Edition): Chapter {
   /* ---- i1: 結果は十人十色 ----------------------------------------- */
   const s1: Stage = {
     id: 'ims1',
-    index: 0,
     title: '幕間',
     subtitle: '十人十色の返し',
     scene: 'guild',
@@ -92,7 +91,6 @@ export function buildInterlude(edition: Edition): Chapter {
   /* ---- i2: 強気で任せる ------------------------------------------- */
   const s2: Stage = {
     id: 'ims2',
-    index: 1,
     title: '幕間',
     subtitle: '強気で任せる',
     scene: 'guild',
@@ -171,7 +169,6 @@ export function buildInterlude(edition: Edition): Chapter {
   /* ---- i2b: 「無理」で諦めない（壁は自分が外す） ------------------ */
   const s2b: Stage = {
     id: 'ims2b',
-    index: 2,
     title: '幕間',
     subtitle: '「無理」で諦めない',
     scene: 'guild',
@@ -250,7 +247,6 @@ export function buildInterlude(edition: Edition): Chapter {
   /* ---- i3: モデルを使い分ける ------------------------------------- */
   const s3: Stage = {
     id: 'ims3',
-    index: 3,
     title: '幕間',
     subtitle: 'モデルを選ぶ',
     scene: 'cyber',
@@ -323,7 +319,6 @@ export function buildInterlude(edition: Edition): Chapter {
   /* ---- i4: 学び続ける --------------------------------------------- */
   const s4: Stage = {
     id: 'ims4',
-    index: 4,
     title: '幕間',
     subtitle: '学び続ける',
     scene: 'cyber',
@@ -392,7 +387,6 @@ export function buildInterlude(edition: Edition): Chapter {
 
   return {
     id: 'interlude',
-    index: 0,
     title: '幕間',
     subtitle: '心得 ── バイブコーディングの作法',
     recap: '初依頼で、自分の言葉からページを創り上げた。',

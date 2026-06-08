@@ -13,7 +13,6 @@ export function buildChapter6(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c6s1',
-    index: 0,
     title: '無限の負荷',
     subtitle: '手軽な自動化',
     scene: 'sky',
@@ -79,7 +78,6 @@ export function buildChapter6(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c6s2',
-    index: 1,
     title: '雲を選ぶ',
     subtitle: '規模に合う道具',
     scene: 'sky',
@@ -134,7 +132,6 @@ export function buildChapter6(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c6s3',
-    index: 2,
     title: '企業の盾',
     subtitle: '安全にAIを',
     scene: 'sky',
@@ -189,7 +186,6 @@ export function buildChapter6(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c6s4',
-    index: 3,
     title: '仕上げ',
     subtitle: 'もう一つ雲に乗せる',
     scene: 'sky',
@@ -250,7 +246,6 @@ export function buildChapter6(edition: Edition): Chapter {
 
   return {
     id: 'ch6',
-    index: 5,
     title: '第6章',
     subtitle: '雲の力 ── 規模に立ち向かう',
     recap: '作品を配布・公開し、世界へ届けられるようになった。',

@@ -1734,7 +1734,8 @@
   }
 }
 
-/* 横長でも縦が十分あるPCでは「縦にして」ヒントは出さない（フレーム表示のため） */
+/* 横長でも縦が十分あるPC（=スマホ枠表示）では「縦にして」ヒントを出さない。
+   521px は rotate-hint を出す閾値 max-height:520px の境界に対応（それより高ければPC扱い）。 */
 @media (min-width: 760px) and (orientation: landscape) and (min-height: 521px) {
   .rotate-hint {
     display: none !important;

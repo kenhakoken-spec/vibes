@@ -14,7 +14,6 @@ export function buildChapterF(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'cFs1',
-    index: 0,
     title: '創造の核',
     subtitle: '挑み方を定める',
     scene: 'cyber',
@@ -79,7 +78,6 @@ export function buildChapterF(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'cFs2',
-    index: 1,
     title: '総力戦',
     subtitle: '武器を束ねる',
     scene: 'cyber',
@@ -130,7 +128,6 @@ export function buildChapterF(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'cFs3',
-    index: 2,
     title: '創る自由',
     subtitle: '最後の一手',
     scene: 'cyber',
@@ -188,7 +185,6 @@ export function buildChapterF(edition: Edition): Chapter {
 
   return {
     id: 'chF',
-    index: 8,
     title: '最終章',
     subtitle: '創造の核 ── OVERSEER',
     recap: '壊れない仕組みを整え、データから次の一手を決める目も得た。すべてが揃った。',

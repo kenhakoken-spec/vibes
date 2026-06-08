@@ -5,21 +5,8 @@ import { rosterFor } from '../data/chapter1';
 import { CharacterPortrait } from '../components/CharacterPortrait';
 import { RichText } from '../components/RichText';
 import { useTypewriter } from '../hooks/useTypewriter';
-import type { DialogueLine, Expression, PortraitVariant } from '../types';
-
-/** セリフ本文から表情を推定（line.expr 指定があれば優先）。はっきり出す。 */
-function inferExpr(line: DialogueLine, portrait?: PortraitVariant): Expression {
-  if (line.expr) return line.expr;
-  const t = line.text;
-  if (/[！!]/.test(t) && /(やった|いいね|よし|すごい|完璧|見事|お見事|正解|できた|いける|行ける|嬉し|楽し|ありがと|最高)/.test(t))
-    return 'smile';
-  if (/(まさか|なんだと|えっ|なに[!？?！]|本当に|信じられ|そんな…|！？)/.test(t)) return 'surprised';
-  if (/(まずい|危ない|やばい|しまった|崩れ|崩落|飲み込|惑わ|濁|奪わ|止まらな|壊れ|怖|恐ろし|不穏|歪|津波|霧)/.test(t))
-    return 'worried';
-  if (portrait === 'mentor') return 'serious';
-  if (/[！!]/.test(t)) return 'smile';
-  return 'neutral';
-}
+import { inferExpr } from '../data/expr';
+import type { DialogueLine } from '../types';
 
 export function StoryScene({ phase }: { phase: 'intro' | 'outro' }) {
   const { edition, currentStage, beginChallenge, finishOutro } = useGame();

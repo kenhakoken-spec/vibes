@@ -22,7 +22,6 @@ export function buildChapter1(edition: Edition): Chapter {
   /* ---- STAGE 1 : プロンプトの基礎 ---------------------------------- */
   const stage1: Stage = {
     id: 's1',
-    index: 0,
     title: '初依頼',
     subtitle: 'はじめてのプロンプト',
     intro: [
@@ -138,7 +137,6 @@ export function buildChapter1(edition: Edition): Chapter {
   /* ---- STAGE 2 : 文脈を与える -------------------------------------- */
   const stage2: Stage = {
     id: 's2',
-    index: 1,
     title: '第二依頼',
     subtitle: '文脈を渡す',
     intro: [
@@ -238,7 +236,6 @@ export function buildChapter1(edition: Edition): Chapter {
   /* ---- STAGE 3 : デバッグ＝反復改善（自由記述） -------------------- */
   const stage3: Stage = {
     id: 's3',
-    index: 2,
     title: '最終依頼',
     subtitle: 'バグと向き合う',
     intro: [
@@ -316,7 +313,6 @@ export function buildChapter1(edition: Edition): Chapter {
   /* ---- STAGE 4 : 応用練習（学びを総動員・自由記述） ----------------- */
   const stage4: Stage = {
     id: 's4',
-    index: 3,
     title: '仕上げ',
     subtitle: '学びを総動員',
     intro: [
@@ -378,7 +374,6 @@ export function buildChapter1(edition: Edition): Chapter {
 
   return {
     id: 'ch1',
-    index: 0,
     title: '第1章',
     subtitle: '初依頼 ── バイブコーディングの夜明け',
     recap: '相棒を喚び出し、「まず試して直す」創り手の覚悟を決めた。',

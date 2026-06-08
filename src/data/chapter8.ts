@@ -13,7 +13,6 @@ export function buildChapter8(edition: Edition): Chapter {
 
   const s1: Stage = {
     id: 'c8s1',
-    index: 0,
     title: '惑わしの霧',
     subtitle: '問いを立てる',
     scene: 'data',
@@ -79,7 +78,6 @@ export function buildChapter8(edition: Edition): Chapter {
 
   const s2: Stage = {
     id: 'c8s2',
-    index: 1,
     title: '霧を晴らす',
     subtitle: '可視化で掴む',
     scene: 'data',
@@ -133,7 +131,6 @@ export function buildChapter8(edition: Edition): Chapter {
 
   const s3: Stage = {
     id: 'c8s3',
-    index: 2,
     title: '計器盤',
     subtitle: '一目で分かる場所',
     scene: 'data',
@@ -189,7 +186,6 @@ export function buildChapter8(edition: Edition): Chapter {
 
   const s4: Stage = {
     id: 'c8s4',
-    index: 3,
     title: '仕上げ',
     subtitle: '自分の数字で決める',
     scene: 'data',
@@ -249,7 +245,6 @@ export function buildChapter8(edition: Edition): Chapter {
 
   return {
     id: 'ch8',
-    index: 7,
     title: '第8章',
     subtitle: 'データを読む ── 数字から決める',
     recap: 'テスト・型・CIで、変更しても壊れない仕組みを手に入れた。',

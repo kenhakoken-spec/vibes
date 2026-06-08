@@ -131,7 +131,6 @@ export type SceneId = 'void' | 'city' | 'guild' | 'cyber' | 'archive' | 'factory
 
 export interface Stage {
   id: string;
-  index: number;
   title: string;
   subtitle: string;
   /** この物語パートで見せる背景（省略時は画面から自動） */
@@ -155,7 +154,6 @@ export interface BossInfo {
 
 export interface Chapter {
   id: string;
-  index: number;
   title: string;
   subtitle: string;
   /** ワールドマップ等で見せる背景 */
