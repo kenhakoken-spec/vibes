@@ -2,22 +2,23 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { UPCOMING } from '../data/chapters';
-import { GLOSSARY } from '../data/glossary';
+import { rankTitle, skillChapters } from '../data/journey';
 import { CodexSheet } from '../components/CodexSheet';
 import { sfx } from '../engine/sfx';
 
 export function WorldMap() {
   const [codexOpen, setCodexOpen] = useState(false);
-  const { chapters, edition, results, learned, enterChapter, isChapterUnlocked, isChapterCleared, backToTitle } =
-    useGame();
+  const { chapters, edition, enterChapter, isChapterUnlocked, isChapterCleared, backToTitle } = useGame();
   if (!edition) return null;
 
-  const totalStages = chapters.reduce((n, c) => n + c.stages.length, 0);
-  const clearedStages = chapters.reduce(
-    (n, c) => n + c.stages.filter((s) => results[s.id]?.cleared).length,
-    0,
-  );
-  const pct = Math.round((clearedStages / Math.max(1, totalStages)) * 100);
+  // 8つの力（バッジ）＝旅の本道
+  const skills = skillChapters(chapters);
+  const totalPowers = skills.length;
+  const earnedPowers = skills.filter((x) => isChapterCleared(x.index)).length;
+  const title = rankTitle(earnedPowers);
+  const pct = Math.round((earnedPowers / Math.max(1, totalPowers)) * 100);
+  // 「現在地（次に挑む章）」＝解放済みで未クリアの最初の章
+  const currentIndex = chapters.findIndex((_, i) => isChapterUnlocked(i) && !isChapterCleared(i));
 
   return (
     <motion.div
@@ -50,11 +51,29 @@ export function WorldMap() {
             <span className="chip">{edition.label}</span>
           </div>
         </div>
-        <span className="kicker">WORLD ／ 章を選ぶ</span>
+        <span className="kicker">WORLD ／ ゴールまでの地図</span>
         <h2 className="display world__title">創造の地図</h2>
         <p className="world__lead">
-          学びを重ね、<b style={{ color: edition.accent }}>OVERSEER</b> へ至る。
+          <b style={{ color: edition.accent }}>8つの力</b>を集め、最後に <b style={{ color: edition.accent }}>OVERSEER</b> に挑む。
         </p>
+
+        {/* バッジケース：8つの力を集める進捗（ポケモンのジムバッジ的） */}
+        <div className="badgecase" aria-label={`獲得した力 ${earnedPowers}/${totalPowers}`}>
+          {skills.map((x) => {
+            const earned = isChapterCleared(x.index);
+            const current = x.index === currentIndex;
+            return (
+              <div
+                key={x.chapter.id}
+                className={`badge ${earned ? 'is-earned' : ''} ${current ? 'is-current' : ''}`}
+                title={`${x.chapter.title}：${x.chapter.power}`}
+              >
+                <span className="badge__gem" />
+                <span className="badge__name">{x.chapter.power}</span>
+              </div>
+            );
+          })}
+        </div>
 
         <div className="world__stats">
           <div className="world__bar">
@@ -66,7 +85,7 @@ export function WorldMap() {
             />
           </div>
           <span className="world__stat">
-            依頼 {clearedStages}/{totalStages}（{pct}%） ・ 学び {learned.length} ・ 用語 {GLOSSARY.length} 収録
+            獲得した力 <b style={{ color: edition.accent }}>{earnedPowers}/{totalPowers}</b> ・ 称号「{title}」
           </span>
         </div>
       </header>
@@ -75,10 +94,12 @@ export function WorldMap() {
         {chapters.map((ch, i) => {
           const unlocked = isChapterUnlocked(i);
           const cleared = isChapterCleared(i);
+          const isCurrent = i === currentIndex;
+          const isGoal = i === chapters.length - 1;
           return (
             <motion.button
               key={ch.id}
-              className={`worldnode ${cleared ? 'is-clear' : ''} ${unlocked ? '' : 'is-lock'}`}
+              className={`worldnode ${cleared ? 'is-clear' : ''} ${unlocked ? '' : 'is-lock'} ${isCurrent ? 'is-current' : ''} ${isGoal ? 'is-goal' : ''}`}
               onClick={() => {
                 if (!unlocked) {
                   const ok = window.confirm(
@@ -99,15 +120,22 @@ export function WorldMap() {
               <span className="worldnode__no">{ch.title}</span>
               <span className="worldnode__body">
                 <b className="worldnode__sub">{ch.subtitle}</b>
-                {ch.boss && (
-                  <span className="worldnode__boss">
-                    歪み:「{ch.boss.name}」{ch.boss.title}
+                {ch.power && (
+                  <span className="worldnode__power">
+                    {cleared ? '★ 獲得: ' : '得る力: '}
+                    <b>{ch.power}</b>
                   </span>
                 )}
+                {ch.boss && (
+                  <span className="worldnode__boss">
+                    {isGoal ? '最終決戦:' : '歪み:'}「{ch.boss.name}」{ch.boss.title}
+                  </span>
+                )}
+                {isCurrent && <span className="worldnode__here">▶ 次はここ</span>}
               </span>
               <span className="worldnode__state">
                 {!unlocked && '🔒'}
-                {unlocked && !cleared && '▶'}
+                {unlocked && !cleared && (isGoal ? '⚑' : '▶')}
                 {cleared && '★'}
               </span>
             </motion.button>

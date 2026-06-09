@@ -259,6 +259,7 @@ export function buildChapter3(edition: Edition): Chapter {
     id: 'ch3',
     title: '第3章',
     subtitle: '自動化 ── 反復を断つ',
+    power: '自動化の力',
     recap: '記憶・Git・GitHubで、成果を失わず共有する術を得た。',
     keyTerms: ['rpa', 'playwright', 'headless', 'screenshot'],
     scene: 'factory',

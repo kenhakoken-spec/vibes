@@ -248,6 +248,7 @@ export function buildChapter6(edition: Edition): Chapter {
     id: 'ch6',
     title: '第6章',
     subtitle: '雲の力 ── 規模に立ち向かう',
+    power: '規模の力',
     recap: '作品を配布・公開し、世界へ届けられるようになった。',
     keyTerms: ['gas', 'gcp', 'bigquery', 'cloud-run', 'vertex-ai', 'aoai', 'cloud'],
     scene: 'sky',

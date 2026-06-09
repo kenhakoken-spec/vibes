@@ -239,6 +239,7 @@ export function buildChapter7(edition: Edition): Chapter {
     id: 'ch7',
     title: '第7章',
     subtitle: '品質を守る ── 壊れない仕組み',
+    power: '守る力',
     recap: 'GASから巨大クラウドまで、規模に合わせて道具を選べるようになった。',
     keyTerms: ['regression', 'test', 'typescript', 'ci'],
     scene: 'lab',

@@ -296,6 +296,7 @@ export function buildChapter2(edition: Edition): Chapter {
     id: 'ch2',
     title: '第2章',
     subtitle: '記憶と航跡 ── 失わないために',
+    power: '失わない力',
     recap: '心得を学び、思い込みの影「ステレオ」を退けた。',
     keyTerms: ['memory', 'git', 'commit', 'repository', 'github', 'readme'],
     scene: 'archive',

@@ -160,6 +160,8 @@ export interface Chapter {
   scene?: SceneId;
   /** 章ボス（歪み） */
   boss?: BossInfo;
+  /** この章をクリアして得る「力（バッジ）」の名。8つの力＝旅の道のり。序章/幕間/最終章には無い。 */
+  power?: string;
   /** 章開始時に出す「前回までの振り返り」 */
   recap?: string;
   /** この章で学ぶ重要用語（glossaryのid）。コーデックスでタップ解説に使う */

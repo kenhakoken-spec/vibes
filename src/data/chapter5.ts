@@ -235,6 +235,7 @@ export function buildChapter5(edition: Edition): Chapter {
     id: 'ch5',
     title: '第5章',
     subtitle: '世に放つ ── 届ける技術',
+    power: '届ける力',
     recap: 'MCPで道具を繋ぎ、AIを「やる」相棒に変えた。',
     keyTerms: ['electron', 'exe', 'batch', 'github-pages', 'deploy'],
     scene: 'city',

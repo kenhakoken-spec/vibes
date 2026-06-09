@@ -247,6 +247,7 @@ export function buildChapter8(edition: Edition): Chapter {
     id: 'ch8',
     title: '第8章',
     subtitle: 'データを読む ── 数字から決める',
+    power: '見抜く力',
     recap: 'テスト・型・CIで、変更しても壊れない仕組みを手に入れた。',
     keyTerms: ['data-analysis', 'chart', 'dashboard', 'kpi'],
     scene: 'data',

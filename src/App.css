@@ -525,6 +525,53 @@
   letter-spacing: 0.04em;
   color: var(--ink-faint);
 }
+
+/* バッジケース：8つの力（集めるほど点灯し、現在地は脈打つ） */
+.badgecase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.5rem;
+  margin: 0.55rem 0 0.35rem;
+}
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: calc((100% - 1.5rem) / 4);
+}
+.badge__gem {
+  width: 15px;
+  height: 15px;
+  transform: rotate(45deg);
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 3px;
+  background: transparent;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.badge.is-earned .badge__gem {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.badge.is-current .badge__gem {
+  border-color: var(--accent);
+  animation: badge-pulse 1.5s ease-in-out infinite;
+}
+.badge__name {
+  font-family: var(--f-head);
+  font-size: 0.52rem;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--ink-faint);
+}
+.badge.is-earned .badge__name {
+  color: color-mix(in srgb, var(--accent) 80%, #fff);
+}
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  50% { box-shadow: 0 0 0 5px transparent; }
+}
 .world__track {
   flex: 1;
   min-height: 0;
@@ -595,6 +642,40 @@
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   color: var(--ink-faint);
+}
+.worldnode__power {
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--accent) 82%, #fff);
+  overflow-wrap: anywhere;
+}
+.worldnode.is-clear .worldnode__power {
+  color: var(--gold);
+}
+.worldnode__here {
+  align-self: start;
+  margin-top: 3px;
+  font-family: var(--f-head);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: #000;
+  background: var(--accent);
+  padding: 1px 8px;
+  border-radius: 999px;
+  width: max-content;
+  animation: badge-pulse 1.5s ease-in-out infinite;
+}
+.worldnode.is-current {
+  border-left-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 6px 24px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.worldnode.is-goal {
+  border-left-color: var(--gold);
+  background: linear-gradient(150deg, color-mix(in srgb, var(--gold) 12%, var(--bg-2)), var(--bg-1));
+}
+.worldnode.is-goal .worldnode__no {
+  color: var(--gold);
 }
 
 /* ============================ STORY ==================================== */

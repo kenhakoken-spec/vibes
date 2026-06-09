@@ -250,6 +250,7 @@ export function buildChapter4(edition: Edition): Chapter {
     id: 'ch4',
     title: '第4章',
     subtitle: '道具をつなぐ ── 孤立を超えて',
+    power: '繋ぐ力',
     recap: 'Playwrightで反復作業を自動化し、「トイル」を断ち切った。',
     keyTerms: ['mcp', 'plugin', 'api', 'database'],
     scene: 'guild',
