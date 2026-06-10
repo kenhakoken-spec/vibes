@@ -1,22 +1,23 @@
-// 自動通しプレイ（回帰確認用）：タイトル→編選択→章→ステージを実際に操作して進行確認
-// 使い方: node scripts/playthrough.mjs [width]
-//   - CLAUDE編: 序章 → 第1章 → 幕間 → 第2章 まで通しプレイ
-//   - CURSOR編: 序章 のみ
+// 自動通しプレイ（全量回帰用）：タイトル→編選択→章→ステージを実際に操作して進行確認
+// 使い方: node scripts/playthrough.mjs [width] [baseURL]
+//   例) node scripts/playthrough.mjs 412 http://localhost:5190
+//   - CLAUDE編 / CURSOR編 の両方で、序章〜最終章（全11章）を通しプレイ
+//   - freeText 課題は「目標＋ヒント文」をそのまま入力して合格できるかを検証
+//     （不合格なら problems に記録し、お手本(sampleAnswer)で続行）
 //   - 進行が止まる / コンソールエラー / ページエラー を検出したら最後にまとめて報告
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
 const W = Number(process.argv[2] || 412); // Pixel 8 Pro ≈ 412
 const H = 915;
-const BASE = process.argv[3] || 'http://localhost:5173';
+const BASE = process.argv[3] || process.env.PLAY_BASE || 'http://localhost:5173';
 mkdirSync('shots', { recursive: true });
 
-// freeText 依頼を確実に通すための「具体的な頼み方」（各章のキーワードを網羅）
-const FREE_ANSWER =
-  'ボタンを押しても反応しないエラーを直して修正して。色を変えて大きく目立たせて、' +
-  'GitHubのリポジトリにプッシュして公開、READMEも追加してコミットして。';
+// 章の並び（buildChapters と同順）。ステージ数は固定せず、章クリア画面の出現で判定する。
+const CHAPTER_LABELS = ['ch0', 'ch1', 'interlude', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'chF'];
 
 const problems = []; // { where, detail }
+const cleared = { claude: 0, cursor: 0 }; // クリアできた章数
 let where = 'boot';
 
 const browser = await chromium.launch();
@@ -65,17 +66,38 @@ async function playStory(phase) {
     const stage = page.locator('.story__stage');
     if ((await stage.count()) === 0) return;
     await stage.click({ timeout: 1500, position: { x: 12, y: 12 } }).catch(() => {});
-    await page.waitForTimeout(280);
+    await page.waitForTimeout(260);
   }
   problems.push({ where, detail: `進行停止: ${phase} の会話が終わらない（240タップ超）` });
   throw new Error(`story loop at ${where}`);
 }
 
-/** 依頼パート：選択式は総当たり、自由記述はキーワード入りの文で突破 */
+/** freeText の回答を組み立てる：
+ *  1回目 = 画面に出ている「目標＋ヒント文」（これで通るのが合格基準）
+ *  3回目以降 = 2回失敗で出現する「お手本: 「…」」を抜き出して送る（救済。記録は別途） */
+async function buildFreeAnswer(attempt) {
+  // ヒントが閉じていれば開く（開閉トグルなので開いている時は触らない）
+  if ((await page.locator('.ch__hint').count()) === 0) {
+    await page.locator('.ch__hintbtn').click().catch(() => {});
+    await page.waitForTimeout(500);
+  }
+  const goal = (await page.locator('.ch__goal').innerText().catch(() => '')) || '';
+  const hint = (await page.locator('.ch__hint').innerText().catch(() => '')) || '';
+  if (attempt >= 2) {
+    const sample = (await page.locator('.ch__sample').innerText().catch(() => '')) || '';
+    const m = sample.match(/「(.+)」/s);
+    if (m) return m[1];
+  }
+  // ヒント欄にお手本が混ざっていても、キーワード照合の妨げにはならない
+  return `${goal} ${hint}`.replace(/\s+/g, ' ').trim();
+}
+
+/** 依頼パート：選択式は総当たり、自由記述は「目標＋ヒント文」で突破 */
 async function solveChallenge() {
   await expect('.screen.challenge');
   await page.waitForTimeout(900);
-  for (let round = 0; round < 14; round++) {
+  let freeTries = 0;
+  for (let round = 0; round < 16; round++) {
     if (await page.locator('.ch__cleared').count()) break;
     if (await page.locator('.ch__choices').count()) {
       // 選択式：未選択（未 disabled）の先頭から順に試す
@@ -87,7 +109,13 @@ async function solveChallenge() {
       }
     }
     if (await page.locator('.ch__compose').count()) {
-      await page.fill('.ch__textarea', FREE_ANSWER);
+      if (freeTries === 1) {
+        // 目標＋ヒント文で通らなかった＝回帰NG として記録（お手本で続行は試みる）
+        problems.push({ where, detail: 'freeText: 目標＋ヒント文の入力でキーワード不合致（1回で通らない）' });
+      }
+      const answer = await buildFreeAnswer(freeTries);
+      freeTries++;
+      await page.fill('.ch__textarea', answer);
       await page.locator('.ch__compose .abtn').click().catch(() => {});
       await page.waitForTimeout(1700);
       continue;
@@ -98,15 +126,15 @@ async function solveChallenge() {
   await page.locator('.ch__cleared .abtn').click(); // つづける ▶
 }
 
-/** 章マップから全ステージを通しでプレイ（リザルト後は自動で次ステージの会話へ） */
-async function playChapter(label, stageCount) {
+/** 章マップから全ステージを通しでプレイ。最終ステージのリザルト後に章クリア画面が出るまで回す */
+async function playChapter(label) {
   where = `${label}/map`;
   await expect('.screen.map');
-  await page.waitForTimeout(2700); // ボス前口上の演出待ち
+  await page.waitForTimeout(2700); // ボス前口上（2.3秒で自動退場）の演出待ち
   where = `${label}/enter-stage`;
   await expect('.node:not(.node--lock)');
   await page.locator('.node:not(.node--lock):not(.node--clear)').first().click();
-  for (let s = 0; s < stageCount; s++) {
+  for (let s = 0; s < 10; s++) {
     where = `${label}/stage${s + 1}/intro`;
     await playStory('intro');
     where = `${label}/stage${s + 1}/challenge`;
@@ -116,8 +144,9 @@ async function playChapter(label, stageCount) {
     where = `${label}/stage${s + 1}/result`;
     await expect('.screen.result .abtn');
     await page.waitForTimeout(900);
-    await page.locator('.screen.result .abtn').click(); // 次へ ▶
-    await page.waitForTimeout(700);
+    await page.locator('.screen.result .abtn').click(); // 次へ ▶（最終ステージなら章クリアへ）
+    await page.waitForTimeout(900);
+    if (await page.locator('.screen.chapclear').count()) break;
   }
   where = `${label}/chapter-clear`;
   await expect('.screen.chapclear');
@@ -125,7 +154,7 @@ async function playChapter(label, stageCount) {
   await page.screenshot({ path: `shots/play-${label.replace(/[^\w-]/g, '_')}-clear.png` });
 }
 
-/** タイトル → 編選択（cardIndex: 0=CLAUDE / 1=CURSOR）→ ワールド → 章へ */
+/** タイトル → 編選択（cardIndex: 0=CLAUDE / 1=CURSOR）→ ワールド → 序章へ */
 async function startEdition(label, cardIndex, chapterNodeIndex = 0) {
   where = `${label}/title`;
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
@@ -142,26 +171,33 @@ async function startEdition(label, cardIndex, chapterNodeIndex = 0) {
   await page.locator('.worldnode').nth(chapterNodeIndex).click();
 }
 
+/** 1つの編を序章〜最終章まで通しプレイ */
+async function playEdition(label, cardIndex) {
+  await startEdition(label, cardIndex);
+  for (let c = 0; c < CHAPTER_LABELS.length; c++) {
+    await playChapter(`${label}-${CHAPTER_LABELS[c]}`);
+    cleared[label]++;
+    if (c < CHAPTER_LABELS.length - 1) {
+      // 「次の章へ ▶」
+      await page.locator('.chapclear__btns .abtn').first().click();
+      await page.waitForTimeout(700);
+    }
+  }
+  // 最終章クリア画面（完）から「タイトルへ」で戻る（次の編 or 終了へ）
+  where = `${label}/final-to-title`;
+  await page.locator('.chapclear__btns .abtn').nth(1).click().catch(() => {});
+  await page.waitForTimeout(800);
+}
+
 try {
-  // ---- CLAUDE編: 序章 → 第1章 → 幕間 → 第2章 --------------------------
-  await startEdition('claude', 0);
-  await playChapter('claude-ch0', 2);
-  await page.locator('.chapclear__btns .abtn').first().click(); // 次の章へ ▶
-  await playChapter('claude-ch1', 4);
-  await page.locator('.chapclear__btns .abtn').first().click();
-  await playChapter('claude-interlude', 5);
-  await page.locator('.chapclear__btns .abtn').first().click();
-  await playChapter('claude-ch2', 4);
-
-  // ---- CURSOR編: 序章のみ ---------------------------------------------
-  await startEdition('cursor', 1);
-  await playChapter('cursor-ch0', 2);
-
+  await playEdition('claude', 0);
+  await playEdition('cursor', 1);
   console.log('PLAYTHROUGH COMPLETE');
 } catch (e) {
   console.log(`PLAYTHROUGH ABORTED: ${e.message}`);
 }
 
+console.log(`CLEARED claude=${cleared.claude}/11 cursor=${cleared.cursor}/11`);
 if (problems.length) {
   console.log(`PROBLEMS (${problems.length}):`);
   for (const p of problems) console.log(`  [${p.where}] ${p.detail}`);
