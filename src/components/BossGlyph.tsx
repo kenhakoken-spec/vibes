@@ -172,6 +172,53 @@ function Body({ kind, eye, uid, down }: { kind: BossGlyphKind; eye: string; uid:
         </g>
       );
 
+    /* スウォーム：群れバグ ── 無数の小さな虫が渦になって群れる */
+    case 'swarm':
+      return (
+        <g>
+          {/* 中心の親バグ（角張った甲虫） */}
+          <path d="M40 30 L52 40 L40 54 L28 40 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" />
+          <g stroke={eye} strokeWidth="2" strokeLinecap="round" opacity={down ? 0.4 : 1}>
+            {/* 触角と脚 */}
+            <line x1="36" y1="32" x2="30" y2="24" />
+            <line x1="44" y1="32" x2="50" y2="24" />
+            <line x1="30" y1="44" x2="22" y2="48" />
+            <line x1="50" y1="44" x2="58" y2="48" />
+          </g>
+          <circle cx="40" cy="40" r="2.4" fill={eye} />
+          {/* 群れなす子バグ（小菱形）が渦を巻く */}
+          <g fill={ink} stroke={eye} strokeWidth="1.6" strokeLinejoin="round" opacity={down ? 0.3 : 0.9}>
+            <path d="M20 22 L26 27 L20 32 L14 27 Z" />
+            <path d="M58 18 L63 22 L58 27 L53 22 Z" />
+            <path d="M64 42 L69 46 L64 51 L59 46 Z" />
+            <path d="M54 60 L59 64 L54 69 L49 64 Z" />
+            <path d="M24 58 L29 62 L24 67 L19 62 Z" />
+            <path d="M12 42 L16 45 L12 49 L8 45 Z" />
+          </g>
+          {/* 渦の軌跡 */}
+          <path d="M40 40 m-22 0 a22 22 0 1 1 6 14" fill="none" stroke={eye} strokeWidth="1.4" strokeDasharray="3 4" opacity={down ? 0.2 : 0.5} />
+        </g>
+      );
+
+    /* ステレオ：固定観念の影 ── 檻に囚われた思考の貌 */
+    case 'static':
+      return (
+        <g>
+          {/* 思考の貌（灰色がかった角張る頭部） */}
+          <path d="M40 12 L62 28 L56 56 L40 66 L24 56 L18 28 Z" fill={ink} stroke={eye} strokeWidth="2.5" strokeLinejoin="round" />
+          <path d="M40 12 L62 28 L56 56 L40 66 Z" fill={ht} opacity="0.22" />
+          {/* 同じ形に固定された両目 */}
+          <rect x="28" y="34" width="9" height="4" fill={eye} />
+          <rect x="43" y="34" width="9" height="4" fill={eye} />
+          {/* 固定観念の檻（縦の格子が貌を縛る） */}
+          <g stroke={eye} strokeWidth="2.5" strokeLinecap="round" opacity={down ? 0.3 : 0.95}>
+            <line x1="26" y1="10" x2="26" y2="70" />
+            <line x1="40" y1="6" x2="40" y2="74" />
+            <line x1="54" y1="10" x2="54" y2="70" />
+          </g>
+        </g>
+      );
+
     /* 汎用：角張った歪みのマスク */
     default:
       return (

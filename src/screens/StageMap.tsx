@@ -11,10 +11,11 @@ export function StageMap() {
   const clearedAll = chapter ? chapter.stages.every((s) => results[s.id]?.cleared) : false;
   const [showIntro, setShowIntro] = useState(!!chapter?.boss && !clearedAll);
 
-  // 旅の本道（8つの力）の中での現在位置と、ゴール（最終章）までの残り章数
+  // 旅の本道（8つの力）の中での現在位置と、ゴールまでの距離（幕間は数えず“力”基準で示す）
   const skills = skillChapters(chapters);
   const powerNo = skills.findIndex((x) => x.index === chapterIndex) + 1;
-  const remaining = chapters.length - 1 - chapterIndex;
+  const remainingPowers = skills.filter((x) => x.index > chapterIndex).length;
+  const nextSkill = skills.find((x) => x.index > chapterIndex);
   const isFinalChapter = chapterIndex >= chapters.length - 1;
 
   useEffect(() => {
@@ -45,13 +46,26 @@ export function StageMap() {
         <h2 className="display map__title">{chapter.title}</h2>
         <p className="map__subtitle">{chapter.subtitle}</p>
         {chapter.recap && <p className="map__recap">前回まで ── {chapter.recap}</p>}
-        {/* 章頭オリエンテーション：この章で得る力と、ゴールまでの距離（power を持つ章のみ） */}
+        {/* 章頭オリエンテーション：この章で得る力と、ゴールまでの距離（“力”基準で数える） */}
         {chapter.power && (
           <div className="map__orient">
             <span className="map__orient-power">
               この章で得る力: <b>{chapter.power}</b>（{powerNo}/{skills.length}）
             </span>
-            <span className="map__orient-goal">ゴール（OVERSEER）まで あと{remaining}章</span>
+            <span className="map__orient-goal">
+              ゴールまで ── 残りの力 {remainingPowers}つ ＋ OVERSEER
+            </span>
+          </div>
+        )}
+        {/* 幕間：力は増えない“心得”の回り道であることを正直に示す */}
+        {!chapter.power && !isFinalChapter && chapterIndex > 0 && nextSkill && (
+          <div className="map__orient">
+            <span className="map__orient-power">
+              この章は“心得”の回り道 ── 力は増えないが、旅の土台になる
+            </span>
+            <span className="map__orient-goal">
+              次の力「{nextSkill.chapter.power}」は、この先の{nextSkill.chapter.title}で
+            </span>
           </div>
         )}
       </header>

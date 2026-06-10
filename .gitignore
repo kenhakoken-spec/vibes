@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# 検証用スクリーンショット（scripts/*.mjs が毎回再生成する。リポジトリ肥大防止）
+shots/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

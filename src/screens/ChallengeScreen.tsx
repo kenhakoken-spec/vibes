@@ -125,7 +125,7 @@ export function ChallengeScreen() {
           {ch.diagram && <Diagram kind={ch.diagram} />}
           <div className="ch__qbubble">
             <CharacterPortrait variant={partner.portrait} accent={edition.accent} />
-            <p><RichText text={ch.question ?? 'きみの言葉で、AIに頼んでみよう。'} /></p>
+            <p><RichText text={ch.question ?? '自分の言葉で、AIに頼んでみよう。'} /></p>
           </div>
 
           {messages.map((m, i) => (

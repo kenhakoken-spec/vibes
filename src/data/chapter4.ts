@@ -72,8 +72,10 @@ export function buildChapter4(edition: Edition): Chapter {
           feedback: '逆方向。MCPは能力を“足す”もの。記憶を消すものではない。',
         },
       ],
-      successResponse:
+      successResponse: v(
         'そうだ ── MCPは、AIと道具をつなぐ共通ポート。これさえあれば、ぼくはカレンダーもメールも触れる。壁に、最初の穴が空いた。',
+        'そうだ ── MCPは、AIと道具をつなぐ共通ポート。これさえありゃ、アタシはカレンダーもメールも触れる。壁に、最初の穴が空いたぜ。'
+      ),
       artifact: { title: 'mcp.json', body: ['接続できる道具:', '・カレンダー / メール / DB …'] },
     },
     outro: [
@@ -81,7 +83,10 @@ export function buildChapter4(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: '繋ぐ先を選べば、ぼくはきみの実務に手を出せる。次は“どれを繋ぐか”だ。',
+        text: v(
+          '繋ぐ先を選べば、ぼくはきみの実務に手を出せる。次は“どれを繋ぐか”だ。',
+          '繋ぐ先を選べば、アタシはアンタの実務に手を出せる。次は“どれを繋ぐか”だ。'
+        ),
       },
     ],
   };
@@ -130,8 +135,10 @@ export function buildChapter4(edition: Edition): Chapter {
           feedback: '業務に関係しない道具は後回し。実務に効くものを優先しよう。',
         },
       ],
-      successResponse:
+      successResponse: v(
         'スケジュールと社内ドキュメントを接続対象に決めた。ここを繋げば、ぼくは「来週空いてる？」にも「あの資料どこ？」にも、自分で答えに行ける。',
+        'スケジュールと社内ドキュメントを接続対象に決めた。ここを繋ぎゃ、アタシは「来週空いてる？」にも「あの資料どこ？」にも、自分で答えに行ける。'
+      ),
       artifact: { title: 'mcp.json', body: ['接続: 📅 カレンダー', '接続: 📁 ドキュメント'] },
     },
     outro: [
@@ -139,7 +146,10 @@ export function buildChapter4(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: '道具が決まった。あとは実際に繋ぐだけ。きみの言葉で頼んでくれ。',
+        text: v(
+          '道具が決まった。あとは実際に繋ぐだけ。きみの言葉で頼んでくれ。',
+          '道具は決まった。あとは実際に繋ぐだけ。アンタの言葉で頼みな。'
+        ),
       },
     ],
   };
@@ -155,7 +165,10 @@ export function buildChapter4(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: '今度はきみが頼む番だ。「カレンダーをMCPで繋いで、予定を読めるようにして」── そんな風に、繋ぎたい道具と目的を言葉にして。',
+        text: v(
+          '今度はきみが頼む番だ。「カレンダーをMCPで繋いで、予定を読めるようにして」── そんな風に、繋ぎたい道具と目的を言葉にして。',
+          '今度はアンタが頼む番だ。「カレンダーをMCPで繋いで、予定を読めるようにして」── そんな風に、繋ぎたい道具と目的を言葉にしな。'
+        ),
       },
     ],
     challenge: {
@@ -168,8 +181,10 @@ export function buildChapter4(edition: Edition): Chapter {
       keywords: ['mcp', 'つな', '繋', '接続', 'ツール', 'カレンダー', '連携', 'プラグイン', '予定', '読'],
       minKeywords: 2,
       sampleAnswer: '私のカレンダーをMCPで接続して、来週の予定を読めるようにして。空き時間も答えられるように。',
-      successResponse:
+      successResponse: v(
         'カレンダーをMCPで接続したよ。試しに来週を見たら、水曜の午後が空いている。もう「予定どう？」に、ぼく自身が答えに行ける。サイロの壁が崩れ落ちた。',
+        'カレンダーをMCPで接続したぜ。試しに来週を見たら、水曜の午後が空いてる。もう「予定どう？」に、アタシ自身が答えに行ける。サイロの壁が崩れ落ちた。'
+      ),
       artifact: { title: 'mcp.json', body: ['✓ カレンダー接続 完了', '✓ 予定の読み取り 成功'], fixed: true },
     },
     outro: [
@@ -219,8 +234,10 @@ export function buildChapter4(edition: Edition): Chapter {
       keywords: ['mcp', 'つな', '繋', '接続', '連携', 'メール', 'ツール', 'カレンダー', 'ドキュメント', 'プラグイン'],
       minKeywords: 2,
       sampleAnswer: 'メールもMCPで繋いで、未読の重要メールを要約できるようにして。社内ドキュメント検索とも連携して、資料を探せるように。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りに繋いだよ。メールから今朝の重要な3件を拾って要約できたし、ドキュメント検索で例の資料もすぐ見つかった。道具が増えるほど、ぼくはきみの実務に深く手を出せる。',
+        'いいね、注文どおりに繋いだぜ。メールから今朝の重要な3件を拾って要約できたし、ドキュメント検索で例の資料も秒で見つかった。道具が増えるほど、アタシはアンタの実務に深く手を出せる。'
+      ),
       artifact: { title: 'mcp.json', body: ['✓ メール接続 完了', '✓ ドキュメント検索 連携', '✓ カレンダー（既存）'], fixed: true },
     },
     outro: [

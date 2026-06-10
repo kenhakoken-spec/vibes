@@ -12,6 +12,30 @@ export function Diagram({ kind }: { kind: DiagramKind }) {
   return <div className="diagram">{RENDER[kind](uid)}</div>;
 }
 
+/** journey 図に並べる8つの力のラベル（正本は各章の power。integrity.test.ts で一致を検証） */
+export const JOURNEY_POWER_LABELS = [
+  '創る力',
+  '失わない力',
+  '自動化の力',
+  '繋ぐ力',
+  '届ける力',
+  '規模の力',
+  '守る力',
+  '見抜く力',
+] as const;
+
+/** journey 図のバッジ配置（時計回りのジグザグ） */
+const JOURNEY_POS = [
+  { x: 42, y: 52 },
+  { x: 120, y: 52 },
+  { x: 198, y: 52 },
+  { x: 276, y: 52 },
+  { x: 276, y: 112 },
+  { x: 198, y: 112 },
+  { x: 120, y: 112 },
+  { x: 42, y: 112 },
+];
+
 /** 矢印マーカー（各SVGに同梱して使う） */
 function ArrowDefs({ uid }: { uid: string }) {
   return (
@@ -322,17 +346,8 @@ const RENDER: Record<DiagramKind, (uid: string) => React.ReactElement> = {
         <text x="42" y="32" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--gold)" letterSpacing="2">
           START
         </text>
-        {/* 8つの力（菱形バッジ）。並びは章の順 */}
-        {[
-          { x: 42, y: 52, n: 1, t: '創る力' },
-          { x: 120, y: 52, n: 2, t: '失わない力' },
-          { x: 198, y: 52, n: 3, t: '自動化の力' },
-          { x: 276, y: 52, n: 4, t: '繋ぐ力' },
-          { x: 276, y: 112, n: 5, t: '届ける力' },
-          { x: 198, y: 112, n: 6, t: '規模の力' },
-          { x: 120, y: 112, n: 7, t: '守る力' },
-          { x: 42, y: 112, n: 8, t: '見抜く力' },
-        ].map((p) => (
+        {/* 8つの力（菱形バッジ）。並びは章の順（ラベルの正本は各章の power） */}
+        {JOURNEY_POWER_LABELS.map((t, i) => ({ ...JOURNEY_POS[i], n: i + 1, t })).map((p) => (
           <g key={p.n}>
             <path
               d={`M${p.x} ${p.y - 10} L${p.x + 10} ${p.y} L${p.x} ${p.y + 10} L${p.x - 10} ${p.y} Z`}

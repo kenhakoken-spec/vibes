@@ -20,3 +20,12 @@ export function rankTitle(powers: number): string {
 export function skillChapters(chapters: Chapter[]): { chapter: Chapter; index: number }[] {
   return chapters.map((chapter, index) => ({ chapter, index })).filter((x) => !!x.chapter.power);
 }
+
+/** 獲得済みの力（バッジ）の数。excludeIndex を渡すと、その章を除いて数える（クリア直後の昇格判定用）。 */
+export function earnedPowers(
+  chapters: Chapter[],
+  isCleared: (index: number) => boolean,
+  excludeIndex?: number,
+): number {
+  return skillChapters(chapters).filter((x) => x.index !== excludeIndex && isCleared(x.index)).length;
+}

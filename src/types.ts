@@ -54,6 +54,8 @@ export interface DialogueLine {
   narration?: boolean;
   /** 立ち絵の表情（未指定なら本文から自動推定） */
   expr?: Expression;
+  /** この行と同時に見せる成果物のカットイン（“言葉が形になる”演出用） */
+  artifact?: ArtifactState;
 }
 
 export type ChallengeKind = 'choice' | 'freeText';
@@ -143,7 +145,7 @@ export interface Stage {
   outro: DialogueLine[];
 }
 
-export type BossGlyphKind = 'mask' | 'chains' | 'wall' | 'silence' | 'wave' | 'overseer' | 'crack' | 'fog';
+export type BossGlyphKind = 'mask' | 'chains' | 'wall' | 'silence' | 'wave' | 'overseer' | 'crack' | 'fog' | 'swarm' | 'static';
 
 export interface BossInfo {
   name: string;

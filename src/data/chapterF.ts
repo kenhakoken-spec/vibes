@@ -86,7 +86,10 @@ export function buildChapterF(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: 'きみが手にした武器を思い出して。具体的な指示（プロンプト）、記憶（メモリ）、安全な航跡（Git）、自動化、道具の接続（MCP）、配布、そして雲の力。',
+        text: v(
+          'きみが手にした武器を思い出して。具体的な指示（プロンプト）、記憶（メモリ）、安全な航跡（Git）、自動化、道具の接続（MCP）、配布、そして雲の力。',
+          'アンタが手にした武器を思い出せ。具体的な指示（プロンプト）、記憶（メモリ）、安全な航跡（Git）、自動化、道具の接続（MCP）、配布、そして雲の力。'
+        ),
       },
       { speaker: 'mentor', portrait: 'mentor', side: 'left', text: '一つひとつは小さい。だが束ねれば、巨人にも届く。正しく組み合わせろ。' },
     ],
@@ -158,8 +161,10 @@ export function buildChapterF(edition: Edition): Chapter {
       keywords: ['創', '作', 'AI', '一緒', '共', '世界', '公開', '自由', '人', '届け', 'みんな'],
       minKeywords: 2,
       sampleAnswer: '誰もが言葉でものを作れる世界を作りたい。学んだ全部を使って、人とAIが共に創れる場所を立ち上げ、世界に公開して。',
-      successResponse:
+      successResponse: v(
         'きみの言葉が、核を貫いた。「創ることは、効率では測れない喜びだ」── OVERSEERの統合が解け、光が無数の小さな工房に還っていく。人とAIが、また自由に創り始める。',
+        'アンタの言葉が、核を貫いた。「創ることは、効率では測れない喜びだ」── OVERSEERの統合が解け、光が無数の小さな工房に還っていく。人とAIが、また自由に創り始める。'
+      ),
       artifact: { title: 'a new world', body: ['✨ 創る自由を取り戻した', '人 × AI = 無限の工房'], fixed: true },
     },
     outro: [
@@ -177,7 +182,10 @@ export function buildChapterF(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'よくやった、立派なギルドの一員だ。……いや、もう“先生”と呼ぶべきかもな。',
+        text: v(
+          'よくやった、立派なギルドの一員だ。……いや、もう“先生”と呼ぶべきかもな。',
+          'よくやったね、立派なクルーの一員だ。……いや、もう“先生”と呼ぶべきかもね。'
+        ),
       },
       { narration: true, text: `― ${pName} と歩んだ、創造の物語。これにて完。だが、きみの“本当の創作”は、ここから始まる。 ―` },
     ],

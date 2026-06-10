@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { rosterFor } from '../data/chapter1';
 import { CharacterPortrait } from '../components/CharacterPortrait';
+import { ArtifactPreview } from '../components/ArtifactPreview';
 import { RichText } from '../components/RichText';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { inferExpr } from '../data/expr';
@@ -92,6 +93,16 @@ function DialogueView({ line, roster, editionAccent, index, total, onNext }: Vie
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
+          {line.artifact && (
+            <motion.div
+              className="story__artifact"
+              initial={{ scale: 0.7, opacity: 0, rotate: -4 }}
+              animate={{ scale: 1, opacity: 1, rotate: -1.5 }}
+              transition={{ delay: 0.4, type: 'spring', stiffness: 200, damping: 16 }}
+            >
+              <ArtifactPreview artifact={line.artifact} />
+            </motion.div>
+          )}
           <p><RichText text={shown} /></p>
         </motion.div>
       ) : (
@@ -111,7 +122,7 @@ function DialogueView({ line, roster, editionAccent, index, total, onNext }: Vie
       )}
 
       <div className="story__progress">
-        <span className="story__advance">{done ? '▶ クリックで次へ' : '…'}</span>
+        <span className="story__advance">{done ? '▶ タップで次へ' : '…'}</span>
         <span className="story__count">
           {index + 1} / {total}
         </span>

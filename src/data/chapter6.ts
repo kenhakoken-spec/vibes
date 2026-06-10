@@ -62,8 +62,10 @@ export function buildChapter6(edition: Edition): Chapter {
           feedback: 'それでは波に飲まれる。手軽な自動化に任せて、人は別の仕事を。',
         },
       ],
-      successResponse:
+      successResponse: v(
         'GASで毎晩の集計を自動化したよ。きみが眠っている間に、スプレッドシートが自分で更新される。小さな波は、もうきみを濡らさない。',
+        'GASで毎晩の集計を自動化したぜ。アンタが寝てる間に、スプレッドシートが勝手に更新される。小さな波は、もうアンタを濡らさない。'
+      ),
       artifact: { title: 'gas.js', body: ['毎晩 23:00 自動実行', '・シート集計 → 更新'] },
     },
     outro: [
@@ -157,8 +159,10 @@ export function buildChapter6(edition: Edition): Chapter {
       keywords: ['クラウド', 'デプロイ', '公開', 'cloud run', 'azure', 'aoai', 'vertex', 'サービス', 'ai', '稼働'],
       minKeywords: 2,
       sampleAnswer: '問い合わせに答えるAIサービスを Cloud Run にデプロイして公開して。AIは Azure OpenAI を使い、情報は安全に扱って。',
-      successResponse:
+      successResponse: v(
         'クラウドにデプロイしたよ。Cloud Run が常時稼働し、Azure OpenAI が安全に応答する。利用者が増えても、雲が自動で受け止める。サージは、もうきみを飲み込めない。',
+        'クラウドにデプロイしたぜ。Cloud Run が常時稼働し、Azure OpenAI が安全に応答する。利用者が増えても、雲が自動で受け止める。サージは、もうアンタを飲み込めない。'
+      ),
       artifact: { title: 'cloud-run / AOAI', body: ['☁ 常時稼働サービス 公開', '🛡 企業管理のAI応答', '✓ 規模に耐える'], fixed: true },
     },
     outro: [
@@ -217,8 +221,10 @@ export function buildChapter6(edition: Edition): Chapter {
       keywords: ['クラウド', 'デプロイ', '公開', 'cloud run', 'gas', 'bigquery', 'azure', '自動', 'サービス', '稼働', '集計'],
       minKeywords: 2,
       sampleAnswer: '軽い件数集計はGASで自動化して。大量のログ分析はBigQueryに、常時動く要約AIサービスはCloud Run＋Azure OpenAIにデプロイして公開して。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りに乗せたよ。軽い波はGASがさばき、大きな波はBigQueryとCloud Runが受け止める。規模に合わせて道具を選ぶ――きみはもう、自分でそれができる。',
+        'いいね、注文どおりに乗せたぜ。軽い波はGASがさばき、大きな波はBigQueryとCloud Runが受け止める。規模に合わせて道具を選ぶ――アンタはもう、自分でそれができる。'
+      ),
       artifact: { title: 'cloud', body: ['⚙ 軽い自動処理 → GAS', '📊 大量集計 → BigQuery', '☁ 常時稼働AI → Cloud Run + AOAI'], fixed: true },
     },
     outro: [

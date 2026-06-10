@@ -118,7 +118,10 @@ export function buildInterlude(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'お前の仕事は“全部やること”じゃない。“何を作りたいか決めて、確認すること”だ。手は相棒に貸してもらえ。',
+        text: v(
+          'お前の仕事は“全部やること”じゃない。“何を作りたいか決めて、確認すること”だ。手は相棒に貸してもらえ。',
+          'アンタの仕事は“全部やること”じゃない。“何を作りたいか決めて、確認すること”さ。手は相棒に貸してもらいな。'
+        ),
       },
     ],
     challenge: {
@@ -149,8 +152,10 @@ export function buildInterlude(edition: Edition): Chapter {
           feedback: '遠慮は不要。AIは頼まれるほど働く。強気でいい。',
         },
       ],
-      successResponse:
+      successResponse: v(
         '「全部まとめて頼む」に切り替えたら、きみの手はぐっと空いた。空いた頭で“何を作るか”を考えられる。ステレオが顔をしかめる。',
+        '「全部まとめて頼む」に切り替えたら、アンタの手はぐっと空いた。空いた頭で“何を作るか”を考えられる。ステレオが顔をしかめる。'
+      ),
       artifact: { title: '心得②', body: ['強気で大きく任せる', '自分は決める・確認する'] },
     },
     outro: [
@@ -227,8 +232,10 @@ export function buildInterlude(edition: Edition): Chapter {
           feedback: '理由を解消しないと進まない。「何があればできる？」と聞き、その前提を渡すのが近道。',
         },
       ],
-      successResponse:
+      successResponse: v(
         'きみが認証を済ませ「あとは任せた」と告げると、相棒は止まっていた作業を一気に駆け抜けた。「無理」は、ただの“詰まり”だった。',
+        'アンタが認証を済ませ「あとは任せた」と告げると、相棒は止まっていた作業を一気に駆け抜けた。「無理」は、ただの“詰まり”だった。'
+      ),
       artifact: { title: '心得②+', body: ['「無理」は“詰まり”のサイン', '前提(認証/権限)を渡して続行'] },
     },
     outro: [
@@ -394,6 +401,7 @@ export function buildInterlude(edition: Edition): Chapter {
     scene: 'guild',
     boss: {
       name: 'ステレオ',
+      glyph: 'static',
       title: '固定観念の影',
       blurb: '「AIは毎回同じ」「自分でやれ」「知識は変わらない」と囁き、創り手を思い込みで縛る影。',
     },

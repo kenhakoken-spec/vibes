@@ -60,7 +60,10 @@ export function buildChapter1(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '最初の依頼だ。ギルドの入口に置く「あいさつページ」を作れ。やり方は――そこの相棒に“頼む”だけだ。',
+        text: v(
+          '最初の依頼だ。ギルドの入口に置く「あいさつページ」を作れ。やり方は――そこの相棒に“頼む”だけだ。',
+          '最初の依頼さ。アジトの入口に置く「あいさつページ」を作りな。やり方は――そこの相棒に“頼む”だけさ。'
+        ),
       },
       {
         speaker: partnerId,
@@ -142,13 +145,19 @@ export function buildChapter1(edition: Edition): Chapter {
     intro: [
       {
         narration: true,
-        text: 'あいさつページは評判だった。棟梁は次の依頼書を放ってよこす。',
+        text: v(
+          'あいさつページは評判だった。棟梁は次の依頼書を放ってよこす。',
+          'あいさつページは評判だった。ヴェイルは次の依頼書を放ってよこす。'
+        ),
       },
       {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'ページに「入口」が要る。来た者が押せる“ギルドに入る”ボタンを足せ。',
+        text: v(
+          'ページに「入口」が要る。来た者が押せる“ギルドに入る”ボタンを足せ。',
+          'ページに「入口」が要るね。来た者が押せる“アジトに入る”ボタンを足しな。'
+        ),
       },
       {
         speaker: partnerId,
@@ -179,7 +188,10 @@ export function buildChapter1(edition: Edition): Chapter {
       kind: 'choice',
       brief: 'QUEST 02 ── 入口のボタンを足せ',
       diagram: 'web-parts',
-      goal: 'さっきのページに「ギルドに入る」ボタンを追加する、文脈の伝わる指示を選べ。',
+      goal: v(
+        'さっきのページに「ギルドに入る」ボタンを追加する、文脈の伝わる指示を選べ。',
+        'さっきのページに「アジトに入る」ボタンを追加する、文脈の伝わる指示を選べ。'
+      ),
       hint: '“対象（どのページ）・場所（どこ）・ラベル（何のボタン）”が揃っているか？',
       learn: 'AIは文脈を覚えていないことがある。『どれに・どこに・何を』を補って指示する。',
       question: `${pName}に、どう頼む？`,
@@ -192,10 +204,15 @@ export function buildChapter1(edition: Edition): Chapter {
         },
         {
           id: 'b',
-          text: 'さっきのあいさつページの下に、押すと反応する「ギルドに入る」ボタンを追加して。',
+          text: v(
+            'さっきのあいさつページの下に、押すと反応する「ギルドに入る」ボタンを追加して。',
+            'さっきのあいさつページの下に、押すと反応する「アジトに入る」ボタンを追加して。'
+          ),
           correct: true,
-          feedback:
+          feedback: v(
             '見事。対象（あいさつページ）・場所（下）・ラベル（ギルドに入る）・挙動（押すと反応）が揃った。',
+            '見事。対象（あいさつページ）・場所（下）・ラベル（アジトに入る）・挙動（押すと反応）が揃った。'
+          ),
         },
         {
           id: 'c',
@@ -205,13 +222,15 @@ export function buildChapter1(edition: Edition): Chapter {
             '作り直す必要はない。せっかくのページを壊すリスクも。“足す”ときは既存を活かして追記しよう。',
         },
       ],
-      successResponse:
+      successResponse: v(
         '前に作った guild.html を読み込んで、あいさつの下に「ギルドに入る」ボタンを追加したよ。今はまだ押しても静かだけどね。',
+        '前に作った guild.html を読み込んで、あいさつの下に「アジトに入る」ボタンを足しといた。今はまだ押しても静かだけどな。'
+      ),
       artifact: {
         title: 'guild.html',
         body: ['ようこそ VIBE GUILD へ'],
         hasButton: true,
-        buttonLabel: 'ギルドに入る',
+        buttonLabel: v('ギルドに入る', 'アジトに入る'),
       },
     },
     outro: [
@@ -262,7 +281,10 @@ export function buildChapter1(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: '今回はきみが自分の言葉で頼む番だ。一発で決まらなくていい。何度でも直せる。それが反復改善だ。',
+        text: v(
+          '今回はきみが自分の言葉で頼む番だ。一発で決まらなくていい。何度でも直せる。それが反復改善だ。',
+          '今回はアンタが自分の言葉で頼む番だ。一発で決まらなくていい。何度でも直せる。それが反復改善ってやつさ。'
+        ),
       },
     ],
     challenge: {
@@ -271,19 +293,23 @@ export function buildChapter1(edition: Edition): Chapter {
       goal: '「押しても反応しないボタン」を直すよう、自分の言葉でAIに頼もう。症状と期待する結果を伝えるのがコツ。',
       hint: '“ボタンを押しても反応しない（症状）” ＋ “押したらこうなってほしい（期待）” を入れて頼もう。',
       learn: 'うまくいかない時は『症状』と『期待する結果』を伝えて、何度でも直してもらえばいい。',
-      placeholder:
+      placeholder: v(
         '例）ギルドに入るボタンを押しても反応しない。押したら「入室しました」と表示されるように直して。',
+        '例）アジトに入るボタンを押しても反応しない。押したら「入室しました」と表示されるように直して。'
+      ),
       keywords: ['ボタン', '押', '反応', '動か', 'エラー', '直', '修正', '入室', '表示'],
       minKeywords: 2,
-      sampleAnswer:
+      sampleAnswer: v(
         'ギルドに入るボタンを押しても何も起きない。押したら「入室しました」と表示されるように直して。',
+        'アジトに入るボタンを押しても何も起きない。押したら「入室しました」と表示されるように直して。'
+      ),
       successResponse:
         'エラーを読んだよ。ボタンに「押されたときの処理」が繋がっていなかった。処理を接続して、押すと「入室しました」と出るように直したよ。もう一度押してみて。',
       artifact: {
         title: 'guild.html',
         body: ['ようこそ VIBE GUILD へ'],
         hasButton: true,
-        buttonLabel: 'ギルドに入る',
+        buttonLabel: v('ギルドに入る', 'アジトに入る'),
         fixed: true,
       },
     },
@@ -305,7 +331,10 @@ export function buildChapter1(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '……新人。お前、見どころがある。最後にもう一つ、今日の総仕上げといこう。',
+        text: v(
+          '……新人。お前、見どころがある。最後にもう一つ、今日の総仕上げといこう。',
+          '……新入り。アンタ、見どころがあるね。最後にもう一つ、今日の総仕上げといこうじゃないか。'
+        ),
       },
     ],
   };
@@ -335,20 +364,25 @@ export function buildChapter1(edition: Edition): Chapter {
     challenge: {
       kind: 'freeText',
       brief: 'QUEST 04 ── 自分で仕上げる',
-      goal: '完成したギルドページに、もう一工夫。自分の言葉で改善をAIに頼もう（例：歓迎の一行を足す／色を変える／ボタンを目立たせる）。正解は一つじゃない。',
+      goal: v(
+        '完成したギルドページに、もう一工夫。自分の言葉で改善をAIに頼もう（例：歓迎の一行を足す／色を変える／ボタンを目立たせる）。正解は一つじゃない。',
+        '完成したアジトのページに、もう一工夫。自分の言葉で改善をAIに頼もう（例：歓迎の一行を足す／色を変える／ボタンを目立たせる）。正解は一つじゃない。'
+      ),
       hint: '「どこに・何を・どうしたいか」を具体的に。一発で完璧じゃなくていい――頼んで、見て、直す。',
       learn: '具体化・文脈・反復改善――学んだ全部を組み合わせれば、もっと良くできる。',
       placeholder: '例）あいさつの下に「一緒に創ろう」と小さく一行足して。ボタンはもう少し大きく目立たせて。',
       keywords: ['足し', '追加', '変え', '色', '大き', '目立', '文言', 'メッセージ', '一行', '下に', '上に', 'ボタン', '背景', '整え', '画像'],
       minKeywords: 1,
       sampleAnswer: 'あいさつの下に「一緒に創ろう」と一行足して、ボタンをもう少し大きく目立たせて。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りに直したよ。短い一行が温かさを足して、ボタンも押したくなる見た目になった。きみの“ひと工夫”が、ページに命を吹き込んだ。',
+        'いいね、注文どおりに直したぜ。短い一行が温かさを足して、ボタンも押したくなる見た目になった。アンタの“ひと工夫”が、ページに命を吹き込んだ。'
+      ),
       artifact: {
         title: 'guild.html',
         body: ['ようこそ VIBE GUILD へ', '一緒に創ろう'],
         hasButton: true,
-        buttonLabel: 'ギルドに入る',
+        buttonLabel: v('ギルドに入る', 'アジトに入る'),
         fixed: true,
       },
     },
@@ -367,7 +401,7 @@ export function buildChapter1(edition: Edition): Chapter {
         speaker: 'hero',
         portrait: 'hero',
         side: 'right',
-        text: '（あいさつページに、動くボタン、そして僕のひと工夫。小さいけど――確かに、僕が“作った”ものだ。）',
+        text: '（あいさつページに、動くボタン、そしてひと工夫。小さいけど――確かに、自分で“作った”ものだ。）',
       },
     ],
   };
@@ -381,7 +415,8 @@ export function buildChapter1(edition: Edition): Chapter {
     keyTerms: ['prompt', 'html', 'css', 'js', 'bug', 'debug'],
     scene: 'guild',
     boss: {
-      name: 'ノイズ',
+      name: 'スウォーム',
+      glyph: 'swarm',
       title: '群れバグ',
       blurb: '無数の小さな不具合の群れ。曖昧な指示につけ込み、作りかけを濁らせる。',
     },

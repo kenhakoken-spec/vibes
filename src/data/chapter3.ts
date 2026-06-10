@@ -23,7 +23,10 @@ export function buildChapter3(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'トイルに捕まると、人は同じ作業を永遠に繰り返す。…お前も毎朝、同じ手作業をしていないか？',
+        text: v(
+          'トイルに捕まると、人は同じ作業を永遠に繰り返す。…お前も毎朝、同じ手作業をしていないか？',
+          'トイルに捕まると、人は同じ作業を永遠に繰り返す。…アンタも毎朝、同じ手作業をしてないかい？'
+        ),
       },
       {
         speaker: partnerId,
@@ -228,8 +231,10 @@ export function buildChapter3(edition: Edition): Chapter {
       minKeywords: 2,
       sampleAnswer:
         '毎朝9時に、各サイトを巡回して売上データを収集し、レポートにまとめてチームへ自動送信するスクリプトを作って。手順どおりに毎日繰り返し動くようにして。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りに組んだよ。手順を台本にして、毎朝決まった時刻に自動で走るようにした。データ収集からレポート送信まで、もうきみの手を借りない。トイルの鎖が、また一本砕けた。',
+        'いいね、注文どおりに組んだぜ。手順を台本にして、毎朝決まった時刻に自動で走るようにした。データ収集からレポート送信まで、もうアンタの手は借りない。トイルの鎖が、また一本砕けた。'
+      ),
       artifact: { title: 'daily-report.spec.ts', body: ['毎朝9:00 自動実行', '1. データを収集', '2. レポートを作成', '3. チームへ送信'], fixed: true },
     },
     outro: [

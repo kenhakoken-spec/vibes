@@ -5,7 +5,7 @@ import { ArtifactPreview } from '../components/ArtifactPreview';
 import { AngledButton } from '../components/AngledButton';
 import { ComicBurst } from '../components/ComicBurst';
 import { ScrollCue } from '../components/ScrollCue';
-import { rankTitle, skillChapters } from '../data/journey';
+import { earnedPowers, rankTitle, skillChapters } from '../data/journey';
 
 export function ChapterClear() {
   const {
@@ -13,7 +13,6 @@ export function ChapterClear() {
     chapters,
     chapterIndex,
     edition,
-    learned,
     results,
     toWorld,
     nextChapter,
@@ -29,13 +28,18 @@ export function ChapterClear() {
   const skills = skillChapters(chapters);
   const totalPowers = skills.length;
   // クリア前の獲得数（今クリアした章を除いて数える）→ 称号の昇格判定に使う
-  const prevEarned = skills.filter((x) => x.index !== chapterIndex && isChapterCleared(x.index)).length;
+  const prevEarned = earnedPowers(chapters, isChapterCleared, chapterIndex);
   const earnedNow = chapter.power ? Math.min(totalPowers, prevEarned + 1) : prevEarned;
   const oldTitle = rankTitle(prevEarned);
   const newTitle = rankTitle(earnedNow);
   const rankedUp = !!chapter.power && oldTitle !== newTitle;
   // 旅の本道で次に得る力（無ければ残るは OVERSEER のみ）
   const nextSkill = skills.find((x) => x.index > chapterIndex);
+  // 「次の章へ」で実際に着地する章（幕間など、力の無い章を挟む場合は正直に予告する）
+  const nextChapterData = chapters[chapterIndex + 1] ?? null;
+  const nextIsDetour = !!nextChapterData && !nextChapterData.power && chapterIndex + 1 < chapters.length - 1;
+  // この章で“できる”ようになったこと＝現在章のステージから導出（累積の学びはCodexSheet側）
+  const chapterLearned = chapter.stages.map((s) => s.challenge.learn);
 
   // 最終ステージの成果物が「完成形」
   const finalArtifact = chapter.stages[chapter.stages.length - 1]?.challenge.artifact ?? null;
@@ -94,6 +98,24 @@ export function ChapterClear() {
             </span>
           </div>
 
+          {/* バッジケースのミニ版：8枠のどこが埋まったかを獲得の瞬間に見せる */}
+          <div className="powerget__slots" aria-label={`獲得した力 ${earnedNow}/${totalPowers}`}>
+            {skills.map((x) => {
+              const isNew = x.index === chapterIndex;
+              const lit = isNew || isChapterCleared(x.index);
+              return (
+                <motion.span
+                  key={x.chapter.id}
+                  className={`powerget__slot ${lit ? 'is-lit' : ''} ${isNew ? 'is-new' : ''}`}
+                  title={x.chapter.power}
+                  initial={isNew ? { scale: 0, rotate: -135 } : { opacity: 0 }}
+                  animate={isNew ? { scale: 1, rotate: 45 } : { opacity: 1 }}
+                  transition={isNew ? { delay: 0.85, type: 'spring', stiffness: 320, damping: 12 } : { delay: 0.7 }}
+                />
+              );
+            })}
+          </div>
+
           <motion.div
             className="powerget__meta"
             initial={{ opacity: 0, y: 8 }}
@@ -105,7 +127,16 @@ export function ChapterClear() {
               <b>
                 {earnedNow}/{totalPowers}
               </b>
-              {nextSkill ? <>・次は「{nextSkill.chapter.power}」</> : <>・残すは OVERSEER のみ</>}
+              {!nextSkill ? (
+                <>・残すは OVERSEER のみ</>
+              ) : nextIsDetour && nextChapterData ? (
+                <>
+                  ・次は{nextChapterData.title}「{nextChapterData.subtitle.split('──')[0].trim()}」── その先で「
+                  {nextSkill.chapter.power}」
+                </>
+              ) : (
+                <>・次は「{nextSkill.chapter.power}」</>
+              )}
             </span>
             {rankedUp ? (
               <motion.span
@@ -130,10 +161,20 @@ export function ChapterClear() {
             きみは {edition.partner.name} と共に OVERSEER を打ち破り、<br />
             「人とAIが共に創る自由」を取り戻した。
           </>
-        ) : (
+        ) : chapter.power ? (
           <>
             きみは {edition.partner.name} と組み、言葉でものを作り上げた。<br />
             小さくても、これは確かに“動く成果物”だ。
+          </>
+        ) : chapter.id === 'ch0' ? (
+          <>
+            相棒 {edition.partner.name} を喚び、創り手の覚悟を決めた。旅の支度は整った。<br />
+            {nextSkill && <>次の地で、最初の力「{nextSkill.chapter.power}」を掴め。</>}
+          </>
+        ) : (
+          <>
+            きみは創り手の“心得”を修めた。思い込みは、もうきみを縛れない。<br />
+            {nextSkill && <>次はいよいよ、力「{nextSkill.chapter.power}」だ。</>}
           </>
         )}
       </p>
@@ -147,7 +188,7 @@ export function ChapterClear() {
         >
           <span className="kicker">この章で“できる”ようになったこと</span>
           <ul>
-            {learned.map((l, i) => (
+            {chapterLearned.map((l, i) => (
               <motion.li
                 key={i}
                 initial={{ x: -20, opacity: 0 }}

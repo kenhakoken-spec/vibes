@@ -20,8 +20,14 @@ export function buildChapter2(edition: Edition): Chapter {
     subtitle: '忘れない仕組み',
     scene: 'archive',
     intro: [
-      { narration: true, text: '初依頼を、やり遂げた。動くページを、自分の言葉で創れた。――だが「創ったものを失う」恐怖を、きみはまだ知らない。' },
-      { narration: true, text: 'ギルドの書庫。棚という棚の文字が、霧に触れて次々と消えていく。' },
+      { narration: true, text: '初依頼をやり遂げ、思い込みの影も振り払った。動くページを、自分の言葉で創れた。――だが「創ったものを失う」恐怖を、きみはまだ知らない。' },
+      {
+        narration: true,
+        text: v(
+          'ギルドの書庫。棚という棚の文字が、霧に触れて次々と消えていく。',
+          'アジトの資料庫。棚という棚の文字が、霧に触れて次々と消えていく。'
+        ),
+      },
       {
         speaker: 'mentor',
         portrait: 'mentor',
@@ -41,7 +47,10 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: '対抗策は「メモリ」。大事な前提を書いて“育てて”おけば、ぼくは毎回そこから賢く始められる。何を残すかが鍵だ。',
+        text: v(
+          '対抗策は「メモリ」。大事な前提を書いて“育てて”おけば、ぼくは毎回そこから賢く始められる。何を残すかが鍵だ。',
+          '対抗策は「メモリ」だ。大事な前提を書いて“育てて”おけば、アタシは毎回そこから賢く始められる。何を残すかが鍵だぜ。'
+        ),
       },
     ],
     challenge: {
@@ -60,7 +69,10 @@ export function buildChapter2(edition: Edition): Chapter {
         },
         {
           id: 'b',
-          text: '「このギルドのページは赤と黒のP5風デザインで作る」という決めごと。',
+          text: v(
+            '「このギルドのページは赤と黒のP5風デザインで作る」という決めごと。',
+            '「このアジトのページは赤と黒のP5風デザインで作る」という決めごと。'
+          ),
           correct: true,
           feedback: '完璧。毎回効いてくる“プロジェクトの前提”。これを残すとAIは最初から方針を外さない。',
         },
@@ -148,7 +160,7 @@ export function buildChapter2(edition: Edition): Chapter {
         'コミットを刻んだ ── 「メモリ機能を追加」。これで巻き戻されても、この地点まで必ず戻れる。航跡は消えない。',
       artifact: {
         title: 'git log',
-        body: ['● メモリ機能を追加', '● ギルド入室ページ 完成'],
+        body: ['● メモリ機能を追加', v('● ギルド入室ページ 完成', '● アジト入室ページ 完成')],
       },
     },
     outro: [
@@ -156,7 +168,10 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
-        text: 'いい習慣だ。Gitの航跡がある限り、きみの一歩は決して消えない。アムネシアの一番嫌う力だよ。',
+        text: v(
+          'いい習慣だ。Gitの航跡がある限り、きみの一歩は決して消えない。アムネシアの一番嫌う力だよ。',
+          'いい習慣だ。Gitの航跡がある限り、アンタの一歩は決して消えない。アムネシアが一番嫌う力さ。'
+        ),
       },
     ],
   };
@@ -191,13 +206,18 @@ export function buildChapter2(edition: Edition): Chapter {
       goal: 'このプロジェクトをGitHubに上げて公開するよう、自分の言葉でAIに頼もう。READMEに何を書くかも添えると良い。',
       hint: '“GitHubに上げて/公開” ＋ “READMEに何を書くか” を入れて頼もう。',
       learn: '成果は共有して初めて価値が伝わる。GitHubで航跡を世界に残せる。',
-      placeholder: '例）このギルドページをGitHubのリポジトリに上げて公開して。READMEに「P5風の学習ゲーム」と書いて。',
+      placeholder: v(
+        '例）このギルドページをGitHubのリポジトリに上げて公開して。READMEに「P5風の学習ゲーム」と書いて。',
+        '例）このアジトのページをGitHubのリポジトリに上げて公開して。READMEに「P5風の学習ゲーム」と書いて。'
+      ),
       keywords: ['github', 'リポジトリ', '公開', 'readme', '共有', 'プッシュ', 'push', '上げ', 'コミット'],
       minKeywords: 2,
       sampleAnswer:
         'このプロジェクトをGitHubのリポジトリに上げて公開して。READMEに「バイブコーディングで作った学習ゲーム」と書いて。',
-      successResponse:
+      successResponse: v(
         'リポジトリを作成し、コミットをプッシュして公開したよ。READMEも書いた。URLができた ── きみの航跡は、もう世界の誰でも見られる。',
+        'リポジトリを作って、コミットをプッシュして公開した。READMEも書いといた。URLができたぜ ── アンタの航跡は、もう世界の誰でも見られる。'
+      ),
       artifact: {
         title: 'github.com/you/vibe-guild',
         body: ['📦 vibe-guild (public)', '📄 README.md', '✓ 公開しました'],
@@ -261,8 +281,10 @@ export function buildChapter2(edition: Edition): Chapter {
       minKeywords: 2,
       sampleAnswer:
         'あいさつの下に一行足して、その変更をコミットして。終わったらGitHubに上げて、READMEにも更新内容を書き足して。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りに進めたよ。変更をコミットして、GitHubへプッシュ。READMEも更新した。新しい航跡が一本、世界に刻まれた――これがきみ自身の手で回せた一周だ。',
+        'いいね、注文どおりに進めたぜ。変更をコミットして、GitHubへプッシュ。READMEも更新した。新しい航跡が一本、世界に刻まれた――これがアンタ自身の手で回せた一周だ。'
+      ),
       artifact: {
         title: 'github.com/you/vibe-guild',
         body: ['● 変更をコミット', '● GitHubへプッシュ', '📄 README.md 更新', '✓ 共有しました'],
@@ -287,7 +309,10 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '……だが忘れるな。これらは皆、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎん。',
+        text: v(
+          '……だが忘れるな。これらは皆、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎん。',
+          '……だけど忘れるんじゃないよ。これは全部、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎないのさ。'
+        ),
       },
     ],
   };

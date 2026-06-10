@@ -145,7 +145,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  align-content: center;
+  align-content: safe center;
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
@@ -590,7 +590,8 @@
   font-size: 0.52rem;
   line-height: 1.1;
   text-align: center;
-  color: var(--ink-faint);
+  /* 未獲得でも「これから集める8つ」の名前が読める明度（獲得時との差は保つ） */
+  color: color-mix(in srgb, var(--ink) 52%, transparent);
 }
 .badge.is-earned .badge__name {
   color: color-mix(in srgb, var(--accent) 80%, #fff);
@@ -651,6 +652,8 @@
   font-family: var(--f-head);
   font-size: 0.92rem;
   overflow-wrap: anywhere;
+  /* 1文字ぶら下がりの折返しを防ぐ（Chrome系で有効） */
+  text-wrap: balance;
 }
 .worldnode__boss {
   font-size: 0.7rem;
@@ -790,6 +793,14 @@
   font-size: clamp(0.95rem, 2.8vw, 1.2rem);
   color: var(--ink-dim);
   font-style: italic;
+}
+/* ナレーション中の成果物カットイン（“言葉が形になる”瞬間を見せる） */
+.story__artifact {
+  width: min(76vw, 330px);
+  margin: 0 auto 1.1rem;
+  text-align: left;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.65))
+    drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 30%, transparent));
 }
 .story__progress {
   position: absolute;
@@ -1129,6 +1140,8 @@
   text-align: center;
   gap: 1rem;
   overflow-y: auto;
+  /* 下端の ScrollCue ピルが結びの文に重ならないよう、cue の高さ分の余白 */
+  padding-bottom: 3.2rem;
 }
 .chapclear > .chapclear__burst {
   margin-top: auto;
@@ -1145,6 +1158,8 @@
   color: var(--ink-dim);
   line-height: 1.9;
   font-size: clamp(0.85rem, 2.6vw, 1rem);
+  /* 右端の用語集タブ(.glossfab)の帯域に中央寄せ文が入らないよう余白を確保 */
+  padding-inline: 1.6rem;
 }
 .chapclear__cols {
   display: grid;
@@ -1247,6 +1262,30 @@
   font-size: clamp(1rem, 4.4vw, 1.25rem);
   color: var(--ink);
   overflow-wrap: anywhere;
+}
+/* バッジケースのミニ版：8枠のどれが埋まったかを獲得の瞬間に見せる */
+.powerget__slots {
+  display: flex;
+  gap: 0.55rem;
+  padding: 0.15rem 0 0.1rem;
+}
+.powerget__slot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  border: 1.5px solid var(--ink-faint);
+  background: transparent;
+}
+.powerget__slot.is-lit {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.powerget__slot.is-new {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--gold) 80%, transparent);
 }
 /* 進捗（獲得N/8・次の力）と称号の昇格表示（バナー内の下段） */
 .powerget__meta {

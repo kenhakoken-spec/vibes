@@ -45,7 +45,7 @@ export function buildChapter0(edition: Edition): Chapter {
         speaker: 'hero',
         portrait: 'hero',
         side: 'right',
-        text: '（創る……。でも僕は、コードも書けないし、何から始めればいいかも分からない。）',
+        text: '（創る……。でも、コードも書けないし、何から始めればいいかも分からない。）',
       },
       {
         speaker: 'mentor',
@@ -67,8 +67,15 @@ export function buildChapter0(edition: Edition): Chapter {
         narration: true,
         text: v(
           '直後、ターミナルが緋色に瞬く。数秒の静寂のあと――ネオンに輝くWebページが、目の前に立ち上がった。コードは一行も書いていない。言葉が、そのまま“形”になった。',
-          '直後、エディタが緋色に瞬く。数秒の静寂のあと――ネオンに輝くWebページが、目の前に立ち上がった。コードは一行も書いていない。言葉が、そのまま“形”になった。'
+          '直後、エディタが電光のシアンに瞬く。数秒の静寂のあと――ネオンに輝くWebページが、目の前に立ち上がった。コードは一行も書いていない。言葉が、そのまま“形”になった。'
         ),
+        /* 語るだけでなく、実際に“立ち上がったページ”を見せる（冒頭フックの実体化） */
+        artifact: {
+          title: 'welcome.html',
+          kind: 'web',
+          body: ['ようこそ、創り手。', 'ここから、すべてが始まる。'],
+          fixed: true,
+        },
       },
       {
         speaker: 'hero',
@@ -80,7 +87,10 @@ export function buildChapter0(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'それを「バイブコーディング」と呼ぶ。ここで学べば、終わるころには――OVERSEERにすら届く“創る力”が、お前のものになっている。',
+        text: v(
+          'それを「バイブコーディング」と呼ぶ。ここで学べば、終わるころには――OVERSEERにすら届く“創る力”が、お前のものになっている。',
+          'それが「バイブコーディング」ってやつさ。ここで学べば、終わるころには――OVERSEERにすら届く“創る力”が、アンタのものになってる。'
+        ),
       },
       /* 全体像の提示：8つの力 → OVERSEER という旅の地図（ポケモン型導線） */
       {
@@ -109,7 +119,7 @@ export function buildChapter0(edition: Edition): Chapter {
       goal: 'AIと共に創るとき、いちばん大切な“姿勢”を選ぼう。これがこの物語の背骨になる。',
       hint: '完璧主義はOVERSEER側の発想。まず動かして、試して、直す――が創り手の道。',
       learn: '完璧じゃなくていい。まず言葉にして、試して、直す。その反復こそが「創る力」。',
-      question: 'きみは、どんな心構えで創る？',
+      question: v('きみは、どんな心構えで創る？', 'アンタは、どんな心構えで創る？'),
       options: [
         {
           id: 'a',
@@ -129,11 +139,16 @@ export function buildChapter0(edition: Edition): Chapter {
           id: 'c',
           text: '誰かの完成品を待って、自分では何もしない。',
           correct: false,
-          feedback: 'それこそOVERSEERの望む世界。だが、きみはもう一歩を踏み出した。だから、ここにいる。',
+          feedback: v(
+            'それこそOVERSEERの望む世界。だが、きみはもう一歩を踏み出した。だから、ここにいる。',
+            'それこそOVERSEERの望む世界。だが、アンタはもう一歩を踏み出した。だから、ここにいる。'
+          ),
         },
       ],
-      successResponse:
+      successResponse: v(
         '「まず試して、直す」――その覚悟が、きみの目に小さな火を灯した。棟梁が、静かに頷く。',
+        '「まず試して、直す」――その覚悟が、アンタの目に小さな火を灯した。ヴェイルが、静かに頷く。'
+      ),
       artifact: { title: 'あなたの決意', body: ['まず言葉にする', '試す → 直す → また試す'] },
     },
     outro: [
@@ -141,9 +156,18 @@ export function buildChapter0(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'よし。ならば最初にやることは一つ。お前の“相棒”を喚び出す。共に創るAIだ。',
+        text: v(
+          'よし。ならば最初にやることは一つ。お前の“相棒”を喚び出す。共に創るAIだ。',
+          'よし。なら最初にやることは一つさ。アンタの“相棒”を喚び出す。共に創るAIだよ。'
+        ),
       },
-      { narration: true, text: '棟梁が、奥の祭壇のような端末を指し示す。画面が、静かに光を待っている。' },
+      {
+        narration: true,
+        text: v(
+          '棟梁が、奥の祭壇のような端末を指し示す。画面が、静かに光を待っている。',
+          'ヴェイルが、奥の祭壇のような端末を指し示す。画面が、静かに光を待っている。'
+        ),
+      },
     ],
   };
 
@@ -159,8 +183,8 @@ export function buildChapter0(edition: Edition): Chapter {
         portrait: 'mentor',
         side: 'left',
         text: v(
-          '相棒は、現実の道具として呼び出す。きみの相棒は「クロード」――その正体は、ターミナルに棲むAI〈Claude Code〉だ。',
-          '相棒は現実の道具として呼び出す。お前の相棒は「カーサ」――その正体は、AIエディタ〈Cursor〉だ。'
+          '相棒は、現実の道具として呼び出す。お前の相棒は「クロード」――その正体は、ターミナルに棲むAI〈Claude Code〉だ。',
+          '相棒は現実の道具として呼び出すのさ。アンタの相棒は「カーサ」――その正体は、AIエディタ〈Cursor〉だ。'
         ),
       },
       {
@@ -178,7 +202,7 @@ export function buildChapter0(edition: Edition): Chapter {
         side: 'right',
         text: v(
           '身構えないで。やることは「黒い画面（ターミナル）に、書いてある“呪文”をコピペして実行」するだけ。一度やれば終わりだ。',
-          '身構えんな。やるのは「黒い画面（ターミナル）に、書いてある“呪文”をコピペして実行」するだけ。一回やりゃ終わりだ。'
+          '身構えんな。やるのは「公式サイトからアプリを入れて、サインインする」だけ。黒い画面なんか要らねぇ。一回やりゃ終わりだ。'
         ),
       },
       {
@@ -272,7 +296,10 @@ export function buildChapter0(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: `相棒は喚べた。次は実戦だ。${pName}と共に、ギルドの初依頼に挑め。`,
+        text: v(
+          `相棒は喚べた。次は実戦だ。${pName}と共に、ギルドの初依頼に挑め。`,
+          `相棒は喚べたね。次は実戦さ。${pName}と組んで、クルーの初依頼に挑みな。`
+        ),
       },
       { narration: true, text: '― こうして、きみの創造の物語が始まった。次なる地は、第1章「初依頼」。 ―' },
     ],

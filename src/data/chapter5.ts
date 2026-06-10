@@ -153,12 +153,17 @@ export function buildChapter5(edition: Edition): Chapter {
       goal: '作ったページをGitHub Pagesで無料公開するよう、自分の言葉で頼もう。',
       hint: '“GitHub Pagesで公開” ＋ “何のページか” を伝えよう。',
       learn: 'GitHub Pagesを使えば、作ったWebページを無料で世界に公開できる。',
-      placeholder: '例）このギルドのページを GitHub Pages で公開して、誰でもURLで見られるようにして。',
+      placeholder: v(
+        '例）このギルドのページを GitHub Pages で公開して、誰でもURLで見られるようにして。',
+        '例）このアジトのページを GitHub Pages で公開して、誰でもURLで見られるようにして。'
+      ),
       keywords: ['github', 'pages', 'ページ', '公開', 'url', 'サイト', '世界', '無料', '見られる'],
       minKeywords: 2,
       sampleAnswer: 'このページを GitHub Pages で公開して、誰でもURLでアクセスできるようにして。',
-      successResponse:
+      successResponse: v(
         'GitHub Pages で公開したよ。URLができた ── 世界中の誰でも、ブラウザを開けばきみの作品にアクセスできる。「届かぬ声」は、もういない。',
+        'GitHub Pages で公開したぜ。URLができた ── 世界中の誰でも、ブラウザを開けばアンタの作品にアクセスできる。「届かぬ声」は、もういない。'
+      ),
       artifact: { title: 'you.github.io/vibe-guild', body: ['🌐 公開URL 発行', '✓ 世界に届く'], fixed: true },
     },
     outro: [
@@ -213,8 +218,10 @@ export function buildChapter5(edition: Edition): Chapter {
       keywords: ['配', '公開', 'exe', 'pages', 'github', '共有', 'url', '届け', 'ダウンロード', '配布'],
       minKeywords: 2,
       sampleAnswer: '自分が作ったツールを EXE にして、チームみんながダウンロードして使えるように配って。',
-      successResponse:
+      successResponse: v(
         'いいね、その通りにしたよ。きみの作品が、きみの手元を離れて誰かのもとへ届いていく。「作って終わり」じゃなく「届けて完成」――もう、きみはそれを自分でできる。',
+        'いいね、注文どおりにしたぜ。アンタの作品が、アンタの手元を離れて誰かのもとへ届いていく。「作って終わり」じゃなく「届けて完成」――もう、アンタはそれを自分でできる。'
+      ),
       artifact: { title: 'dist/ → 世界へ', body: ['📦 きみの作品', '✓ 配布・公開ずみ', '👥 使う人のもとへ'], fixed: true },
     },
     outro: [

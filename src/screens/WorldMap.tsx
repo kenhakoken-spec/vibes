@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { UPCOMING } from '../data/chapters';
-import { rankTitle, skillChapters } from '../data/journey';
+import { earnedPowers as countEarnedPowers, rankTitle, skillChapters } from '../data/journey';
 import { CodexSheet } from '../components/CodexSheet';
 import { sfx } from '../engine/sfx';
 
@@ -14,7 +14,7 @@ export function WorldMap() {
   // 8つの力（バッジ）＝旅の本道
   const skills = skillChapters(chapters);
   const totalPowers = skills.length;
-  const earnedPowers = skills.filter((x) => isChapterCleared(x.index)).length;
+  const earnedPowers = countEarnedPowers(chapters, isChapterCleared);
   const title = rankTitle(earnedPowers);
   const pct = Math.round((earnedPowers / Math.max(1, totalPowers)) * 100);
   // 「現在地（次に挑む章）」＝解放済みで未クリアの最初の章
