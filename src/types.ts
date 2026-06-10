@@ -70,7 +70,8 @@ export type DiagramKind =
   | 'delegate'
   | 'web-parts'
   | 'rpa-flow'
-  | 'ship-flow';
+  | 'ship-flow'
+  | 'journey';
 
 export interface ChoiceOption {
   id: string;

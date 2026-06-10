@@ -303,6 +303,63 @@ const RENDER: Record<DiagramKind, (uid: string) => React.ReactElement> = {
       </g>
     </svg>
   ),
+  /* 旅の全体像：8つの力（第1〜8章のバッジ）→ 頂のOVERSEER へ至る道 */
+  journey: (uid) => (
+    <svg className="dgm__svg" viewBox="0 0 320 232" role="img" aria-label="創造の旅路の図">
+      <ArrowDefs uid={uid} />
+      {/* 背景のシャード（P5風の差し色） */}
+      <polygon points="0,0 48,0 0,32" fill="var(--accent)" opacity="0.14" />
+      <polygon points="320,232 270,232 320,198" fill="var(--accent)" opacity="0.14" />
+      <text x="160" y="18" textAnchor="middle" fontSize="11" fontWeight="700" fill="#f5f5f7">
+        創造の旅路 ── 8つの力と、その先の頂
+      </text>
+      {/* わずかに傾けて“疾走感”を出す */}
+      <g transform="rotate(-2 160 124)">
+        {/* 道筋（ジグザグの破線） */}
+        <path d="M42 52 L276 52 L276 112 L42 112" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="5 4" opacity="0.45" />
+        {/* 最終区間：8つ目の力から頂へ */}
+        <path d="M42 112 L146 160" fill="none" stroke="var(--gold)" strokeWidth="2" strokeDasharray="5 4" opacity="0.85" markerEnd={`url(#mk-${uid})`} />
+        <text x="42" y="32" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--gold)" letterSpacing="2">
+          START
+        </text>
+        {/* 8つの力（菱形バッジ）。並びは章の順 */}
+        {[
+          { x: 42, y: 52, n: 1, t: '創る力' },
+          { x: 120, y: 52, n: 2, t: '失わない力' },
+          { x: 198, y: 52, n: 3, t: '自動化の力' },
+          { x: 276, y: 52, n: 4, t: '繋ぐ力' },
+          { x: 276, y: 112, n: 5, t: '届ける力' },
+          { x: 198, y: 112, n: 6, t: '規模の力' },
+          { x: 120, y: 112, n: 7, t: '守る力' },
+          { x: 42, y: 112, n: 8, t: '見抜く力' },
+        ].map((p) => (
+          <g key={p.n}>
+            <path
+              d={`M${p.x} ${p.y - 10} L${p.x + 10} ${p.y} L${p.x} ${p.y + 10} L${p.x - 10} ${p.y} Z`}
+              fill="#1a1a24"
+              stroke="var(--accent)"
+              strokeWidth="2"
+            />
+            <text x={p.x} y={p.y + 3.5} textAnchor="middle" fontSize="9" fontWeight="700" fill="var(--accent)">
+              {p.n}
+            </text>
+            <text x={p.x} y={p.y + 25} textAnchor="middle" fontSize="7.5" fill="var(--ink-dim)">
+              {p.t}
+            </text>
+          </g>
+        ))}
+        {/* 頂：管理者AI OVERSEER（金の大菱形） */}
+        <path d="M160 152 L178 170 L160 188 L142 170 Z" fill="#1a1a24" stroke="var(--gold)" strokeWidth="2.5" />
+        <path d="M160 162 L168 170 L160 178 L152 170 Z" fill="var(--accent)" opacity="0.85" />
+        <text x="160" y="204" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--gold)" letterSpacing="1">
+          OVERSEER
+        </text>
+      </g>
+      <text x="160" y="226" textAnchor="middle" fontSize="9" fill="var(--ink-faint)">
+        現在地は「創造の地図」でいつでも確かめられる
+      </text>
+    </svg>
+  ),
   delegate: () => (
     <svg className="dgm__svg" viewBox="0 0 320 160" role="img" aria-label="任せる量の図">
       <text x="80" y="20" textAnchor="middle" fontSize="11" fill="var(--ink-faint)">

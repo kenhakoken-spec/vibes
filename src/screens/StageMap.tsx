@@ -4,11 +4,18 @@ import { useGame } from '../store/gameStore';
 import { BossGlyph } from '../components/BossGlyph';
 import { BossIntro } from '../components/BossIntro';
 import { rankFor, RANK_COLOR } from '../engine/rank';
+import { skillChapters } from '../data/journey';
 
 export function StageMap() {
-  const { chapter, edition, results, enterStage, isUnlocked, toWorld } = useGame();
+  const { chapter, chapters, chapterIndex, edition, results, enterStage, isUnlocked, toWorld } = useGame();
   const clearedAll = chapter ? chapter.stages.every((s) => results[s.id]?.cleared) : false;
   const [showIntro, setShowIntro] = useState(!!chapter?.boss && !clearedAll);
+
+  // 旅の本道（8つの力）の中での現在位置と、ゴール（最終章）までの残り章数
+  const skills = skillChapters(chapters);
+  const powerNo = skills.findIndex((x) => x.index === chapterIndex) + 1;
+  const remaining = chapters.length - 1 - chapterIndex;
+  const isFinalChapter = chapterIndex >= chapters.length - 1;
 
   useEffect(() => {
     if (!showIntro) return;
@@ -38,6 +45,15 @@ export function StageMap() {
         <h2 className="display map__title">{chapter.title}</h2>
         <p className="map__subtitle">{chapter.subtitle}</p>
         {chapter.recap && <p className="map__recap">前回まで ── {chapter.recap}</p>}
+        {/* 章頭オリエンテーション：この章で得る力と、ゴールまでの距離（power を持つ章のみ） */}
+        {chapter.power && (
+          <div className="map__orient">
+            <span className="map__orient-power">
+              この章で得る力: <b>{chapter.power}</b>（{powerNo}/{skills.length}）
+            </span>
+            <span className="map__orient-goal">ゴール（OVERSEER）まで あと{remaining}章</span>
+          </div>
+        )}
       </header>
 
       {chapter.boss && (
@@ -94,7 +110,14 @@ export function StageMap() {
 
       <footer className="map__foot">
         {clearedAll ? (
-          <span className="map__done">第1章 制覇 ── きみは“作れる新人”になった。</span>
+          <span className="map__done">
+            {/* 章ごとに動的な制覇メッセージ（得た力 ＞ 最終決戦 ＞ その他） */}
+            {chapter.power
+              ? `${chapter.title} 制覇 ── きみは「${chapter.power}」を手に入れた。`
+              : isFinalChapter
+                ? `${chapter.title} 制覇 ── 「人とAIが共に創る自由」を取り戻した。`
+                : `${chapter.title} 制覇 ── 物語は次の地へ続く。`}
+          </span>
         ) : (
           <span className="map__hint">ノードを選んで依頼に挑め。クリアで次が解放される。</span>
         )}
