@@ -22,7 +22,6 @@ export function ChallengeScreen() {
   const [attempts, setAttempts] = useState(0);
   const [busy, setBusy] = useState(false);
   const [cleared, setCleared] = useState(false);
-  const [score, setScore] = useState(0);
   const [input, setInput] = useState('');
   const [pickedWrong, setPickedWrong] = useState<string[]>([]);
   const [showHint, setShowHint] = useState(false);
@@ -48,7 +47,6 @@ export function ChallengeScreen() {
     const res = await ai.judgeChoice(ch, opt);
     push({ role: 'ai', text: res.response });
     if (res.ok) {
-      setScore(res.score);
       setCleared(true);
       sfx.clear();
     } else {
@@ -68,7 +66,6 @@ export function ChallengeScreen() {
     const res = await ai.judgeFreeText(ch, text);
     push({ role: 'ai', text: res.response });
     if (res.ok) {
-      setScore(res.score);
       setCleared(true);
       sfx.clear();
     } else {
@@ -171,7 +168,7 @@ export function ChallengeScreen() {
           </div>
         )}
 
-        {cleared && <ClearedBar onNext={() => completeChallenge(score, attempts + 1)} />}
+        {cleared && <ClearedBar onNext={() => completeChallenge(attempts + 1)} />}
       </section>
     </motion.div>
   );

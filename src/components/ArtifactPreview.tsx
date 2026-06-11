@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useSettings } from '../store/settingsStore';
 import type { ArtifactKind, ArtifactState } from '../types';
+
+/** OS設定(prefers-reduced-motion) とアプリ内モーションOFF の両方に従う */
+function useMotionOff() {
+  const osReduced = useReducedMotion();
+  const motionOn = useSettings((s) => s.motion);
+  return !motionOn || !!osReduced;
+}
 
 /**
  * 章を通して育つ“成果物”の表示。種類ごとに正しい見た目で描き分ける。
@@ -132,28 +140,44 @@ function TerminalView({ a }: { a: ArtifactState }) {
 }
 
 /* ---- game: ネオンシューティング ------------------------------------- */
-/** SCORE を target までカウントアップ（“動いているゲーム”の生気） */
-function useCountUp(target: number, ms = 1800) {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    const t0 = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - t0) / ms);
-      setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, ms]);
-  return n;
-}
+/** 敵編隊は 3×2 の6機。撃破されても次の波がすぐ補充される（ループ） */
+const FOES = [0, 1, 2, 3, 4, 5];
 
 function GameView({ a }: { a: ArtifactState }) {
   // body[0]=ゲームタイトル / body[1]="SCORE 12800" 形式（無ければ既定値）
   const gameTitle = a.body[0] ?? 'NEON SHOOTER';
-  const target = Number((a.body[1] ?? '').replace(/\D/g, '')) || 12800;
-  const score = useCountUp(target);
+  const base = Number((a.body[1] ?? '').replace(/\D/g, '')) || 12800;
+  const motionOff = useMotionOff();
+  // “プレイ中”のスコア。撃ち続けている間じゅう刻まれ、撃破でボーナスが乗る
+  const [score, setScore] = useState(motionOff ? base : 0);
+  const [boom, setBoom] = useState<{ idx: number; id: number } | null>(null);
+
+  useEffect(() => {
+    if (motionOff) {
+      setScore(base);
+      return;
+    }
+    const tick = window.setInterval(
+      () => setScore((s) => s + 20 + Math.floor(Math.random() * 60)),
+      140
+    );
+    // 約1秒ごとにどれかの敵が散る（フラッシュ + 撃破ボーナス）
+    let id = 0;
+    let clear = 0;
+    const kill = window.setInterval(() => {
+      id += 1;
+      setBoom({ idx: Math.floor(Math.random() * FOES.length), id });
+      setScore((s) => s + 250);
+      window.clearTimeout(clear);
+      clear = window.setTimeout(() => setBoom(null), 460);
+    }, 1050);
+    return () => {
+      window.clearInterval(tick);
+      window.clearInterval(kill);
+      window.clearTimeout(clear);
+    };
+  }, [motionOff, base]);
+
   return (
     <>
       <div className="artifact__bar artifact__bar--term">
@@ -178,32 +202,78 @@ function GameView({ a }: { a: ArtifactState }) {
             </svg>
           ))}
         </motion.div>
-        {/* 敵編隊（ゆらぎ） */}
+
+        {/* 撃破の瞬間、画面がうっすら明滅する */}
+        <AnimatePresence>
+          {boom && (
+            <motion.div
+              key={`flash-${boom.id}`}
+              className="artifact__game-flash"
+              initial={{ opacity: 0.2 }}
+              animate={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* 敵編隊：左右にスウェイしながら、じわじわ降りてくる */}
         <motion.div
           className="artifact__game-foes"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2.2, ease: 'easeInOut', repeat: Infinity }}
+          animate={{ y: [0, 20, 0], x: [-8, 8, -8] }}
+          transition={{
+            y: { duration: 6.5, ease: 'easeInOut', repeat: Infinity },
+            x: { duration: 2.4, ease: 'easeInOut', repeat: Infinity },
+          }}
         >
-          <span>▼</span>
-          <span>▼</span>
-          <span>▼</span>
+          {FOES.map((i) => (
+            <span
+              key={i}
+              className="artifact__game-foe"
+              style={{ opacity: boom?.idx === i ? 0 : 1 }}
+            >
+              ▼
+            </span>
+          ))}
+          {/* 撃破フラッシュ（散った敵の位置で弾ける） */}
+          <AnimatePresence>
+            {boom && (
+              <motion.span
+                key={boom.id}
+                className="artifact__game-boom"
+                style={{
+                  left: `${(boom.idx % 3) * 33.4 + 16.7}%`,
+                  top: boom.idx < 3 ? '-12%' : '52%',
+                }}
+                initial={{ scale: 0.3, opacity: 1 }}
+                animate={{ scale: 2, opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.45, ease: 'easeOut' }}
+              >
+                ✦
+              </motion.span>
+            )}
+          </AnimatePresence>
         </motion.div>
-        {/* 自機の弾 */}
-        <motion.span
-          className="artifact__game-shot"
-          animate={{ y: [-4, -86], opacity: [1, 0] }}
-          transition={{ duration: 0.7, ease: 'linear', repeat: Infinity, repeatDelay: 0.35 }}
+
+        {/* 自機リグ：機体と弾が一体で左右に流れる（弾は自機から連射） */}
+        <motion.div
+          className="artifact__game-rig"
+          animate={{ x: [-34, 26, -12, 34, -34] }}
+          transition={{ duration: 5.6, ease: 'easeInOut', repeat: Infinity }}
         >
-          |
-        </motion.span>
-        {/* 自機 */}
-        <motion.span
-          className="artifact__game-ship"
-          animate={{ x: [-26, 22, -26] }}
-          transition={{ duration: 3.4, ease: 'easeInOut', repeat: Infinity }}
-        >
-          ▲
-        </motion.span>
+          {!motionOff &&
+            [0, 1, 2].map((i) => (
+              <motion.span
+                key={i}
+                className="artifact__game-shot"
+                animate={{ y: [0, -110], opacity: [1, 1, 0] }}
+                transition={{ duration: 0.55, ease: 'linear', repeat: Infinity, delay: i * 0.18 }}
+              />
+            ))}
+          <span className="artifact__game-ship">▲</span>
+        </motion.div>
+
         <div className="artifact__game-hud">
           <span className="artifact__game-title">{gameTitle}</span>
           <span className="artifact__game-score">SCORE {score.toLocaleString()}</span>
@@ -215,7 +285,75 @@ function GameView({ a }: { a: ArtifactState }) {
 
 /* ---- dashboard: 監視盤面 -------------------------------------------- */
 /** body 1行 = "ラベル|値|増減" 形式の KPI。増減は +/-/0 始まり */
+
+/** "98.2%" のような値の数値部分を、カウントアップ→微小な揺らぎで“生かす” */
+function useLiveValue(raw: string, motionOff: boolean, delayMs = 0) {
+  const [text, setText] = useState(motionOff ? raw : raw.replace(/-?\d+(?:\.\d+)?/, '0'));
+  useEffect(() => {
+    const m = raw.match(/-?\d+(?:\.\d+)?/);
+    if (motionOff || !m) {
+      setText(raw);
+      return;
+    }
+    const target = parseFloat(m[0]);
+    const dec = (m[0].split('.')[1] ?? '').length;
+    const render = (n: number) => raw.replace(m[0], Math.max(0, n).toFixed(dec));
+    // ① 立ち上がりのカウントアップ（約0.9秒）
+    const t0 = performance.now() + delayMs;
+    let raf = 0;
+    const grow = (t: number) => {
+      const p = Math.min(1, Math.max(0, (t - t0) / 900));
+      setText(render(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(grow);
+    };
+    raf = requestAnimationFrame(grow);
+    // ② その後は計測値らしく小さくティックし続ける（0 は 0 のまま）
+    const amp = target === 0 ? 0 : Math.max(Math.abs(target) * 0.012, dec > 0 ? 0.1 : 1);
+    const jitter = window.setInterval(() => {
+      setText(render(target + (Math.random() * 2 - 1) * amp));
+    }, 1400 + delayMs);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearInterval(jitter);
+    };
+  }, [raw, motionOff, delayMs]);
+  return text;
+}
+
+function KpiCard({
+  k,
+  i,
+  motionOff,
+}: {
+  k: { label: string; value: string; delta: string };
+  i: number;
+  motionOff: boolean;
+}) {
+  const value = useLiveValue(k.value, motionOff, i * 120);
+  return (
+    <motion.div
+      className="artifact__dash-card"
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15 + i * 0.12 }}
+    >
+      <span className="artifact__dash-label">{k.label}</span>
+      <span className="artifact__dash-value">{value}</span>
+      {k.delta && (
+        <span className={`artifact__dash-delta ${k.delta.startsWith('-') ? 'is-down' : 'is-up'}`}>
+          {k.delta.startsWith('-') ? '▼' : k.delta === '0' ? '─' : '▲'} {k.delta.replace(/^[+-]/, '')}
+        </span>
+      )}
+    </motion.div>
+  );
+}
+
+const SPARK_A = 'M0 18 L12 14 L24 16 L36 9 L48 12 L60 6 L72 9 L84 4 L100 7';
+const SPARK_B = 'M0 16 L12 17 L24 11 L36 13 L48 7 L60 10 L72 6 L84 9 L100 3';
+const SPARK_C = 'M0 19 L12 13 L24 15 L36 8 L48 13 L60 7 L72 10 L84 5 L100 8';
+
 function DashboardView({ a }: { a: ArtifactState }) {
+  const motionOff = useMotionOff();
   const kpis = a.body.map((line) => {
     const [label = '', value = '', delta = ''] = line.split('|');
     return { label, value, delta };
@@ -230,46 +368,76 @@ function DashboardView({ a }: { a: ArtifactState }) {
         <span className="artifact__url">{a.title}</span>
       </div>
       <div className="artifact__dash">
+        {/* ライブ計測中のインジケータ */}
+        <div className="artifact__dash-head">
+          <span className="artifact__dash-live">
+            <motion.span
+              className="artifact__dash-livedot"
+              animate={motionOff ? undefined : { opacity: [1, 0.2, 1] }}
+              transition={{ duration: 1.3, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            LIVE
+          </span>
+          <span className="artifact__dash-feed">受信中 ─ 12 sensors</span>
+        </div>
         <div className="artifact__dash-kpis">
           {kpis.slice(0, 4).map((k, i) => (
-            <motion.div
-              key={i}
-              className="artifact__dash-card"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 + i * 0.12 }}
-            >
-              <span className="artifact__dash-label">{k.label}</span>
-              <span className="artifact__dash-value">{k.value}</span>
-              {k.delta && (
-                <span className={`artifact__dash-delta ${k.delta.startsWith('-') ? 'is-down' : 'is-up'}`}>
-                  {k.delta.startsWith('-') ? '▼' : k.delta === '0' ? '─' : '▲'} {k.delta.replace(/^[+-]/, '')}
-                </span>
-              )}
-            </motion.div>
+            <KpiCard key={i} k={k} i={i} motionOff={motionOff} />
           ))}
         </div>
-        {/* バーチャート（時間差で伸びる） */}
+        {/* バーチャート：時間差で伸び、その後も呼吸するように伸び縮みを繰り返す */}
         <div className="artifact__dash-bars">
           {bars.map((w, i) => (
             <motion.span
               key={i}
-              initial={{ width: 0 }}
-              animate={{ width: `${w}%` }}
+              className="artifact__dash-bar"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: w / 100 }}
               transition={{ delay: 0.5 + i * 0.1, duration: 0.5, ease: 'easeOut' }}
-            />
+            >
+              <motion.span
+                className="artifact__dash-barfill"
+                animate={motionOff ? undefined : { scaleX: [1, 0.72, 1.04, 0.85, 1] }}
+                transition={{
+                  delay: 1.1 + i * 0.18,
+                  duration: 3 + i * 0.35,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            </motion.span>
           ))}
         </div>
-        {/* 折れ線スパークライン */}
+        {/* 折れ線スパークライン：描画されたあと、波形が更新され続ける */}
         <svg className="artifact__dash-spark" viewBox="0 0 100 24" preserveAspectRatio="none">
           <motion.path
-            d="M0 18 L12 14 L24 16 L36 9 L48 12 L60 6 L72 9 L84 4 L100 7"
             fill="none"
             strokeWidth="1.6"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ delay: 0.7, duration: 0.9, ease: 'easeOut' }}
+            initial={{ pathLength: 0, d: SPARK_A }}
+            animate={
+              motionOff
+                ? { pathLength: 1, d: SPARK_A }
+                : { pathLength: 1, d: [SPARK_A, SPARK_B, SPARK_C, SPARK_A] }
+            }
+            transition={{
+              pathLength: { delay: 0.7, duration: 0.9, ease: 'easeOut' },
+              d: { delay: 2, duration: 7, repeat: Infinity, ease: 'easeInOut' },
+            }}
           />
+          {/* 最新値の点（波形の終端で脈打つ） */}
+          {!motionOff && (
+            <motion.circle
+              className="artifact__dash-sparkdot"
+              cx="100"
+              r="1.8"
+              initial={{ cy: 7, opacity: 0 }}
+              animate={{ cy: [7, 3, 8, 7], opacity: [1, 0.45, 1, 1] }}
+              transition={{
+                cy: { delay: 2, duration: 7, repeat: Infinity, ease: 'easeInOut' },
+                opacity: { delay: 1.6, duration: 1.3, repeat: Infinity },
+              }}
+            />
+          )}
         </svg>
       </div>
     </>

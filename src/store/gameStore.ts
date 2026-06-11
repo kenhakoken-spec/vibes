@@ -84,7 +84,7 @@ interface GameState {
   toWorld: () => void;
   enterStage: (index: number) => void;
   beginChallenge: () => void;
-  completeChallenge: (score: number, attempts: number) => void;
+  completeChallenge: (attempts: number) => void;
   finishOutro: () => void;
   closeResult: () => void;
   backToTitle: () => void;
@@ -192,7 +192,16 @@ export const useGame = create<GameState>((set, get) => ({
     const { chapters, chapterIndex } = get();
     const ni = chapterIndex + 1;
     if (chapters[ni]) {
-      set({ chapterIndex: ni, chapter: chapters[ni], stageIndex: 0, screen: 'map' });
+      // 序章クリア直後だけは世界地図を経由する。
+      // 師の語る「地図」＝旅の全体像（現在地▶と OVERSEER までの道）を最初の10分で見せるため。
+      // 2章目以降のクリアは従来どおり次章マップへ直行。
+      const viaWorld = chapters[chapterIndex]?.id === 'ch0';
+      set({
+        chapterIndex: ni,
+        chapter: chapters[ni],
+        stageIndex: 0,
+        screen: viaWorld ? 'world' : 'map',
+      });
     } else {
       set({ screen: 'world' });
     }
@@ -207,11 +216,11 @@ export const useGame = create<GameState>((set, get) => ({
 
   beginChallenge: () => set({ screen: 'challenge' }),
 
-  completeChallenge: (score, attempts) => {
+  completeChallenge: (attempts) => {
     const { chapter, stageIndex, results, learned, edition } = get();
     const stage = chapter?.stages[stageIndex];
     if (!stage) return;
-    const nextResults = { ...results, [stage.id]: { cleared: true, score, attempts } };
+    const nextResults = { ...results, [stage.id]: { cleared: true, attempts } };
     const nextLearned = learned.includes(stage.challenge.learn)
       ? learned
       : [...learned, stage.challenge.learn];

@@ -12,8 +12,6 @@ export interface AIResult {
   ok: boolean;
   /** AIが画面に話す本文（タイプライタ表示される） */
   response: string;
-  /** 0..1 の品質スコア。ランク算出に使う */
-  score: number;
   /** 不正解/不十分のときの誘導メッセージ */
   nudge?: string;
 }
@@ -32,12 +30,11 @@ export class SimulatedProvider implements AIProvider {
   async judgeChoice(challenge: Challenge, option: ChoiceOption): Promise<AIResult> {
     await think(600);
     if (option.correct) {
-      return { ok: true, response: challenge.successResponse, score: 1 };
+      return { ok: true, response: challenge.successResponse };
     }
     return {
       ok: false,
       response: option.feedback,
-      score: 0,
       nudge: 'もう一度、いちばん具体的な頼み方を選んでみよう。',
     };
   }
@@ -53,19 +50,17 @@ export class SimulatedProvider implements AIProvider {
     const enoughLength = input.trim().length >= 8;
 
     if (distinct.length >= need && enoughLength) {
-      // 0..1 を、満たした手がかり数で滑らかに
-      const score = clamp(distinct.length / (need + 2), 0.6, 1);
-      return { ok: true, response: challenge.successResponse, score };
+      return { ok: true, response: challenge.successResponse };
     }
 
     // 不十分なときは、その課題のヒントをそのまま誘導に使う（章ごとに適切）
+    // ※両編の相棒が話すため、一人称（ぼく/アタシ）は使わない中立文
     const tooShort = !enoughLength;
     return {
       ok: false,
       response: tooShort
-        ? 'うーん、もう少しだけ詳しく教えてくれる？ 一言だと、何をすればいいか掴みきれないな。'
-        : 'なるほど、惜しい。あと少し具体的に頼んでくれると、ぼくも動きやすいよ。',
-      score: 0,
+        ? 'うーん、もう少しだけ詳しく教えて。一言だと、何をすればいいか掴みきれない。'
+        : 'なるほど、惜しい。あと少しだけ具体的に頼んでもらえれば、すぐ動ける。',
       nudge: challenge.hint,
     };
   }
@@ -97,10 +92,6 @@ function dedupeByMeaning(words: string[]): string[] {
     hit.add(idx === -1 ? `loose-${loose++}` : `g-${idx}`);
   }
   return [...hit];
-}
-
-function clamp(n: number, lo: number, hi: number): number {
-  return Math.max(lo, Math.min(hi, n));
 }
 
 /* 既定のプロバイダ。差し替えるならここを変えるだけ。 */

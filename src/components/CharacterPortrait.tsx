@@ -5,6 +5,12 @@ import type { Expression, PortraitVariant } from '../types';
    スタイライズド・キャラ肖像（SVG）— マンガ風の硬い陰影・インク輪郭・網点・
    リムライト。後でAI生成イラストに差し替えるなら imageSrc。
    ※ defのidはインスタンス毎にユニーク化（複数表示時のID衝突＝色化けを防ぐ）。
+
+   顔の文法（全キャラ共通・最近の二宮和也を基準にしたナチュラル路線）:
+   - 髪は作り込まないセンターパート/流しの短髪。額の見える三角形・分け目の
+     根本の立ち上がり・左右非対称の毛流れで「自然な毛」を出す（マッシュ禁止）。
+   - 目はタレ目気味の優しいアーモンド形（つり目NG）。眉は自然なアーチ。
+   - 口は薄めの唇の穏やかな口元。気取らない愛嬌＋知的な余裕。
    ========================================================================= */
 
 interface Props {
@@ -119,37 +125,12 @@ function Defs({ accent, uid }: { accent: string; uid: string }) {
         <stop offset="55%" stopColor={accent} stopOpacity="0.1" />
         <stop offset="100%" stopColor={accent} stopOpacity="0" />
       </radialGradient>
-      {/* 肌（明るめのライト面→クールな影。顔がはっきり読める“キャラ”の質感） */}
-      <linearGradient id={`skin-${uid}`} x1="0.3" y1="0" x2="0.72" y2="1">
-        <stop offset="0%" stopColor="#d8b4a6" />
-        <stop offset="42%" stopColor="#a9838a" />
-        <stop offset="78%" stopColor="#5d4654" />
-        <stop offset="100%" stopColor="#2c2030" />
-      </linearGradient>
-      {/* 肌・相棒用（明るくクリア＝イケメンの透明感。Hero/Mentorは従来のskinを使う） */}
+      {/* 肌・大人用（メンター。落ち着いたトーンで年齢感） */}
       <linearGradient id={`skin2-${uid}`} x1="0.3" y1="0" x2="0.72" y2="1">
-        <stop offset="0%" stopColor="#f0d4c3" />
-        <stop offset="45%" stopColor="#d2a49b" />
-        <stop offset="80%" stopColor="#946f7c" />
-        <stop offset="100%" stopColor="#5a4358" />
-      </linearGradient>
-      {/* 髪（深い・上に少し明るさ） */}
-      <linearGradient id={`hair-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
-        <stop offset="0%" stopColor="#1c1c26" />
-        <stop offset="60%" stopColor="#0e0e16" />
-        <stop offset="100%" stopColor="#050509" />
-      </linearGradient>
-      {/* 髪・クロード用（柔らかいダークブラウン＝優しい印象のマッシュ） */}
-      <linearGradient id={`hairC-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
-        <stop offset="0%" stopColor="#54402f" />
-        <stop offset="55%" stopColor="#37271b" />
-        <stop offset="100%" stopColor="#1e130d" />
-      </linearGradient>
-      {/* 髪・カーサ用（自然な黒。青みは抑えてソフトに） */}
-      <linearGradient id={`hairK-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
-        <stop offset="0%" stopColor="#2b2b34" />
-        <stop offset="55%" stopColor="#17171f" />
-        <stop offset="100%" stopColor="#0a0a10" />
+        <stop offset="0%" stopColor="#ecd0b8" />
+        <stop offset="45%" stopColor="#cda08c" />
+        <stop offset="80%" stopColor="#8f6a70" />
+        <stop offset="100%" stopColor="#564050" />
       </linearGradient>
       {/* 肌・ソフト（卵形の柔らかい顔用。影もウォームに寄せて穏やかに） */}
       <linearGradient id={`skinSoft-${uid}`} x1="0.3" y1="0" x2="0.72" y2="1">
@@ -157,6 +138,30 @@ function Defs({ accent, uid }: { accent: string; uid: string }) {
         <stop offset="48%" stopColor="#e6b8a6" />
         <stop offset="82%" stopColor="#b8847f" />
         <stop offset="100%" stopColor="#7e5c64" />
+      </linearGradient>
+      {/* 髪・クロード用（グレーアッシュ＝ブラックペアン2期のニノの髪色） */}
+      <linearGradient id={`hairC-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
+        <stop offset="0%" stopColor="#b4b8c4" />
+        <stop offset="52%" stopColor="#83889a" />
+        <stop offset="100%" stopColor="#4a4e5e" />
+      </linearGradient>
+      {/* 髪・カーサ用（自然な黒。青みは抑えてソフトに） */}
+      <linearGradient id={`hairK-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
+        <stop offset="0%" stopColor="#34343e" />
+        <stop offset="55%" stopColor="#1c1c24" />
+        <stop offset="100%" stopColor="#0c0c12" />
+      </linearGradient>
+      {/* 髪・主人公用（ダークブラウンの爽やかな短髪） */}
+      <linearGradient id={`hairH-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
+        <stop offset="0%" stopColor="#604834" />
+        <stop offset="55%" stopColor="#3d2c1e" />
+        <stop offset="100%" stopColor="#22150b" />
+      </linearGradient>
+      {/* 髪・メンター用（白髪混じりのアイアングレー＝貫禄） */}
+      <linearGradient id={`hairM-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
+        <stop offset="0%" stopColor="#9aa0ad" />
+        <stop offset="55%" stopColor="#646a78" />
+        <stop offset="100%" stopColor="#343844" />
       </linearGradient>
       {/* 衣服（やや青みの暗色） */}
       <linearGradient id={`cloth-${uid}`} x1="0.3" y1="0" x2="0.7" y2="1">
@@ -200,8 +205,9 @@ function CastShadow({ d, opacity = 0.32 }: { d: string; opacity?: number }) {
   return <path d={d} fill="#000" opacity={opacity} />;
 }
 
-/** 柔らかいアーモンド形の目（優しい正統派イケメン用）。中心(cx,cy)に描き、flipで左右反転。
-   目尻は上げすぎず、二重まぶたのライン・穏やかなキャッチライト・控えめな涙袋で「優しい目」を作る。 */
+/** 目。中心(cx,cy)に描き、flipで左右反転。
+   デフォルトはタレ目気味の優しいアーモンド形（目尻がわずかに下がる＝つり目NG）。
+   sharp=trueで切れ長の大人の目（メンター用）。irisで虹彩色を上書き（既定はaccent）。 */
 function Eye({
   cx,
   cy,
@@ -209,6 +215,8 @@ function Eye({
   uid,
   flip = false,
   size = 1.28,
+  sharp = false,
+  iris,
 }: {
   cx: number;
   cy: number;
@@ -216,10 +224,18 @@ function Eye({
   uid: string;
   flip?: boolean;
   size?: number;
+  sharp?: boolean;
+  iris?: string;
 }) {
-  const cid = `eyeclip-${uid}-${flip ? 'l' : 'r'}`;
-  // 横長のアーモンド形（+x=目尻側。縦を抑えて男性的に・目尻はわずかに上がる程度＝穏やか）
-  const sclera = 'M-12 1.2 Q-6 -4.8 1 -5.2 Q9 -5.4 12.5 -1.2 Q10 3 2.5 4.2 Q-6 4.8 -12 1.2 Z';
+  const cid = `eyeclip-${uid}-${flip ? 'l' : 'r'}${sharp ? 's' : ''}`;
+  const irisColor = iris ?? accent;
+  // 横長のアーモンド形（+x=目尻側）。soft=目尻が目頭よりわずかに低い「タレ目気味」
+  const sclera = sharp
+    ? 'M-12 1 Q-5.5 -4.2 1.5 -4.6 Q9 -4.6 13 -1.4 Q10.2 2.8 2.5 3.8 Q-6 4 -12 1 Z'
+    : 'M-12 0.2 Q-6 -4.8 0.5 -5.2 Q8.5 -5.2 12.5 1.4 Q9.5 4.6 2 5 Q-6 4.8 -12 0.2 Z';
+  const upperLid = sharp
+    ? 'M-12.5 1 Q-5 -5.2 2 -5.4 Q10 -5.2 14 -1.8'
+    : 'M-12.5 0.2 Q-6.5 -6 0.5 -6 Q8.5 -5.6 13.2 1.8';
   return (
     <g transform={`translate(${cx} ${cy}) scale(${flip ? -size : size} ${size})`}>
       <clipPath id={cid}>
@@ -229,110 +245,55 @@ function Eye({
       <path d={sclera} fill="#eeedf4" />
       <g clipPath={`url(#${cid})`}>
         {/* 虹彩（大きめ＝まぶたに上下を切られて自然なアニメの目になる。やや鼻側＝カメラ目線） */}
-        <circle cx="-0.5" cy="-0.5" r="6.6" fill={accent} />
-        <circle cx="-0.5" cy="-0.5" r="6.2" fill="none" stroke="#14101a" strokeOpacity="0.5" strokeWidth="1.2" />
-        <circle cx="-0.5" cy="-2.4" r="5.4" fill="#fff" opacity="0.12" />
-        <path d="M-9 2.4 Q0 5 11 1.4 L11 7 -9 7 Z" fill="#000" opacity="0.16" />
-        <circle cx="-0.5" cy="-0.4" r="3.4" fill="#14101a" />
+        <circle cx="-0.5" cy="-0.3" r="6.6" fill={irisColor} />
+        <circle cx="-0.5" cy="-0.3" r="6.2" fill="none" stroke="#14101a" strokeOpacity="0.5" strokeWidth="1.2" />
+        <circle cx="-0.5" cy="-2.2" r="5.4" fill="#fff" opacity="0.12" />
+        <path d="M-9 2.6 Q0 5.2 11 1.6 L11 7 -9 7 Z" fill="#000" opacity="0.16" />
+        <circle cx="-0.5" cy="-0.2" r="3.4" fill="#14101a" />
         {/* 穏やかなキャッチライト（大小2つ・ギラつかせない） */}
-        <circle cx="-2.2" cy="-2.4" r="1.3" fill="#fff" />
-        <circle cx="2.4" cy="1.2" r="0.7" fill="#fff" opacity="0.7" />
+        <circle cx="-2.2" cy="-2.2" r="1.3" fill="#fff" />
+        <circle cx="2.4" cy="1.4" r="0.7" fill="#fff" opacity="0.7" />
         {/* 上まぶたの落ち影（目に奥行き） */}
-        <path d="M-12 -2 Q0 -6.4 12.5 -2.8 L12.5 -7 -12 -7 Z" fill="#000" opacity="0.14" />
+        <path d="M-12 -2 Q0 -6.4 12.5 -2.4 L12.5 -7 -12 -7 Z" fill="#000" opacity="0.14" />
       </g>
-      {/* 上まぶた（なだらかなアーチ・目尻で跳ね上げない／ここだけ太く＝男性的） */}
-      <path d="M-12.5 1.2 Q-5.5 -5.8 1.5 -6 Q9.5 -6 13.5 -1.6" fill="none" stroke={INK} strokeWidth="2.3" strokeLinecap="round" />
+      {/* 上まぶた（なだらかなアーチ・目尻側でゆるく下がる＝優しい目） */}
+      <path d={upperLid} fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
       {/* 二重まぶたのライン */}
-      <path d="M-9.5 -4.4 Q-0.5 -8.2 8.5 -5.6" fill="none" stroke={INK} strokeOpacity="0.3" strokeWidth="0.9" strokeLinecap="round" />
+      <path d="M-9.5 -4.4 Q-0.5 -8 8.5 -5" fill="none" stroke={INK} strokeOpacity="0.28" strokeWidth="0.9" strokeLinecap="round" />
       {/* 下まぶた（淡く＝縁取らない） */}
-      <path d="M-9 3.4 Q0 5.4 9.5 2.6" fill="none" stroke={INK} strokeOpacity="0.4" strokeWidth="1.1" strokeLinecap="round" />
+      <path d="M-9 3.6 Q0 5.6 9.5 3" fill="none" stroke={INK} strokeOpacity="0.38" strokeWidth="1.1" strokeLinecap="round" />
       {/* 涙袋（控えめな甘さ） */}
-      <path d="M-7.5 5.4 Q0 7 7.5 4.9" fill="none" stroke={INK} strokeOpacity="0.16" strokeWidth="0.9" strokeLinecap="round" />
+      <path d="M-7.5 5.6 Q0 7.2 7.5 5.2" fill="none" stroke={INK} strokeOpacity="0.15" strokeWidth="0.9" strokeLinecap="round" />
     </g>
   );
 }
 
 /* ---- HERO ----------------------------------------------------------- */
-/* フード付き・うつむき加減で決意のある新人。アクセントは白（中立）。 */
+/* プレイヤーの分身＝爽やかなナチュラル短髪の新人。フードは肩に下ろして素顔を見せる。
+   癖は控えめに、でも確実にかっこよく。アクセントは白（中立）。 */
 function HeroSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
-      {/* 肩・フードの外側 */}
-      <g stroke={INK} strokeWidth="3" strokeLinejoin="round">
-        {/* 上半身マント／フード裾 */}
-        <path d="M30 420 Q44 320 92 290 Q150 300 208 290 Q256 320 270 420 Z" fill={`url(#cloth-${uid})`} />
-        {/* フード（頭を包む大きなシルエット） */}
-        <path d="M70 168 Q60 78 150 56 Q240 78 230 168 Q236 232 196 262 L104 262 Q64 232 70 168 Z" fill={`url(#hair-${uid})`} />
-      </g>
-      {/* フード内側の影（顔を縁取る） */}
-      <path d="M98 170 Q98 92 150 78 Q202 92 202 170 Q204 226 150 246 Q96 226 98 170 Z" fill="#060609" stroke={INK} strokeWidth="2" />
-      {/* 顔（フードの奥・暗め） */}
-      <path d="M114 168 Q114 116 150 108 Q186 116 186 168 Q186 214 150 230 Q114 214 114 168 Z" fill={`url(#skin-${uid})`} stroke={INK} strokeWidth="2" />
-      {/* 顔の右側キャストシャドウ */}
-      <CastShadow d="M150 110 Q186 118 186 168 Q186 214 150 230 Z" opacity={0.34} />
-      {/* 網点（影側） */}
-      <path d="M150 124 Q182 132 182 168 Q180 206 150 222 Z" fill={`url(#halftone-${uid})`} opacity="0.22" />
-      {/* 前髪の毛束（フードの縁から覗く） */}
-      <g fill={`url(#hair-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round">
-        <path d="M118 120 Q126 150 110 168 Q108 138 118 120 Z" />
-        <path d="M150 112 Q150 146 134 158 Q132 132 150 112 Z" />
-        <path d="M182 122 Q176 150 190 168 Q192 140 182 122 Z" />
-      </g>
-      {/* 鋭い目（決意・伏し目がち） */}
-      <g>
-        <path d="M122 176 L143 170 L144 178 L123 182 Z" fill="#e9e9ef" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M178 176 L157 170 L156 178 L177 182 Z" fill="#e9e9ef" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
-        <circle cx="135" cy="176" r="2" fill="#0c0c12" />
-        <circle cx="165" cy="176" r="2" fill="#0c0c12" />
-        <circle cx="134.2" cy="175.2" r="0.8" fill="#fff" />
-        <circle cx="164.2" cy="175.2" r="0.8" fill="#fff" />
-      </g>
-      {/* 眉（表情） */}
-      <Brows L={{ ox: 120, oy: 166, ix: 144, iy: 162 }} R={{ ox: 180, oy: 166, ix: 156, iy: 162 }} sw={3} expr={expr} />
-      {/* 鼻 */}
-      <path d="M150 184 L153 196 L147 197" fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      {/* 口（表情） */}
-      <Mouth x={150} y={210} w={10} expr={expr} color="#000" op={0.55} sw={2.2} />
-      {/* 襟元の留め具（白アクセント） */}
-      <g fill={accent} stroke={INK} strokeWidth="1.5">
-        <path d="M150 300 L138 320 L150 330 L162 320 Z" />
-      </g>
-      <path d="M118 296 Q150 308 182 296" fill="none" stroke={accent} strokeWidth="2.5" opacity="0.7" strokeLinecap="round" />
-      {/* リムライト（フード輪郭・左上から） */}
-      <path d="M70 168 Q60 78 150 56" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4.5" opacity="0.8" strokeLinecap="round" />
-      {/* 白ハイライト（フード頂） */}
-      <path d="M104 86 Q150 64 196 86" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.32" />
-    </Frame>
-  );
-}
+      {/* 肩・マント */}
+      <path d="M30 420 Q44 320 92 290 Q150 300 208 290 Q256 320 270 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+      {/* 下ろしたフード（肩の後ろにたたまれた布） */}
+      <path d="M92 294 Q150 258 208 294 Q204 314 150 308 Q96 314 92 294 Z" fill="#11111a" stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="M104 296 Q150 270 196 296" fill="none" stroke="#000" strokeOpacity="0.5" strokeWidth="1.6" />
 
-/* ---- CLAUDE --------------------------------------------------------- */
-/* 柔らかい正統派の知性イケメン。卵形の輪郭×ナチュラルマッシュのダークブラウン。
-   「隣にいてくれる優しい天才」— 目尻を上げず、穏やかな微笑で。 */
-function ClaudeSvg({ accent, uid, expr }: SvgProps) {
-  return (
-    <Frame accent={accent} uid={uid}>
-      {/* 後光リング */}
-      <circle cx="150" cy="118" r="86" fill="none" stroke={accent} strokeOpacity={0.24} strokeWidth="2" />
-      <circle cx="150" cy="118" r="94" fill="none" stroke={accent} strokeOpacity={0.1} strokeWidth="1" strokeDasharray="2 6" />
-
-      {/* 肩・ローブ（高めの位置＝大人の体格） */}
-      <path d="M40 420 Q60 282 150 272 Q240 282 260 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
-
-      {/* 髪：後ろの短いマッシュシルエット（頭に沿わせて耳の高さで終える＝男性的な短さ。輪郭に微かな起伏） */}
+      {/* 髪：後ろの自然な短髪シルエット */}
       <path
-        d="M99 124 Q93 52 124 43 Q136 39 150 40 Q165 39 177 44 Q207 54 201 124 Q201 144 195 158 Q190 168 187 156 Q184 140 184 122 L116 122 Q116 140 113 156 Q110 168 105 158 Q99 144 99 124 Z"
-        fill={`url(#hairC-${uid})`}
+        d="M101 124 Q94 50 150 40 Q206 50 199 124 Q199 142 194 154 Q189 162 186 150 Q184 136 184 122 L116 122 Q116 136 114 150 Q111 162 106 154 Q101 142 101 124 Z"
+        fill={`url(#hairH-${uid})`}
         stroke={INK}
-        strokeWidth="2.6"
+        strokeWidth="2.4"
         strokeLinejoin="round"
       />
 
-      {/* 首（顎から自然につながる・短めでしっかり） */}
-      <path d="M134 192 L133 238 Q150 250 167 238 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      {/* 首 */}
+      <path d="M134 192 L133 240 Q150 252 167 240 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <path d="M134 196 Q150 214 166 196 L166 192 L134 192 Z" fill="#000" opacity="0.22" />
 
-      {/* 耳（マッシュの裾から覗く＝短髪の男性感） */}
+      {/* 耳 */}
       <g fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="1.8" strokeLinejoin="round">
         <path d="M110 140 Q97 134 97 150 Q98 165 111 166 Z" />
         <path d="M190 140 Q203 134 203 150 Q202 165 189 166 Z" />
@@ -342,7 +303,115 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
         <path d="M197 147 Q194 152 196 158" />
       </g>
 
-      {/* 顔（柔らかい卵形・顎は丸みを残しつつ少し縦に） */}
+      {/* 顔（柔らかい卵形） */}
+      <path
+        d="M108 120 Q106 72 150 66 Q194 72 192 120 Q192 152 183 172 Q173 192 159 199 Q150 203 141 199 Q127 192 117 172 Q108 152 108 120 Z"
+        fill={`url(#skinSoft-${uid})`}
+        stroke={INK}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <CastShadow d="M168 70 Q192 76 192 122 Q192 152 183 172 Q173 192 159 199 Q172 180 176 152 Q180 106 168 70 Z" opacity={0.12} />
+
+      {/* もみあげ（耳の上半分に自然にかぶせる） */}
+      <g fill={`url(#hairH-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
+        <path d="M107 110 Q102 134 105 156 Q110 164 114 154 Q111 132 114 116 Z" />
+        <path d="M193 110 Q198 134 195 156 Q190 164 186 154 Q189 132 186 116 Z" />
+      </g>
+
+      {/* 前髪：ゆるいセンターパート（左右非対称の毛流れ・額の三角形を見せる） */}
+      {/* 左バンク（小さい側） */}
+      <path
+        d="M147 62 Q141 46 128 47 Q105 53 102 92 Q101 112 104 123 Q109 129 112 116 Q114 109 113 102 Q118 113 124 105 Q127 99 126 91 Q131 101 136 93 Q139 86 138 78 Q142 69 147 62 Z"
+        fill={`url(#hairH-${uid})`}
+        stroke={INK}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      {/* 右バンク（大きい側） */}
+      <path
+        d="M147 62 Q154 45 166 46 Q197 52 199 94 Q200 112 196 124 Q191 130 188 118 Q186 111 187 103 Q182 114 176 106 Q173 100 174 92 Q168 102 163 93 Q160 86 161 78 Q156 70 150 64 Q148 63 147 62 Z"
+        fill={`url(#hairH-${uid})`}
+        stroke={INK}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      {/* 若さの跳ね毛（クラウンに少しだけ） */}
+      <g fill={`url(#hairH-${uid})`} stroke={INK} strokeWidth="1.5" strokeLinejoin="round">
+        <path d="M126 46 Q118 38 108 39 Q118 44 123 50 Z" />
+        <path d="M172 45 Q181 36 191 39 Q181 43 175 50 Z" />
+      </g>
+      {/* 毛流れ（分け目から左右へ掃く） */}
+      <g fill="none" stroke="#1c120a" strokeOpacity="0.45" strokeWidth="1.2" strokeLinecap="round">
+        <path d="M141 66 Q127 74 117 92" />
+        <path d="M135 58 Q119 64 109 84" />
+        <path d="M153 66 Q169 74 179 94" />
+        <path d="M159 58 Q179 64 189 86" />
+      </g>
+      {/* ツヤ */}
+      <path d="M118 64 Q148 48 182 64 L176 80 Q150 66 124 80 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
+
+      {/* タレ目気味の優しい目（プレイヤーの分身＝癖は控えめ） */}
+      <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.36} iris="#8e93a6" />
+      <Eye cx={170} cy={148} accent={accent} uid={uid} size={1.36} iris="#8e93a6" />
+
+      {/* 自然な眉（少し直線的＝新人の素直さと決意） */}
+      <Brows L={{ ox: 115, oy: 129, ix: 144, iy: 128 }} R={{ ox: 185, oy: 129, ix: 156, iy: 128 }} sw={3} expr={expr} arch color="#241710" />
+      {/* 鼻 */}
+      <path d="M150 154 L153 168 L147 169" fill="none" stroke="#000" strokeOpacity={0.3} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M150 148 L150 164" stroke="#fff" strokeOpacity={0.14} strokeWidth="1.5" strokeLinecap="round" />
+      {/* 口（薄めの唇・穏やか） */}
+      <Mouth x={150} y={184} w={10.5} expr={expr} color="#9c625c" sw={2} warm />
+
+      {/* 襟元の留め具（白アクセント） */}
+      <g fill={accent} stroke={INK} strokeWidth="1.5">
+        <path d="M150 300 L138 320 L150 330 L162 320 Z" />
+      </g>
+      <path d="M118 296 Q150 308 182 296" fill="none" stroke={accent} strokeWidth="2.5" opacity="0.7" strokeLinecap="round" />
+      {/* リムライト（髪の左上から） */}
+      <path d="M101 124 Q94 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.75" strokeLinecap="round" />
+    </Frame>
+  );
+}
+
+/* ---- CLAUDE --------------------------------------------------------- */
+/* ニノ直球：グレーアッシュのセンターパート（額の見える三角形・根本の立ち上がり・
+   左右非対称の毛流れ）×タレ目気味の優しい目×薄い唇の穏やかな口元。
+   「気取らない愛嬌＋知的な余裕」— 編の緋は襟と虹彩のアクセントで。 */
+function ClaudeSvg({ accent, uid, expr }: SvgProps) {
+  return (
+    <Frame accent={accent} uid={uid}>
+      {/* 後光リング */}
+      <circle cx="150" cy="118" r="86" fill="none" stroke={accent} strokeOpacity={0.24} strokeWidth="2" />
+      <circle cx="150" cy="118" r="94" fill="none" stroke={accent} strokeOpacity={0.1} strokeWidth="1" strokeDasharray="2 6" />
+
+      {/* 肩・ローブ */}
+      <path d="M40 420 Q58 272 150 260 Q242 272 260 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+
+      {/* 髪：後ろの自然な短髪シルエット（クラウンに量感・耳に少しかかる程度） */}
+      <path
+        d="M97 128 Q90 42 150 33 Q210 42 203 128 Q203 148 197 160 Q192 168 189 154 Q187 140 187 124 L113 124 Q113 140 111 154 Q108 168 103 160 Q97 148 97 128 Z"
+        fill={`url(#hairC-${uid})`}
+        stroke={INK}
+        strokeWidth="2.4"
+        strokeLinejoin="round"
+      />
+
+      {/* 首 */}
+      <path d="M134 192 L133 228 Q150 240 167 228 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M134 196 Q150 214 166 196 L166 192 L134 192 Z" fill="#000" opacity="0.22" />
+
+      {/* 耳 */}
+      <g fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="1.8" strokeLinejoin="round">
+        <path d="M110 140 Q97 134 97 150 Q98 165 111 166 Z" />
+        <path d="M190 140 Q203 134 203 150 Q202 165 189 166 Z" />
+      </g>
+      <g fill="none" stroke="#000" strokeOpacity="0.3" strokeWidth="1.2" strokeLinecap="round">
+        <path d="M103 147 Q106 152 104 158" />
+        <path d="M197 147 Q194 152 196 158" />
+      </g>
+
+      {/* 顔（丸みのある柔らかい卵形＝細すぎない） */}
       <path
         d="M108 120 Q106 72 150 66 Q194 72 192 120 Q192 152 183 172 Q173 192 159 199 Q150 203 141 199 Q127 192 117 172 Q108 152 108 120 Z"
         fill={`url(#skinSoft-${uid})`}
@@ -352,56 +421,64 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
       />
       {/* 右輪郭に沿う淡い三日月影（柔らかい立体感だけ） */}
       <CastShadow d="M168 70 Q192 76 192 122 Q192 152 183 172 Q173 192 159 199 Q172 180 176 152 Q180 106 168 70 Z" opacity={0.12} />
-      {/* 頬の血色（ごく控えめ＝男性的に） */}
+      {/* 頬の血色（ごく控えめ） */}
       <ellipse cx="127" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.07" />
       <ellipse cx="173" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.05" />
 
-      {/* もみあげ（耳の上半分に自然にかぶせる＝大人のマッシュ。右は前髪の掃き上がりに接続） */}
+      {/* もみあげ（こめかみ〜耳の上に自然にかぶせる＝前髪と隙間を作らない） */}
       <g fill={`url(#hairC-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M107 112 Q101 134 105 158 Q110 166 114 156 Q111 134 116 120 Z" />
-        <path d="M191 102 Q200 130 196 158 Q191 166 187 156 Q190 130 183 110 Z" />
+        <path d="M105 106 Q99 134 102 158 Q108 167 113 155 Q109 132 113 114 Z" />
+        <path d="M195 106 Q201 134 198 158 Q192 167 187 155 Q191 132 187 114 Z" />
       </g>
 
-      {/* 耳上のハネ（外向きの小さな遊び毛＝ヘルメット感を断つ） */}
-      <g fill={`url(#hairC-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M101 132 Q92 138 90 148 Q99 146 104 139 Z" />
-        <path d="M199 132 Q208 138 210 148 Q201 146 196 139 Z" />
-      </g>
-
-      {/* 流れのある前髪（左へ掃くマッシュ。毛先は斜めに切って自然な毛流れ＝ボウルカット感を断つ） */}
+      {/* 前髪：センターパート（分け目はやや左＝左右非対称。カーテンはこめかみまで覆い、毛先は丸く段差） */}
+      {/* 左バンク（小さい側・分け目から左へ流す） */}
       <path
-        d="M150 46 Q104 52 102 108 Q101 118 108 114 Q111 124 119 126 Q117 118 119 110 Q124 128 134 129 Q131 119 132 110 Q138 130 149 130 Q145 120 146 110 Q153 130 164 128 Q160 119 161 110 Q168 129 177 125 Q174 117 175 109 Q182 122 189 117 Q185 110 186 102 Q193 112 197 107 Q200 104 199 96 Q193 52 150 46 Z"
+        d="M144 64 Q136 45 122 46 Q99 53 97 96 Q96 116 101 129 Q106 135 110 127 Q114 119 113 109 Q119 122 127 113 Q132 105 130 95 Q136 101 140 91 Q143 83 141 75 Q141 68 144 64 Z"
         fill={`url(#hairC-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
-      {/* 毛流れの線（掃いた方向に沿わせる） */}
-      <g fill="none" stroke="#1a100a" strokeOpacity="0.45" strokeWidth="1.3" strokeLinecap="round">
-        <path d="M135 58 Q127 88 124 114" />
-        <path d="M158 56 Q150 88 147 116" />
-        <path d="M178 60 Q173 86 170 108" />
+      {/* 右バンク（大きい側・分け目から右へふんわり流す） */}
+      <path
+        d="M144 64 Q154 43 168 45 Q201 53 203 96 Q204 118 198 130 Q193 136 189 128 Q185 120 186 110 Q180 123 172 113 Q168 105 170 95 Q163 103 158 94 Q155 86 157 77 Q152 69 147 66 Q145 65 144 64 Z"
+        fill={`url(#hairC-${uid})`}
+        stroke={INK}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      {/* 分け目の影（根本の立ち上がりを見せる短い線） */}
+      <path d="M144 64 Q145 55 148 48" fill="none" stroke="#383c48" strokeWidth="1.4" strokeLinecap="round" />
+      {/* 毛流れ（分け目から左右へ掃く・非対称） */}
+      <g fill="none" stroke="#4a4e5c" strokeOpacity="0.65" strokeWidth="1.3" strokeLinecap="round">
+        <path d="M137 68 Q122 78 112 98" />
+        <path d="M129 58 Q111 66 103 90" />
+        <path d="M152 66 Q170 76 181 98" />
+        <path d="M160 56 Q182 64 192 90" />
+        <path d="M148 76 Q159 90 165 104" />
       </g>
-      {/* 髪のツヤ（柔らかい帯＝天使の輪） */}
-      <path d="M116 70 Q148 54 184 70 L178 86 Q150 72 124 86 Z" fill={`url(#sheen-${uid})`} opacity="0.26" />
-      <g fill="none" strokeLinecap="round">
-        <path d="M138 58 Q129 72 124 92" stroke="#e8d4b8" strokeOpacity="0.36" strokeWidth="1.3" />
-        <path d="M164 58 Q175 72 180 90" stroke="#e8d4b8" strokeOpacity="0.28" strokeWidth="1.2" />
+      {/* アッシュのハイライト（明るい筋＝柔らかい立ち上がり） */}
+      <g fill="none" stroke="#dde0e8" strokeLinecap="round">
+        <path d="M133 53 Q117 62 108 82" strokeOpacity="0.4" strokeWidth="1.3" />
+        <path d="M160 50 Q180 60 189 82" strokeOpacity="0.34" strokeWidth="1.2" />
       </g>
+      {/* ツヤ（柔らかい帯） */}
+      <path d="M116 60 Q148 42 184 60 L178 76 Q150 60 122 76 Z" fill={`url(#sheen-${uid})`} opacity="0.22" />
 
-      {/* やや大きめで優しいアーモンド形の目（横長＝穏やかで男性的） */}
-      <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.45} />
-      <Eye cx={170} cy={148} accent={accent} uid={uid} size={1.45} />
+      {/* タレ目気味の優しいアーモンド形の目 */}
+      <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.42} />
+      <Eye cx={170} cy={148} accent={accent} uid={uid} size={1.42} />
 
-      {/* 自然なアーチ眉（太め長め＝男性的・角度は立てない・表情連動） */}
-      <Brows L={{ ox: 114, oy: 128, ix: 144, iy: 129 }} R={{ ox: 186, oy: 128, ix: 156, iy: 129 }} sw={3} expr={expr} arch color="#241710" />
-      {/* 鼻（少し長め＝大人の骨格＋ハイライト） */}
+      {/* 自然なアーチ眉（立てない・優しい） */}
+      <Brows L={{ ox: 114, oy: 129, ix: 144, iy: 130 }} R={{ ox: 186, oy: 129, ix: 156, iy: 130 }} sw={3} expr={expr} arch color="#33343e" />
+      {/* 鼻（すっと通す程度） */}
       <path d="M150 154 L153 168 L147 169" fill="none" stroke="#000" strokeOpacity={0.3} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M150 148 L150 164" stroke="#fff" strokeOpacity={0.16} strokeWidth="1.5" strokeLinecap="round" />
-      {/* 口（穏やかで親しみのある微笑・やや広め＝男性的） */}
-      <Mouth x={150} y={184} w={11} expr={expr} color="#9c5a5e" sw={2.2} warm />
+      {/* 口（薄めの唇の穏やかな微笑） */}
+      <Mouth x={150} y={184} w={11} expr={expr} color="#9c5a5e" sw={2} warm />
 
-      {/* ローブの襟（V字） */}
+      {/* ローブの襟（V字・緋のアクセント） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
         <path d="M150 282 L116 304 L130 384 L150 342 Z" fill="#1a1a24" />
         <path d="M150 282 L184 304 L170 384 L150 342 Z" fill="#101019" />
@@ -410,34 +487,34 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
       <path d="M150 282 L184 304" stroke={accent} strokeWidth="2.4" opacity="0.85" strokeLinecap="round" />
       <circle cx="150" cy="312" r="3.6" fill={accent} stroke={INK} strokeWidth="1.2" />
       {/* リムライト（髪の左上・控えめに調和） */}
-      <path d="M99 124 Q92 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
+      <path d="M100 126 Q93 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.6" strokeLinecap="round" />
     </Frame>
   );
 }
 
 /* ---- CURSOR --------------------------------------------------------- */
-/* 柔らかい正統派×パンクの名残り。自然な黒マッシュにシアンのメッシュ（差し色）で個性。
-   目も口元も穏やかに——「速いけど、隣にいてくれる」相棒の顔。 */
+/* クロードと同じ「ナチュラル短髪×柔らかい目元」の文法で、分け目を逆（やや右）に流し、
+   シアンのメッシュ少量＋ピアスで個性（パンク感は小物で）。 */
 function CursorSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
-      {/* 肩・ジャケット（高めの位置＝大人の体格） */}
+      {/* 肩・ジャケット */}
       <path d="M42 420 Q58 282 150 272 Q242 282 258 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
 
-      {/* 髪：後ろの短いマッシュシルエット（自然な黒・右サイドだけ少し長く＝遊び。輪郭に微かな起伏） */}
+      {/* 髪：後ろの自然な黒髪短髪シルエット */}
       <path
-        d="M99 124 Q93 52 124 43 Q136 39 150 40 Q165 39 177 44 Q207 54 201 124 Q201 148 195 164 Q190 174 187 162 Q184 144 184 122 L116 122 Q116 140 113 156 Q110 168 105 158 Q99 144 99 124 Z"
+        d="M100 126 Q93 50 150 40 Q207 50 200 126 Q200 148 194 162 Q189 172 186 158 Q184 142 184 124 L116 124 Q116 138 114 152 Q111 166 106 158 Q100 146 100 126 Z"
         fill={`url(#hairK-${uid})`}
         stroke={INK}
-        strokeWidth="2.6"
+        strokeWidth="2.4"
         strokeLinejoin="round"
       />
 
-      {/* 首（顎から自然につながる・短めでしっかり） */}
+      {/* 首 */}
       <path d="M134 192 L133 238 Q150 250 167 238 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <path d="M134 196 Q150 214 166 196 L166 192 L134 192 Z" fill="#000" opacity="0.22" />
 
-      {/* 耳（短髪の男性感）＋シアンのピアス（パンクの名残り） */}
+      {/* 耳＋シアンのピアス（パンクの名残り） */}
       <g fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="1.8" strokeLinejoin="round">
         <path d="M110 140 Q97 134 97 150 Q98 165 111 166 Z" />
         <path d="M190 140 Q203 134 203 150 Q202 165 189 166 Z" />
@@ -449,7 +526,7 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       <circle cx="101" cy="161" r="2" fill={accent} stroke={INK} strokeWidth="0.8" />
       <circle cx="199" cy="161" r="2" fill={accent} stroke={INK} strokeWidth="0.8" />
 
-      {/* 顔（柔らかい卵形・顎は丸みを残しつつ少し縦に） */}
+      {/* 顔（丸みのある柔らかい卵形） */}
       <path
         d="M108 120 Q106 72 150 66 Q194 72 192 120 Q192 152 183 172 Q173 192 159 199 Q150 203 141 199 Q127 192 117 172 Q108 152 108 120 Z"
         fill={`url(#skinSoft-${uid})`}
@@ -457,56 +534,61 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      {/* 右輪郭に沿う淡い三日月影 */}
       <CastShadow d="M168 70 Q192 76 192 122 Q192 152 183 172 Q173 192 159 199 Q172 180 176 152 Q180 106 168 70 Z" opacity={0.13} />
       <ellipse cx="127" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.06" />
       <ellipse cx="173" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.04" />
 
-      {/* もみあげ（耳の上半分にかぶせる・左は前髪の掃き上がりに接続・右だけ少し長く） */}
+      {/* もみあげ */}
       <g fill={`url(#hairK-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M109 102 Q100 130 104 158 Q109 166 113 156 Q110 130 117 110 Z" />
-        <path d="M193 112 Q200 136 196 162 Q191 170 187 159 Q189 136 184 120 Z" />
+        <path d="M107 110 Q102 134 105 156 Q110 164 114 154 Q111 132 114 116 Z" />
+        <path d="M193 112 Q198 136 195 160 Q190 168 186 157 Q189 134 186 118 Z" />
       </g>
 
-      {/* 耳上のハネ（外向きの小さな遊び毛＝ヘルメット感を断つ・パンクの名残り） */}
-      <g fill={`url(#hairK-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M101 132 Q91 137 89 148 Q99 146 104 139 Z" />
-        <path d="M199 130 Q210 134 213 146 Q202 145 196 138 Z" />
-      </g>
-
-      {/* 流れのある前髪（カーサは右へ掃く＝クロードと逆方向。毛先は斜めに切って自然な毛流れ） */}
+      {/* 前髪：センターパート（分け目はやや右＝クロードと逆の非対称） */}
+      {/* 左バンク（大きい側・分け目から左へ流す） */}
       <path
-        d="M150 46 Q196 52 198 108 Q199 118 192 114 Q189 124 181 126 Q183 118 181 110 Q176 128 166 129 Q169 119 168 110 Q162 130 151 130 Q155 120 154 110 Q147 130 136 128 Q140 119 139 110 Q132 129 123 125 Q126 117 125 109 Q118 122 111 117 Q115 110 114 102 Q107 112 103 107 Q100 104 101 96 Q107 52 150 46 Z"
+        d="M156 62 Q148 45 136 46 Q104 52 101 94 Q100 114 104 126 Q109 132 112 119 Q114 112 113 104 Q119 116 124 107 Q128 100 127 92 Q133 102 138 93 Q141 86 140 78 Q146 72 152 66 Q155 64 156 62 Z"
         fill={`url(#hairK-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
-      {/* シアンのメッシュ（差し色＝パンクの名残り。掃いた毛流れに沿う控えめな筋） */}
+      {/* 右バンク（小さい側） */}
+      <path
+        d="M156 62 Q162 47 174 47 Q196 52 199 92 Q200 112 197 124 Q192 130 189 117 Q187 110 188 103 Q183 114 177 106 Q174 100 175 92 Q170 102 165 94 Q162 88 163 80 Q160 70 156 62 Z"
+        fill={`url(#hairK-${uid})`}
+        stroke={INK}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      {/* 分け目の影（根本の立ち上がり） */}
+      <path d="M156 62 Q155 54 153 48" fill="none" stroke="#22222c" strokeWidth="1.4" strokeLinecap="round" />
+      {/* シアンのメッシュ（毛流れに沿う控えめな筋＝差し色） */}
       <g fill="none" strokeLinecap="round">
-        <path d="M165 58 Q172 88 176 114" stroke={accent} strokeWidth="2.2" opacity="0.6" />
-        <path d="M128 62 Q124 84 121 104" stroke={accent} strokeWidth="2.2" opacity="0.6" />
-        <path d="M194 122 Q198 140 194 158" stroke={accent} strokeWidth="1.8" opacity="0.5" />
+        <path d="M140 56 Q122 64 111 86" stroke={accent} strokeWidth="2" opacity="0.55" />
+        <path d="M148 70 Q137 82 131 98" stroke={accent} strokeWidth="1.8" opacity="0.5" />
+        <path d="M170 56 Q183 64 189 84" stroke={accent} strokeWidth="1.8" opacity="0.45" />
       </g>
-      {/* 毛流れの線（掃いた方向に沿わせる） */}
-      <g fill="none" stroke="#05050a" strokeOpacity="0.5" strokeWidth="1.3" strokeLinecap="round">
-        <path d="M142 56 Q150 88 153 116" />
-        <path d="M122 60 Q127 86 130 108" />
+      {/* 毛流れ（分け目から左右へ掃く） */}
+      <g fill="none" stroke="#05050a" strokeOpacity="0.55" strokeWidth="1.3" strokeLinecap="round">
+        <path d="M150 66 Q132 74 121 94" />
+        <path d="M144 74 Q136 86 131 100" />
+        <path d="M163 64 Q176 72 184 92" />
       </g>
-      {/* 髪のツヤ（柔らかい帯） */}
-      <path d="M116 70 Q148 54 184 70 L178 86 Q150 72 124 86 Z" fill={`url(#sheen-${uid})`} opacity="0.22" />
+      {/* ツヤ */}
+      <path d="M118 64 Q148 48 182 64 L176 80 Q150 66 124 80 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
 
-      {/* やや大きめで優しいアーモンド形の目（横長＝穏やかで男性的） */}
-      <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.42} />
-      <Eye cx={170} cy={148} accent={accent} uid={uid} size={1.42} />
+      {/* タレ目気味の優しいアーモンド形の目 */}
+      <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.4} />
+      <Eye cx={170} cy={148} accent={accent} uid={uid} size={1.4} />
 
-      {/* 自然なアーチ眉（太め長め＝男性的・表情連動） */}
-      <Brows L={{ ox: 114, oy: 128, ix: 144, iy: 129 }} R={{ ox: 186, oy: 128, ix: 156, iy: 129 }} sw={3} expr={expr} arch color="#15151c" />
-      {/* 鼻（少し長め＝大人の骨格） */}
+      {/* 自然なアーチ眉 */}
+      <Brows L={{ ox: 114, oy: 129, ix: 144, iy: 130 }} R={{ ox: 186, oy: 129, ix: 156, iy: 130 }} sw={3} expr={expr} arch color="#15151c" />
+      {/* 鼻 */}
       <path d="M150 154 L153 168 L147 169" fill="none" stroke="#000" strokeOpacity={0.3} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M150 148 L150 164" stroke="#fff" strokeOpacity={0.14} strokeWidth="1.5" strokeLinecap="round" />
-      {/* 口（穏やかで親しみのある微笑・クールな差し色・やや広め） */}
-      <Mouth x={150} y={184} w={11} expr={expr} color="#7fb8c4" sw={2.2} warm />
+      {/* 口（薄めの唇の穏やかな微笑・クールな差し色） */}
+      <Mouth x={150} y={184} w={11} expr={expr} color="#7fb8c4" sw={2} warm />
 
       {/* ジャケット襟（鋭角ラペル） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
@@ -518,69 +600,123 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       <path d="M150 282 L190 302" stroke={accent} strokeWidth="2.2" opacity="0.75" strokeLinecap="round" />
       {/* 胸元のカーソル型マーク */}
       <path d="M150 252 L162 282 L151 275 L140 283 Z" fill="#fff" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
-      {/* リムライト（控えめに調和） */}
-      <path d="M99 124 Q92 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
+      {/* リムライト */}
+      <path d="M100 126 Q93 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
     </Frame>
   );
 }
 
 /* ---- MENTOR --------------------------------------------------------- */
-/* 厳格な老練の指南役。金（ゴールド）を内部で使う。顎髭・冠の帯。 */
+/* 大人の渋いイケメン。白髪混じりのオールバック×整えた短い顎髭で貫禄。
+   切れ長の金の目・通った鼻筋。年齢感は髪色とほうれい線で残す。 */
 function MentorSvg({ uid, expr }: SvgProps) {
   const gold = '#ffce3a';
   return (
     <Frame accent={gold} uid={uid}>
-      <g stroke={INK} strokeWidth="3" strokeLinejoin="round">
-        {/* 肩・重厚なローブ */}
-        <path d="M24 420 Q50 286 150 276 Q250 286 276 420 Z" fill={`url(#cloth-${uid})`} />
-        {/* 顎髭（フルベアード・大きなシルエット） */}
-        <path d="M70 296 Q150 240 230 296 Q224 360 150 384 Q76 360 70 296 Z" fill={`url(#hair-${uid})`} />
-        {/* 頭髪（後退気味・横に広い） */}
-        <path d="M92 110 Q92 48 150 46 Q208 48 208 110 Q210 168 150 184 Q90 168 92 110 Z" fill={`url(#hair-${uid})`} />
+      {/* 肩・重厚なローブ */}
+      <path d="M24 420 Q50 286 150 276 Q250 286 276 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+
+      {/* 髪：後ろのシルエット（オールバックの量感） */}
+      <path
+        d="M102 118 Q97 42 150 36 Q203 42 198 118 Q198 138 193 150 Q188 158 185 146 Q184 134 184 118 L116 118 Q116 134 115 146 Q112 158 107 150 Q102 138 102 118 Z"
+        fill={`url(#hairM-${uid})`}
+        stroke={INK}
+        strokeWidth="2.4"
+        strokeLinejoin="round"
+      />
+
+      {/* 首（大人の太さ） */}
+      <path d="M132 196 L131 242 Q150 254 169 242 L168 196 Z" fill={`url(#skin2-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M132 200 Q150 218 168 200 L168 196 L132 196 Z" fill="#000" opacity="0.24" />
+
+      {/* 耳 */}
+      <g fill={`url(#skin2-${uid})`} stroke={INK} strokeWidth="1.8" strokeLinejoin="round">
+        <path d="M109 138 Q96 132 96 148 Q97 163 110 164 Z" />
+        <path d="M191 138 Q204 132 204 148 Q203 163 190 164 Z" />
       </g>
-      {/* 顔 */}
-      <path d="M102 116 Q102 64 150 56 Q198 64 198 116 Q198 200 150 240 Q102 200 102 116 Z" fill={`url(#skin-${uid})`} stroke={INK} strokeWidth="2" />
-      {/* 右半分キャストシャドウ */}
-      <CastShadow d="M150 56 Q198 64 198 116 Q198 200 150 240 Z" opacity={0.32} />
-      <path d="M150 80 Q194 90 194 118 Q194 192 150 226 Z" fill={`url(#halftone-${uid})`} opacity="0.16" />
-      {/* 後退した生え際＆白髪のツヤ */}
-      <path d="M102 112 Q108 56 150 54 Q192 56 198 112 Q172 86 150 90 Q128 86 102 112 Z" fill="#23200f" stroke={INK} strokeWidth="2" />
-      <path d="M118 64 Q150 52 182 64" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.28" />
-      {/* 厳しい眉（表情・太く） */}
-      <Brows L={{ ox: 112, oy: 118, ix: 142, iy: 114 }} R={{ ox: 188, oy: 118, ix: 158, iy: 114 }} sw={3.4} expr={expr} />
-      {/* 鋭い目（金の輝き） */}
-      <g fill={gold} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M114 128 L142 122 L141 134 L116 138 Z" />
-        <path d="M186 128 L158 122 L159 134 L184 138 Z" />
+
+      {/* 顔（やや長め・顎のしっかりした骨格） */}
+      <path
+        d="M106 118 Q104 68 150 60 Q196 68 194 118 Q194 152 186 174 Q177 196 162 204 Q150 209 138 204 Q123 196 114 174 Q106 152 106 118 Z"
+        fill={`url(#skin2-${uid})`}
+        stroke={INK}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      {/* 右輪郭の影（彫りの深さ） */}
+      <CastShadow d="M166 64 Q194 72 194 120 Q194 152 186 174 Q177 196 162 204 Q174 184 178 154 Q182 104 166 64 Z" opacity={0.18} />
+
+      {/* もみあげ（顎髭へつながる） */}
+      <g fill={`url(#hairM-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
+        <path d="M106 108 Q102 136 107 162 Q112 170 116 158 Q112 132 115 112 Z" />
+        <path d="M194 108 Q198 136 193 162 Q188 170 184 158 Q188 132 185 112 Z" />
       </g>
-      <g fill="#0c0c08">
-        <circle cx="130" cy="129.5" r="1.9" />
-        <circle cx="170" cy="129.5" r="1.9" />
+
+      {/* 前髪：オールバック（生え際を見せて後ろへ流す。中央にゆるいウィドウズピーク） */}
+      <path
+        d="M104 116 Q98 46 150 38 Q202 46 196 116 Q193 104 190 100 Q180 80 166 76 Q156 72 150 84 Q144 72 134 76 Q120 80 110 100 Q107 104 104 116 Z"
+        fill={`url(#hairM-${uid})`}
+        stroke={INK}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      {/* 後ろへ流れる毛流れ */}
+      <g fill="none" stroke="#2c303a" strokeOpacity="0.6" strokeWidth="1.4" strokeLinecap="round">
+        <path d="M128 78 Q123 60 130 46" />
+        <path d="M150 82 Q150 60 150 44" />
+        <path d="M172 78 Q177 60 170 46" />
       </g>
-      <g fill="#fff" opacity="0.9">
-        <circle cx="129" cy="128.6" r="0.9" />
-        <circle cx="169" cy="128.6" r="0.9" />
+      {/* 白髪の筋（貫禄） */}
+      <g fill="none" stroke="#e9ebf2" strokeLinecap="round">
+        <path d="M139 79 Q136 60 141 45" strokeOpacity="0.55" strokeWidth="1.5" />
+        <path d="M162 78 Q166 60 161 45" strokeOpacity="0.5" strokeWidth="1.4" />
+        <path d="M118 88 Q112 72 118 56" strokeOpacity="0.4" strokeWidth="1.3" />
       </g>
-      {/* 鼻（高く厳格） */}
-      <path d="M150 134 L156 156 L148 158" fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      {/* 口元（表情・髭の中） */}
-      <Mouth x={150} y={173} w={16} expr={expr} color="#000" op={0.55} sw={2.2} />
-      {/* 顎髭の毛束ライン */}
-      <g fill="none" stroke="#000" strokeOpacity={0.45} strokeWidth="2" strokeLinecap="round">
-        <path d="M118 300 Q126 340 150 360" />
-        <path d="M150 300 L150 366" />
-        <path d="M182 300 Q174 340 150 360" />
+      {/* ツヤ */}
+      <path d="M120 58 Q150 42 180 58 L174 72 Q150 58 126 72 Z" fill={`url(#sheen-${uid})`} opacity="0.18" />
+
+      {/* 切れ長の目（金の虹彩＝厳しさの中の知性） */}
+      <Eye cx={129} cy={144} accent={gold} uid={uid} flip size={1.32} sharp />
+      <Eye cx={171} cy={144} accent={gold} uid={uid} size={1.32} sharp />
+
+      {/* 太く厳格な眉（表情連動） */}
+      <Brows L={{ ox: 112, oy: 125, ix: 144, iy: 121 }} R={{ ox: 188, oy: 125, ix: 156, iy: 121 }} sw={3.4} expr={expr} color="#2e313c" />
+      {/* 鼻（高く通った鼻筋） */}
+      <path d="M150 150 L155 169 L147 170.5" fill="none" stroke="#000" strokeOpacity={0.42} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M150 142 L151 164" stroke="#fff" strokeOpacity={0.14} strokeWidth="1.5" strokeLinecap="round" />
+      {/* ほうれい線（年齢の彫り・うっすら） */}
+      <g fill="none" stroke="#000" strokeOpacity="0.16" strokeWidth="1.2" strokeLinecap="round">
+        <path d="M137 174 Q133 182 135 189" />
+        <path d="M163 174 Q167 182 165 189" />
       </g>
-      {/* 口髭 */}
-      <path d="M118 168 Q150 188 182 168 Q170 200 150 204 Q130 200 118 168 Z" fill={`url(#hair-${uid})`} stroke={INK} strokeWidth="2" />
-      {/* 冠の帯（金・宝石付き） */}
-      <g stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <rect x="112" y="40" width="76" height="9" rx="2" fill={gold} />
-        <path d="M150 28 L156 42 L144 42 Z" fill={gold} />
+      {/* 口（薄め・厳しめでも穏やかさを残す） */}
+      <Mouth x={150} y={181} w={11.5} expr={expr} color="#5e4248" sw={2.2} op={0.9} />
+
+      {/* 顎髭：輪郭に沿う整えた短い髭（白髪混じり） */}
+      <path
+        d="M111 152 Q113 180 124 193 Q136 204 150 206 Q164 204 176 193 Q187 180 189 152 Q192 164 190 176 Q185 196 169 207 Q159 213 150 213 Q141 213 131 207 Q115 196 110 176 Q108 164 111 152 Z"
+        fill={`url(#hairM-${uid})`}
+        stroke={INK}
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      {/* 顎先の髭（少しだけ厚みを出す） */}
+      <path d="M136 196 Q150 203 164 196 Q161 208 150 210 Q139 208 136 196 Z" fill={`url(#hairM-${uid})`} stroke={INK} strokeWidth="1.4" strokeLinejoin="round" />
+      {/* 髭の白の筋 */}
+      <g fill="none" stroke="#e9ebf2" strokeLinecap="round">
+        <path d="M124 188 Q131 197 140 202" strokeOpacity="0.35" strokeWidth="1.2" />
+        <path d="M176 188 Q169 197 160 202" strokeOpacity="0.3" strokeWidth="1.2" />
+        <path d="M150 200 L150 210" strokeOpacity="0.35" strokeWidth="1.2" />
       </g>
-      <circle cx="150" cy="44.5" r="2.4" fill="#fff" opacity="0.85" />
+
+      {/* 額の細い金環（棟梁の証＝控えめに残す） */}
+      <g stroke={INK} strokeWidth="1.4" strokeLinejoin="round">
+        <rect x="120" y="42" width="60" height="7" rx="2" fill={gold} />
+        <path d="M150 32 L155 44 L145 44 Z" fill={gold} />
+      </g>
+      <circle cx="150" cy="45.5" r="2" fill="#fff" opacity="0.85" />
       {/* リムライト */}
-      <path d="M92 110 Q92 50 150 46" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4.5" opacity="0.8" strokeLinecap="round" />
+      <path d="M102 118 Q97 42 150 36" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
     </Frame>
   );
 }

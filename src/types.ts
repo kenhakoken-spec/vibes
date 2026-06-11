@@ -194,7 +194,5 @@ export type Screen =
 
 export interface StageResult {
   cleared: boolean;
-  /** 0..1 の品質（内部記録のみ。画面に数値・ランクは出さない＝新方針） */
-  score: number;
   attempts: number;
 }

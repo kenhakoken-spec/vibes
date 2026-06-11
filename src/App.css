@@ -561,6 +561,11 @@
   /* 1文字ぶら下がりの折返しを防ぐ（Chrome系で有効） */
   text-wrap: balance;
 }
+/* カタカナ複合語の語中折返し防止（keepKatakana() が付与する span）。
+   「バイブコ／ーディング」のような途中折返しを禁じ、語の前後でだけ折り返す */
+.nobr {
+  white-space: nowrap;
+}
 .worldnode__boss {
   font-size: 0.7rem;
   color: var(--ink-faint);
@@ -1021,6 +1026,18 @@
   font-size: 1rem;
   color: var(--accent);
 }
+/* 相棒の反応（労いの一言＋どこが良かったか）。afterword__partner の見た目を流用 */
+.result__partner {
+  width: 100%;
+  text-align: left;
+}
+.afterword__bubble .result__why {
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  opacity: 0.86;
+  font-size: clamp(0.78rem, 2.3vw, 0.9rem);
+}
 .result__learn {
   width: 100%;
   padding: 1.2rem 1.4rem;
@@ -1364,10 +1381,27 @@
 .artifact__btn.is-live {
   background: var(--accent);
   box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 50%, transparent);
+  animation: artifact-btn-glow 2.2s ease-in-out 1.2s infinite;
 }
+@keyframes artifact-btn-glow {
+  0%,
+  100% {
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+  50% {
+    box-shadow: 0 6px 26px color-mix(in srgb, var(--accent) 80%, transparent);
+  }
+}
+/* 押した手応えが返ってくるトースト（白いピル） */
 .artifact__toast {
   margin: 0;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
   font-family: var(--f-head);
+  font-size: 0.78rem;
   color: #1a8f3c;
   font-weight: 700;
 }
@@ -2056,20 +2090,54 @@
 }
 .artifact__game-foes {
   position: absolute;
-  top: 16%;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 1.4rem;
+  top: 13%;
+  left: 22%;
+  width: 56%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  row-gap: 0.55rem;
   color: var(--accent-2);
   font-size: 0.85rem;
   text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 80%, transparent);
 }
+.artifact__game-foe {
+  line-height: 1;
+  transition: opacity 0.08s linear;
+}
+/* 撃破の散り火花（散った敵の位置で弾ける） */
+.artifact__game-boom {
+  position: absolute;
+  margin-left: -0.5rem;
+  color: var(--gold);
+  font-size: 1rem;
+  line-height: 1;
+  text-shadow:
+    0 0 10px var(--gold),
+    0 0 22px var(--accent);
+  pointer-events: none;
+}
+/* 撃破の瞬間の薄い明滅 */
+.artifact__game-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--accent) 60%, #fff) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* 自機と連射弾をまとめて左右に流すリグ */
+.artifact__game-rig {
+  position: absolute;
+  bottom: 15%;
+  left: calc(50% - 0.65rem);
+  width: 1.3rem;
+  height: 1.3rem;
+}
 .artifact__game-ship {
   position: absolute;
-  bottom: 16%;
-  left: 50%;
+  bottom: 0;
+  left: 0;
+  width: 1.3rem;
+  text-align: center;
   color: var(--accent);
   font-size: 1.3rem;
   line-height: 1;
@@ -2077,12 +2145,15 @@
 }
 .artifact__game-shot {
   position: absolute;
-  bottom: 26%;
-  left: 50%;
-  color: #fff;
-  font-size: 0.8rem;
-  line-height: 1;
-  text-shadow: 0 0 8px var(--accent);
+  bottom: 1.5rem;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--accent) 70%, #fff));
+  box-shadow:
+    0 0 6px #fff,
+    0 0 14px var(--accent);
 }
 .artifact__game-hud {
   position: absolute;
@@ -2146,14 +2217,51 @@
 .artifact__dash-delta.is-down {
   color: #ff7a6e;
 }
+/* ライブ計測ヘッダ（点滅インジケータ） */
+.artifact__dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.artifact__dash-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: #ff5a5a;
+}
+.artifact__dash-livedot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5a5a;
+  box-shadow: 0 0 8px #ff5a5a;
+}
+.artifact__dash-feed {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.58rem;
+  color: var(--ink-faint);
+}
+/* バー：外側=立ち上がりの伸び / 内側=呼吸の伸び縮み（どちらも transform） */
 .artifact__dash-bars {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-.artifact__dash-bars span {
+.artifact__dash-bar {
   display: block;
+  width: 100%;
   height: 6px;
+  transform-origin: left center;
+}
+.artifact__dash-barfill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
   background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent));
   box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent);
 }
@@ -2164,4 +2272,8 @@
 .artifact__dash-spark path {
   stroke: var(--accent);
   filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 70%, transparent));
+}
+.artifact__dash-sparkdot {
+  fill: var(--accent-2);
+  filter: drop-shadow(0 0 4px var(--accent));
 }

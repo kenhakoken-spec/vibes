@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- 一時ハーネス: 立ち絵の全キャラ×全表情グリッド（検証後に削除） -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body { margin: 0; background: #16131b; font-family: monospace; }
+      .row { display: flex; }
+      .cell { width: 150px; height: 210px; position: relative; }
+      .cell span { position: absolute; top: 2px; left: 4px; color: #fff; font-size: 10px; z-index: 2; }
+      .cell > div { width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/dev-pt-grid.tsx"></script>
+  </body>
+</html>

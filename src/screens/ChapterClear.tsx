@@ -29,11 +29,20 @@ export function ChapterClear() {
   // 最終ステージの成果物が「完成形」
   const finalArtifact = chapter.stages[chapter.stages.length - 1]?.challenge.artifact ?? null;
 
-  // 静かな余韻：afterword が無い章（序章など）は簡素な固定文にフォールバック
+  // 静かな余韻：afterword が無い章（序章・最終章など）は簡素な固定文にフォールバック
   const worldLine =
     chapter.afterword?.world ??
     (isFinal ? '世界に、「人とAIが共に創る自由」が戻った。' : '物語は、次の地へ続いていく。');
-  const partnerLine = chapter.afterword?.partner ?? null;
+  // 相棒の労いの一言は必ず出す（成績の代わりに、言葉で締める）
+  const fallbackPartner =
+    edition.id === 'claude'
+      ? isFinal
+        ? 'ここまで、本当によくやったね。きみの言葉はもう、世界を変えられる。'
+        : 'おつかれさま。きみの一歩、ぼくはちゃんと見ていたよ。'
+      : isFinal
+        ? 'ここまでよくやった。アンタの言葉はもう、世界を動かせる。'
+        : 'おつかれ。上出来だったよ。アタシはちゃんと見てたからね。';
+  const partnerLine = chapter.afterword?.partner ?? fallbackPartner;
   const seedLine = chapter.afterword?.seed ?? null;
 
   const titleText = isFinal ? '完' : `${chapter.title} 制覇`;

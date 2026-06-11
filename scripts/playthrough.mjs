@@ -129,6 +129,12 @@ async function solveChallenge() {
 /** 章マップから全ステージを通しでプレイ。最終ステージのリザルト後に章クリア画面が出るまで回す */
 async function playChapter(label) {
   where = `${label}/map`;
+  // 序章クリア直後だけ「次の章へ」が世界地図（創造の地図）を経由する仕様（gameStore.nextChapter）。
+  // 世界地図に居たら現在章ノード（is-current）をタップして章マップへ入る。
+  await expect('.screen.map, .worldnode.is-current');
+  if ((await page.locator('.screen.map').count()) === 0) {
+    await page.locator('.worldnode.is-current').click();
+  }
   await expect('.screen.map');
   await page.waitForTimeout(2700); // ボス前口上（2.3秒で自動退場）の演出待ち
   where = `${label}/enter-stage`;
