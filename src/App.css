@@ -832,6 +832,16 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 6% 100%);
   font-weight: 700;
 }
+/* アクセント地の自分吹き出しでは、用語リンクも黒で読ませる。
+   （既定の .term はアクセント色のため、同色背景に沈んで見えない＝正解文が読めないバグ）
+   P5の黒×編色の反転表現に合わせ、点線下線でタップ可能の手掛かりは維持 */
+.bubble--you p .term {
+  color: inherit;
+  border-bottom-color: rgba(0, 0, 0, 0.7);
+}
+.bubble--you p .term:active {
+  background: rgba(0, 0, 0, 0.18);
+}
 .bubble--ai p {
   background: var(--bg-2);
   border: 1px solid rgba(255, 255, 255, 0.08);
