@@ -20,27 +20,31 @@ export function buildChapter2(edition: Edition): Chapter {
     subtitle: '忘れない仕組み',
     scene: 'archive',
     intro: [
-      { narration: true, text: '初依頼をやり遂げ、思い込みの影も振り払った。動くページを、自分の言葉で創れた。――だが「創ったものを失う」恐怖を、きみはまだ知らない。' },
       {
         narration: true,
         text: v(
-          'ギルドの書庫。棚という棚の文字が、霧に触れて次々と消えていく。',
-          'アジトの資料庫。棚という棚の文字が、霧に触れて次々と消えていく。'
+          'ギルドの書庫。あの夜、勢いだけで建てて大破させた掲示板――その直しを、きみはここで続けていた。',
+          'アジトの資料庫。あの夜、勢いだけで建てて大破させた掲示板――その直しを、きみはここで続けていた。'
         ),
       },
+      {
+        narration: true,
+        text: '――ふいに、手が止まる。“直す前の状態”が、どこにも残っていない。どこを変えて、どこから壊れたのか。辿るための道が、消えている。',
+      },
+      { narration: true, text: '顔を上げると、棚という棚の文字が、霧に触れて次々と消えていくところだった。' },
       {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '出たな……「健忘の亡霊アムネシア」。触れたものの記憶を奪う。昨日の成果も、こいつの前では無かったことになる。',
+        text: '出たな……「健忘の亡霊アムネシア」。触れたものの記憶を奪う霧だ。手元から“直す前”が消えたのも、こいつの仕業。昨日の成果が、無かったことにされていく。',
       },
       {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          'ぼくにも弱点がある。会話が長くなったり日をまたぐと、前提を忘れてしまうことがあるんだ。アムネシアはそこを突いてくる。',
-          'アタシも万能じゃない。話が長引くと前提を忘れることがある。アムネシアはそこに付け込んでくるタイプだ。'
+          'この間のあいさつページは、まだ元気に貼り出されてるよ。でも……正直に言うね。ぼくにも弱点がある。会話が長くなったり日をまたぐと、前提を忘れてしまうことがあるんだ。アムネシアはそこを突いてくる。',
+          'この間のあいさつページは、まだ元気に貼り出されてるぜ。でも……正直に言うとな、アタシも万能じゃない。話が長引くと前提を忘れることがある。アムネシアはそこに付け込んでくるタイプだ。'
         ),
       },
       {
@@ -52,11 +56,17 @@ export function buildChapter2(edition: Edition): Chapter {
           '対抗策は「メモリ」だ。大事な前提を書いて“育てて”おけば、アタシは毎回そこから賢く始められる。何を残すかが鍵だぜ。'
         ),
       },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '霧への最初の反撃だ。依頼 ── 残すべき“前提”を選り分けろ。書庫を守る戦いは、その目利きから始まる。',
+      },
     ],
     challenge: {
       kind: 'choice',
-      brief: 'QUEST ── 何を“記憶”に残す？',
-      goal: 'AIのメモリに残すべき情報を選ぼう。毎回役立つ前提を残すのがコツ。',
+      brief: '依頼 ── 残すべき“前提”を選り分けろ',
+      goal: '書庫を霧から守るため、AIのメモリに残すべき情報を選ぼう。毎回役立つ前提を残すのがコツ。',
       hint: '「次回以降もずっと役立つ前提」か？ 一度きりの雑談は残さない。',
       learn: '大事な前提は“メモリ”に書いて育てる。AIは毎回そこから賢く始められる。',
       question: `${pName}のメモリに残すなら、どれ？`,
@@ -111,7 +121,7 @@ export function buildChapter2(edition: Edition): Chapter {
     subtitle: 'いつでも戻れる',
     scene: 'archive',
     intro: [
-      { narration: true, text: 'アムネシアが反撃。作りかけのコードが、ぐにゃりと巻き戻り、壊れる。' },
+      { narration: true, text: 'アムネシアが反撃。直しかけだった掲示板のコードが、ぐにゃりと巻き戻り、壊れる。' },
       {
         speaker: 'mentor',
         portrait: 'mentor',
@@ -127,10 +137,16 @@ export function buildChapter2(edition: Edition): Chapter {
           '「Git」だ。区切りごとに記録（コミット）しとけば、爆発しても巻き戻せる。要はセーブ＆ロード。'
         ),
       },
+      {
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '備えの無い者から、霧は奪っていく。次の依頼だ ── 巻き戻しに備えろ。',
+      },
     ],
     challenge: {
       kind: 'choice',
-      brief: 'QUEST ── 巻き戻しに備える',
+      brief: '依頼 ── 巻き戻しに備えろ',
       diagram: 'git',
       goal: 'アムネシアの巻き戻し攻撃に備える、いちばん賢い習慣を選ぼう。',
       hint: '「区切り」で「こまめに」記録しておくと、被害を最小にできる。',
@@ -169,8 +185,8 @@ export function buildChapter2(edition: Edition): Chapter {
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          'いい習慣だ。Gitの航跡がある限り、きみの一歩は決して消えない。アムネシアの一番嫌う力だよ。',
-          'いい習慣だ。Gitの航跡がある限り、アンタの一歩は決して消えない。アムネシアが一番嫌う力さ。'
+          'いい習慣だ。Gitの航跡がある限り、きみの一歩は決して消えない。アムネシアが一番嫌う習慣だよ。',
+          'いい習慣だ。Gitの航跡がある限り、アンタの一歩は決して消えない。アムネシアが一番嫌う習慣さ。'
         ),
       },
     ],
@@ -197,12 +213,12 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '会社規模なら GitHub Enterprise で仲間と安全に共有できる。さあ新人、自分の言葉で頼んでみろ。',
+        text: '会社規模なら GitHub Enterprise で仲間と安全に共有できる。さあ新人、次の依頼だ ── 航跡を世界に刻め。GitHubへ、自分の言葉で頼んでみろ。',
       },
     ],
     challenge: {
       kind: 'freeText',
-      brief: 'QUEST ── GitHubに公開せよ',
+      brief: '依頼 ── 航跡を世界に刻め',
       goal: 'このプロジェクトをGitHubに上げて公開するよう、自分の言葉でAIに頼もう。READMEに何を書くかも添えると良い。',
       hint: '“GitHubに上げて/公開” ＋ “READMEに何を書くか” を入れて頼もう。',
       learn: '成果は共有して初めて価値が伝わる。GitHubで航跡を世界に残せる。',
@@ -258,7 +274,7 @@ export function buildChapter2(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: 'まだ霧の残り香がある。アムネシアを二度と寄せつけぬよう、今日の流れを自分の言葉で回してみせろ。',
+        text: 'まだ霧の残り香がある。アムネシアを二度と寄せつけぬよう、最後の依頼だ ── 今日の一周を、自分の手で回してみせろ。',
       },
       {
         speaker: partnerId,
@@ -272,7 +288,7 @@ export function buildChapter2(edition: Edition): Chapter {
     ],
     challenge: {
       kind: 'freeText',
-      brief: 'QUEST ── 自分で記録・共有',
+      brief: '依頼 ── 今日の一周を、自分の手で回せ',
       goal: 'ページに小さな変更を加えて、こまめにコミットし、GitHubへ上げて共有しよう。READMEの更新も添えると良い。自分の言葉でAIに頼もう。',
       hint: '“変更を加える” ＋ “コミットする” ＋ “GitHubに上げる/READMEを更新” を、自分の言葉でつなげて頼もう。',
       learn: 'メモリ・Git・GitHub――学んだ全部を一続きにすれば、成果は失われず世界に残る。',
@@ -294,7 +310,7 @@ export function buildChapter2(edition: Edition): Chapter {
     outro: [
       {
         narration: true,
-        text: '新しいコミットの光が、書庫の隅々まで届く。霧の残り香は、もうどこにも無い。',
+        text: '新しいコミットの光が、書庫の隅々まで届く。霧の残り香は、もうどこにも無い。――机の上では、あの掲示板が、静かに直り終えていた。',
       },
       {
         speaker: partnerId,
@@ -310,8 +326,8 @@ export function buildChapter2(edition: Edition): Chapter {
         portrait: 'mentor',
         side: 'left',
         text: v(
-          '……だが忘れるな。これらは皆、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎん。',
-          '……だけど忘れるんじゃないよ。これは全部、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎないのさ。'
+          '……手が迷わなくなったな。だが忘れるな。これらは皆、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎん。',
+          '……手が迷わなくなったね。だけど忘れるんじゃないよ。これは全部、いずれ来る“あの存在”── OVERSEER に挑むための、ほんの足がかりに過ぎないのさ。'
         ),
       },
     ],
@@ -321,8 +337,16 @@ export function buildChapter2(edition: Edition): Chapter {
     id: 'ch2',
     title: '第2章',
     subtitle: '記憶と航跡 ── 失わないために',
-    power: '失わない力',
-    recap: '心得を学び、思い込みの影「ステレオ」を退けた。',
+    quest: '消えゆく記録を、失われない書庫に',
+    afterword: {
+      world: '書庫の棚に、文字が戻った。消えない航跡が一本、街の外――クラウドの空まで伸びている。',
+      partner: v(
+        'ねえ、気づいてた？ 今日のきみ、手を動かす前に「まずコミット」って言ってたんだ。失うのを恐れて止まってた手が、いまは先に備えてる。',
+        '気づいてたか？ 今日のアンタ、手を動かす前に「まずコミット」って言ってたんだぜ。失うのにビビって止まってた手が、いまは先に備えてる。'
+      ),
+      seed: '――その夜、写字室の窓にはまだ灯りがあった。誰かが今夜も、同じ転記を手で続けている。',
+    },
+    recap: '一夜の失敗を検証し、思い込みの影「ステレオ」を退けた。――壊した掲示板の後始末は、まだ残っている。',
     keyTerms: ['memory', 'git', 'commit', 'repository', 'github', 'readme'],
     scene: 'archive',
     boss: {

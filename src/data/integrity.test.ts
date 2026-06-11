@@ -2,8 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { buildChapters } from './chapters';
 import { EDITIONS } from './editions';
 import { GLOSSARY } from './glossary';
-import { skillChapters } from './journey';
-import { JOURNEY_POWER_LABELS } from '../components/Diagram';
+import { buildOpening } from './opening';
 import type { BossGlyphKind, Chapter, SceneId } from '../types';
 
 /* 章データの不変条件を機械的に検証する。
@@ -18,6 +17,12 @@ function visibleStrings(chapters: Chapter[]): { where: string; text: string }[] 
   const out: { where: string; text: string }[] = [];
   for (const c of chapters) {
     out.push({ where: `${c.id} subtitle`, text: c.subtitle });
+    if (c.quest) out.push({ where: `${c.id} quest`, text: c.quest });
+    if (c.afterword) {
+      out.push({ where: `${c.id} afterword.world`, text: c.afterword.world });
+      out.push({ where: `${c.id} afterword.partner`, text: c.afterword.partner });
+      if (c.afterword.seed) out.push({ where: `${c.id} afterword.seed`, text: c.afterword.seed });
+    }
     if (c.recap) out.push({ where: `${c.id} recap`, text: c.recap });
     if (c.boss) out.push({ where: `${c.id} boss`, text: `${c.boss.name} ${c.boss.title} ${c.boss.blurb}` });
     for (const s of c.stages) {
@@ -45,6 +50,8 @@ function visibleStrings(chapters: Chapter[]): { where: string; text: string }[] 
 function partnerStrings(chapters: Chapter[], partnerId: string): { where: string; text: string }[] {
   const out: { where: string; text: string }[] = [];
   for (const c of chapters) {
+    // 章クリアの余韻＝相棒の吹き出しとして表示される
+    if (c.afterword) out.push({ where: `${c.id} afterword.partner`, text: c.afterword.partner });
     for (const s of c.stages) {
       [...s.intro, ...s.outro].forEach((l, i) => {
         if (l.speaker === partnerId) out.push({ where: `${s.id} line[${i}]`, text: l.text });
@@ -58,17 +65,12 @@ function partnerStrings(chapters: Chapter[], partnerId: string): { where: string
   return out;
 }
 
-describe('ジャーニー図と章データの整合', () => {
-  it('journey 図の8つの力ラベルは、各章の power と順序まで一致する', () => {
+describe('章データの大域整合', () => {
+  it('全章が quest（依頼の一行）を持つ（ワールドマップの依頼表示が欠けない）', () => {
     for (const ed of [EDITIONS.claude, EDITIONS.cursor]) {
-      const powers = skillChapters(buildChapters(ed)).map((x) => x.chapter.power);
-      expect(powers).toEqual([...JOURNEY_POWER_LABELS]);
-    }
-  });
-
-  it('力（バッジ）を持つ章はちょうど8つ（称号閾値 rankTitle と連動）', () => {
-    for (const ed of [EDITIONS.claude, EDITIONS.cursor]) {
-      expect(skillChapters(buildChapters(ed)).length).toBe(8);
+      for (const c of buildChapters(ed)) {
+        expect(Boolean(c.quest), `${c.id} に quest が無い`).toBe(true);
+      }
     }
   });
 
@@ -77,6 +79,18 @@ describe('ジャーニー図と章データの整合', () => {
       const names = buildChapters(ed).flatMap((c) => (c.boss ? [c.boss.name] : []));
       expect(new Set(names).size, `重複: ${names.join(',')}`).toBe(names.length);
     }
+  });
+
+  it('明示ゲーミフィケーションの語（バッジ/称号/◯つの力）が表示文字列に無い（成長は物語で描く）', () => {
+    const hits: string[] = [];
+    for (const ed of [EDITIONS.claude, EDITIONS.cursor]) {
+      for (const { where, text } of visibleStrings(buildChapters(ed))) {
+        for (const ng of ['バッジ', '称号', '8つの力', 'つの力を']) {
+          if (text.includes(ng)) hits.push(`${ed.id} ${where} に「${ng}」: ${text}`);
+        }
+      }
+    }
+    expect(hits).toEqual([]);
   });
 });
 
@@ -97,6 +111,42 @@ describe('CURSOR編の世界観・口調（編固有NGワード）', () => {
     const hits: string[] = [];
     for (const { where, text } of partnerStrings(chapters, EDITIONS.cursor.partner.id)) {
       if (text.includes('きみ')) hits.push(`${where}: ${text}`);
+    }
+    expect(hits).toEqual([]);
+  });
+});
+
+describe('オープニング（ムービー風OP）の口調', () => {
+  /** OPの1カットからプレイヤーに見える文字列を全部拾う */
+  const cutStrings = (edId: 'claude' | 'cursor') =>
+    buildOpening(EDITIONS[edId]).flatMap((c, i) => {
+      const out: { where: string; text: string }[] = [{ where: `cut[${i}] text`, text: c.text }];
+      if (c.command) out.push({ where: `cut[${i}] command`, text: c.command });
+      if (c.artifact) {
+        out.push({
+          where: `cut[${i}] artifact`,
+          text: [c.artifact.title, ...c.artifact.body, c.artifact.buttonLabel ?? ''].join(' '),
+        });
+      }
+      return out;
+    });
+
+  it('CURSOR編OPに「棟梁」「ギルド」「ぼく」「きみ」が無い', () => {
+    const hits: string[] = [];
+    for (const { where, text } of cutStrings('cursor')) {
+      for (const ng of ['棟梁', 'ギルド', 'ぼく', 'きみ']) {
+        if (text.includes(ng)) hits.push(`${where} に「${ng}」: ${text}`);
+      }
+    }
+    expect(hits).toEqual([]);
+  });
+
+  it('CLAUDE編OPに「アタシ」「アンタ」が無い', () => {
+    const hits: string[] = [];
+    for (const { where, text } of cutStrings('claude')) {
+      for (const ng of ['アタシ', 'アンタ']) {
+        if (text.includes(ng)) hits.push(`${where} に「${ng}」: ${text}`);
+      }
     }
     expect(hits).toEqual([]);
   });

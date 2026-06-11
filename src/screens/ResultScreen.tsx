@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
-import { rankFor, RANK_LABEL, RANK_COLOR } from '../engine/rank';
 import { ArtifactPreview } from '../components/ArtifactPreview';
 import { AngledButton } from '../components/AngledButton';
 import { RichText } from '../components/RichText';
@@ -9,31 +8,26 @@ import { ComicBurst } from '../components/ComicBurst';
 import { ScrollCue } from '../components/ScrollCue';
 
 export function ResultScreen() {
-  const { currentStage, results, closeResult } = useGame();
+  const { currentStage, closeResult } = useGame();
   const stage = currentStage();
   const scrollRef = useRef<HTMLDivElement>(null);
   if (!stage) return null;
-
-  const res = results[stage.id];
-  const rank = res ? rankFor(res.score, res.attempts) : 'C';
 
   return (
     <motion.div ref={scrollRef} className="screen result" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <ComicBurst />
       <ScrollCue targetRef={scrollRef} />
       <div className="result__inner">
+        {/* 成績表は出さない（新方針：成長は言葉と成果物で語る）。
+            ランクの代わりに“依頼をやり遂げた”ことだけをスタンプで決める */}
         <motion.div
-          className="result__rank"
+          className="result__stamp"
           initial={{ scale: 2.4, rotate: -25, opacity: 0 }}
           animate={{ scale: 1, rotate: -8, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 180, damping: 14 }}
         >
-          <span className="result__ranktag display" style={{ color: RANK_COLOR[rank] }}>
-            {rank}
-          </span>
-          <span className="result__ranklabel head" style={{ color: RANK_COLOR[rank] }}>
-            {RANK_LABEL[rank]}
-          </span>
+          <span className="result__stamptag display">完遂</span>
+          <span className="result__stamplabel head">REQUEST COMPLETE</span>
         </motion.div>
 
         <motion.div

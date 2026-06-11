@@ -171,7 +171,7 @@ export function ChallengeScreen() {
           </div>
         )}
 
-        {cleared && <ClearedBar score={score} attempts={attempts} onNext={() => completeChallenge(score, attempts + 1)} />}
+        {cleared && <ClearedBar onNext={() => completeChallenge(score, attempts + 1)} />}
       </section>
     </motion.div>
   );
@@ -205,7 +205,8 @@ function ChatBubble({
   );
 }
 
-function ClearedBar({ score, attempts, onNext }: { score: number; attempts: number; onNext: () => void }) {
+/** 達成バナー。品質％や試行回数は出さない（新方針：成績表ではなく達成の事実だけ） */
+function ClearedBar({ onNext }: { onNext: () => void }) {
   return (
     <motion.div
       className="ch__cleared"
@@ -214,9 +215,6 @@ function ClearedBar({ score, attempts, onNext }: { score: number; attempts: numb
       transition={{ type: 'spring', stiffness: 240, damping: 18 }}
     >
       <span className="ch__cleared-tag display">依頼 達成</span>
-      <span className="ch__cleared-meta">
-        品質 {Math.round(score * 100)}％ ・ 試行 {attempts + 1} 回
-      </span>
       <AngledButton onClick={onNext}>つづける ▶</AngledButton>
     </motion.div>
   );

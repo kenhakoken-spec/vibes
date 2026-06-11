@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { UPCOMING } from '../data/chapters';
-import { earnedPowers as countEarnedPowers, rankTitle, skillChapters } from '../data/journey';
 import { CodexSheet } from '../components/CodexSheet';
 import { sfx } from '../engine/sfx';
 
@@ -11,12 +10,6 @@ export function WorldMap() {
   const { chapters, edition, enterChapter, isChapterUnlocked, isChapterCleared, backToTitle } = useGame();
   if (!edition) return null;
 
-  // 8つの力（バッジ）＝旅の本道
-  const skills = skillChapters(chapters);
-  const totalPowers = skills.length;
-  const earnedPowers = countEarnedPowers(chapters, isChapterCleared);
-  const title = rankTitle(earnedPowers);
-  const pct = Math.round((earnedPowers / Math.max(1, totalPowers)) * 100);
   // 「現在地（次に挑む章）」＝解放済みで未クリアの最初の章
   const currentIndex = chapters.findIndex((_, i) => isChapterUnlocked(i) && !isChapterCleared(i));
 
@@ -53,41 +46,10 @@ export function WorldMap() {
         </div>
         <span className="kicker">WORLD ／ ゴールまでの地図</span>
         <h2 className="display world__title">創造の地図</h2>
+        {/* 進捗の数字は出さない。★が増え、道が伸びる見た目だけで語る */}
         <p className="world__lead">
-          <b style={{ color: edition.accent }}>8つの力</b>を集め、最後に <b style={{ color: edition.accent }}>OVERSEER</b> に挑む。
+          道は、<b style={{ color: edition.accent }}>OVERSEER</b> の塔まで続いている。
         </p>
-
-        {/* バッジケース：8つの力を集める進捗（ポケモンのジムバッジ的） */}
-        <div className="badgecase" aria-label={`獲得した力 ${earnedPowers}/${totalPowers}`}>
-          {skills.map((x) => {
-            const earned = isChapterCleared(x.index);
-            const current = x.index === currentIndex;
-            return (
-              <div
-                key={x.chapter.id}
-                className={`badge ${earned ? 'is-earned' : ''} ${current ? 'is-current' : ''}`}
-                title={`${x.chapter.title}：${x.chapter.power}`}
-              >
-                <span className="badge__gem" />
-                <span className="badge__name">{x.chapter.power}</span>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="world__stats">
-          <div className="world__bar">
-            <motion.span
-              className="world__bar-fill"
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            />
-          </div>
-          <span className="world__stat">
-            獲得した力 <b style={{ color: edition.accent }}>{earnedPowers}/{totalPowers}</b> ・ 称号「{title}」
-          </span>
-        </div>
       </header>
 
       <div className="world__track scroll">
@@ -120,12 +82,8 @@ export function WorldMap() {
               <span className="worldnode__no">{ch.title}</span>
               <span className="worldnode__body">
                 <b className="worldnode__sub">{ch.subtitle}</b>
-                {ch.power && (
-                  <span className="worldnode__power">
-                    {cleared ? '★ 獲得: ' : '得る力: '}
-                    <b>{ch.power}</b>
-                  </span>
-                )}
+                {/* 依頼の一行＝章のスケール感。回を追うごとに依頼が大きくなる＝成長の体感 */}
+                {ch.quest && <span className="worldnode__quest">依頼 ── {ch.quest}</span>}
                 {ch.boss && (
                   <span className="worldnode__boss">
                     {isGoal ? '最終決戦:' : '歪み:'}「{ch.boss.name}」{ch.boss.title}

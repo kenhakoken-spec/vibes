@@ -42,6 +42,25 @@ export function clearSave() {
   }
 }
 
+/* ---- ムービー風オープニングの初回再生フラグ（編ごと） ----------------- */
+const OPENING_SEEN_PREFIX = 'vg-opening-seen-';
+
+function hasSeenOpening(id: EditionId): boolean {
+  try {
+    return localStorage.getItem(OPENING_SEEN_PREFIX + id) === '1';
+  } catch {
+    return true; // localStorage不可ならOPに固執しない
+  }
+}
+
+function markOpeningSeen(id: EditionId) {
+  try {
+    localStorage.setItem(OPENING_SEEN_PREFIX + id, '1');
+  } catch {
+    /* noop */
+  }
+}
+
 interface GameState {
   screen: Screen;
   edition: Edition | null;
@@ -55,6 +74,8 @@ interface GameState {
   pressStart: () => void;
   continueGame: () => void;
   selectEdition: (id: EditionId) => void;
+  /** オープニング終了（SKIP含む）。見たことを記録し、序章へ直行する */
+  finishOpening: () => void;
   /** world map -> open a chapter's stage map（ロックされていても入れる。注意はUI側） */
   enterChapter: (index: number) => void;
   /** チャプタークリア後、次の章へ直接進む */
@@ -145,12 +166,20 @@ export const useGame = create<GameState>((set, get) => ({
       chapters,
       chapterIndex: 0,
       chapter: chapters[0],
-      screen: 'world',
+      // 初めての編ならムービー風オープニングから（編切替で未見の編も流れる＝仕様）
+      screen: hasSeenOpening(id) ? 'world' : 'opening',
       stageIndex: 0,
       results: {},
       learned: [],
     });
     writeSave({ editionId: id, results: {}, learned: [] });
+  },
+
+  finishOpening: () => {
+    const { edition, chapters } = get();
+    if (edition) markOpeningSeen(edition.id);
+    // 世界地図は序章クリア後に初めて見せる。OP直後は序章へ直行
+    set({ chapterIndex: 0, chapter: chapters[0] ?? null, stageIndex: 0, screen: 'map' });
   },
 
   enterChapter: (index) => {

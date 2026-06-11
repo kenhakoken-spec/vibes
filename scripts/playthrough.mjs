@@ -154,8 +154,46 @@ async function playChapter(label) {
   await page.screenshot({ path: `shots/play-${label.replace(/[^\w-]/g, '_')}-clear.png` });
 }
 
-/** タイトル → 編選択（cardIndex: 0=CLAUDE / 1=CURSOR）→ ワールド → 序章へ */
-async function startEdition(label, cardIndex, chapterNodeIndex = 0) {
+/** ムービー風オープニング：タップで早送りしつつ最後の「扉を開く」まで実際に通す
+ *  （SKIPは使わない＝新方針の見せ場が壊れていないかも回帰で確認する）
+ *  終了後は世界地図を経由せず序章マップへ直行する仕様。 */
+async function playOpening(label) {
+  where = `${label}/opening`;
+  // 初見の編はオープニング。既読なら world（章選択）に居る場合もあるので両対応
+  await expect('.screen.opening, .screen.map, .worldnode');
+  if ((await page.locator('.screen.opening').count()) === 0) {
+    if (await page.locator('.worldnode').count()) {
+      await page.locator('.worldnode').first().click();
+    }
+    return;
+  }
+  for (let i = 0; i < 200; i++) {
+    if ((await page.locator('.screen.opening').count()) === 0) return; // 序章マップへ遷移済み
+    // 最終カット：ロゴ →「▶ 扉を開く」
+    const enter = page.locator('.opening__enter .abtn');
+    if (await enter.count()) {
+      await enter.click({ timeout: 1500 }).catch(() => {});
+      await page.waitForTimeout(700);
+      continue;
+    }
+    // デモカットの一文はキャプション側にクリックが付く。それ以外はカット本体をタップ
+    const cap = page.locator('.opening__caption');
+    if (await cap.count()) {
+      await cap.click({ timeout: 1500 }).catch(() => {});
+    } else {
+      await page
+        .locator('.opening__cut')
+        .click({ timeout: 1500, position: { x: 24, y: 220 } })
+        .catch(() => {});
+    }
+    await page.waitForTimeout(420);
+  }
+  problems.push({ where, detail: '進行停止: オープニングが終わらない（200タップ超）' });
+  throw new Error(`opening loop at ${where}`);
+}
+
+/** タイトル → 編選択（cardIndex: 0=CLAUDE / 1=CURSOR）→ オープニング → 序章へ */
+async function startEdition(label, cardIndex) {
   where = `${label}/title`;
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1500);
@@ -165,10 +203,8 @@ async function startEdition(label, cardIndex, chapterNodeIndex = 0) {
   where = `${label}/edition`;
   await expect('.edition__card');
   await page.locator('.edition__card').nth(cardIndex).click();
-  where = `${label}/world`;
-  await expect('.worldnode');
-  await page.waitForTimeout(800);
-  await page.locator('.worldnode').nth(chapterNodeIndex).click();
+  // 新方針: 編選択直後はムービー風オープニング → 序章マップへ直行（世界地図は序章クリア後）
+  await playOpening(label);
 }
 
 /** 1つの編を序章〜最終章まで通しプレイ */

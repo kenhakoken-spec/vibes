@@ -17,8 +17,23 @@ export function buildChapter4(edition: Edition): Chapter {
     subtitle: 'AIに道具を',
     scene: 'guild',
     intro: [
-      { narration: true, text: '自動化で手数は増えた。だが気づく――相棒AIが触れられる“道具”は、まだほんの一部しかない。' },
-      { narration: true, text: '高くそびえる壁。向こう側のカレンダーも、メールも、データも、AIの手は届かない。' },
+      {
+        narration: true,
+        text: v(
+          'その朝、ギルドの受付は騒然としていた。同じ依頼が受付台帳と壁の予定表に“二重登録”され――職人が二人、同じ仕事場で鉢合わせたのだ。',
+          'その朝、クルーのアジトは騒然としていた。同じ依頼が受付台帳と壁の予定表に“二重登録”され――職人が二人、同じ現場で鉢合わせたのだ。'
+        ),
+      },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'この間きみが組んだ自動化、台帳のほうは今夜も正しく動いてたよ。……でもね、ぼくに読めるのは台帳だけ。壁の予定表には、ぼくの手が届かないんだ。',
+          'この間アンタが組んだ自動化、台帳のほうは今夜も正しく動いてたぜ。……だがな、アタシに読めるのは台帳だけ。壁の予定表にゃ、アタシの手が届かねぇ。'
+        ),
+      },
+      { narration: true, text: '台帳は読める。なのに予定表には触れない。道具と道具のあいだに、高い壁がそびえていた。' },
       {
         speaker: 'mentor',
         portrait: 'mentor',
@@ -30,25 +45,22 @@ export function buildChapter4(edition: Edition): Chapter {
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          '……ねえ。最初のきみは「何から始めればいいか分からない」って言ってた。それが今や、自動化までやってのけた。正直、ぼくは少し誇らしいよ。',
-          '……なあ。最初のアンタは「何から始めりゃいいか分からん」って顔してた。それが今や自動化までやってのける。…ちょっと誇らしいぜ、正直。'
+          '今のやり方じゃ、この壁は越えられない。鍵は「MCP」――ぼくのようなAIに、カレンダーやメールやデータベースといった“外の道具”をつなぐ、共通の差し込み口だ。',
+          '今のやり方じゃ、この壁は越えられねぇ。鍵は「MCP」――アタシみたいなAIに、カレンダーやメールやデータベース(DB)っていう“外の道具”を挿す、共通の差し込み口だ。'
         ),
       },
       {
-        speaker: partnerId,
-        portrait: partnerPortrait,
-        side: 'right',
-        text: v(
-          'で、次の壁を越える鍵は「MCP」。ぼくのようなAIに、カレンダーやメールやデータベースといった“道具”をつなぐ共通の差し込み口だ。繋がれば、ぼくは「やる」AIになる。',
-          'で、次の壁を越える鍵が「MCP」。アタシみたいなAIに、カレンダーやメールやデータベース(DB)っていう“道具”を挿す共通の差し込み口だ。繋がりゃ、アタシは「実行する」側になる。'
-        ),
+        speaker: 'mentor',
+        portrait: 'mentor',
+        side: 'left',
+        text: '依頼だ。二度と鉢合わせを起こすな。AIの手を道具に届かせる“規格”がある――それが何か、まず知れ。',
       },
     ],
     challenge: {
       kind: 'choice',
-      brief: 'QUEST ── MCPの正体',
+      brief: '依頼 ── AIの手を道具に届かせる“規格”を知れ',
       diagram: 'mcp',
-      goal: 'MCPでできることとして、いちばん正しいものを選ぼう。',
+      goal: '二重登録の事故を防ぐ第一歩。MCPでできることとして、いちばん正しいものを選ぼう。',
       hint: 'MCP＝AIと“外部の道具”をつなぐ共通の仕組み。AIが道具を操作できるようになる。',
       learn: 'MCPはAIと道具をつなぐ共通規格。繋ぐとAIは「話す」だけでなく「やる」に変わる。',
       question: 'MCPで、何ができる？',
@@ -106,12 +118,21 @@ export function buildChapter4(edition: Edition): Chapter {
           '実務用に整った“プラグイン集”もある。Anthropic の knowledge-work-plugins とかな。業務ツールをAIに繋ぐ部品の宝庫だ。'
         ),
       },
+      {
+        speaker: partnerId,
+        portrait: partnerPortrait,
+        side: 'right',
+        text: v(
+          'で、今回の鉢合わせの元凶は“予定表”。依頼主を二度と待たせないために――さて、まずどこへ挿す？',
+          'で、今回の鉢合わせの元凶は“予定表”。客を二度と待たせねぇために――さて、まずどこへ挿す？'
+        ),
+      },
       { speaker: 'mentor', portrait: 'mentor', side: 'left', text: '闇雲に繋ぐな。効くところから繋げ。' },
     ],
     challenge: {
       kind: 'choice',
-      brief: 'QUEST ── まず繋ぐ道具',
-      goal: '業務でまず繋ぐと効果が大きい道具はどれ？',
+      brief: '依頼 ── 効くところから繋げ',
+      goal: '依頼主を待たせないために、まず繋ぐと効果が大きい道具はどれ？',
       hint: '「毎日使う」「手間が大きい」業務ツールほど、繋いだ効果が大きい。',
       learn: 'よく使う業務ツールをAIに繋ぐと、AIが実務を“代わりにやる”ようになる。',
       question: 'まず繋ぐと効くのは？',
@@ -173,8 +194,8 @@ export function buildChapter4(edition: Edition): Chapter {
     ],
     challenge: {
       kind: 'freeText',
-      brief: 'QUEST ── 道具を接続せよ',
-      goal: '自分のAIにカレンダーをMCPで接続し、予定を読めるようにするよう、自分の言葉で頼もう。',
+      brief: '依頼 ── 予定表をAIの手に',
+      goal: '鉢合わせを二度と起こさないために。自分のAIにカレンダーをMCPで接続し、予定を読めるようにするよう、自分の言葉で頼もう。',
       hint: '“カレンダーをMCPで繋ぐ/接続” ＋ “何ができるようにしたいか（予定を読む等）” を伝えよう。',
       learn: '道具を繋げばAIは「話す」だけでなく「やる」になる。目的を添えて接続を頼む。',
       placeholder: '例）私のGoogleカレンダーをMCPで繋いで、来週の予定を読めるようにして。空き時間も教えられるように。',
@@ -182,26 +203,32 @@ export function buildChapter4(edition: Edition): Chapter {
       minKeywords: 2,
       sampleAnswer: '私のカレンダーをMCPで接続して、来週の予定を読めるようにして。空き時間も答えられるように。',
       successResponse: v(
-        'カレンダーをMCPで接続したよ。試しに来週を見たら、水曜の午後が空いている。もう「予定どう？」に、ぼく自身が答えに行ける。サイロの壁が崩れ落ちた。',
-        'カレンダーをMCPで接続したぜ。試しに来週を見たら、水曜の午後が空いてる。もう「予定どう？」に、アタシ自身が答えに行ける。サイロの壁が崩れ落ちた。'
+        'カレンダーをMCPで接続したよ。台帳と予定表、両方をぼくが見比べられる――例の二重登録も、もう起こさせない。サイロの壁に、大きな亀裂が走った。',
+        'カレンダーをMCPで接続したぜ。台帳と予定表、両方をアタシが見比べられる――例の二重登録も、もう起こさせねぇ。サイロの壁に、デカい亀裂が走った。'
       ),
       artifact: { title: 'mcp.json', body: ['✓ カレンダー接続 完了', '✓ 予定の読み取り 成功'], fixed: true },
     },
     outro: [
       {
+        speaker: 'hero',
+        portrait: 'hero',
+        side: 'right',
+        text: '（前なら、こんな仕組みは丸一日かかっても作れなかった。いまは、言葉ひとつ。）',
+      },
+      {
         speaker: partnerId,
         portrait: partnerPortrait,
         side: 'right',
         text: v(
-          'やった。これでぼくは、きみの道具を使いこなす相棒だ。孤立は終わり。AIは「話す」から「やる」へ。',
-          'やったな。これでアタシはアンタの道具を握る相棒だ。孤立は終わり。AIは「話す」から「やる」へ進化した。'
+          'これでぼくは、きみの道具を使いこなす相棒だ。孤立は終わり。AIは「話す」から「やる」へ。',
+          'これでアタシはアンタの道具を握る相棒だ。孤立は終わり。AIは「話す」から「やる」へ進化した。'
         ),
       },
       {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '道具を一つ束ねたか。だが本領は“いくつも繋ぐ”ところからだ。最後に、もう一つ繋いでみせろ。',
+        text: '道具を一つ束ねたか。だが本領は“いくつも繋ぐ”ところからだ。最後の依頼だ――もう一つ繋いでみせろ。',
       },
     ],
   };
@@ -212,7 +239,7 @@ export function buildChapter4(edition: Edition): Chapter {
     subtitle: 'もう一つ繋ぐ',
     scene: 'cyber',
     intro: [
-      { narration: true, text: '壁は崩れた。だが向こうには、まだ繋がれていない道具が静かに眠っている。' },
+      { narration: true, text: '壁には大きな亀裂。だがその向こうには、まだ繋がれていない道具が静かに眠っている。' },
       {
         speaker: partnerId,
         portrait: partnerPortrait,
@@ -225,7 +252,7 @@ export function buildChapter4(edition: Edition): Chapter {
     ],
     challenge: {
       kind: 'freeText',
-      brief: 'QUEST ── 別の道具も繋ぐ',
+      brief: '依頼 ── もう一つ繋いでみせろ',
       diagram: 'mcp',
       goal: 'カレンダー以外の道具（例：メール／社内ドキュメント検索）をMCPで繋ぎ、AIに何をさせたいかを、自分の言葉で頼もう。正解は一つじゃない。',
       hint: '“どの道具を MCPで繋ぐ/接続” ＋ “繋いだら何をさせたいか” を具体的に伝えよう。',
@@ -243,7 +270,7 @@ export function buildChapter4(edition: Edition): Chapter {
     outro: [
       {
         narration: true,
-        text: '繋がれた道具が一つ、また一つと灯をともす。孤立していた壁の向こうが、ひとつながりの仕事場になった。',
+        text: '繋がれた道具が一つ、また一つと灯をともす。サイロの壁は音を立てて崩れ落ち、断たれていた道具たちが、ひとつながりの仕事場になった。',
       },
       {
         speaker: partnerId,
@@ -258,7 +285,10 @@ export function buildChapter4(edition: Edition): Chapter {
         speaker: 'mentor',
         portrait: 'mentor',
         side: 'left',
-        text: '道具を束ねたか。…OVERSEER は、あらゆる道具を独占しようとする。お前の力、いよいよ試されるぞ。',
+        text: v(
+          '……繋ぐ先を、もう自分で見つけてくるのだな。だが心せよ――OVERSEERは、あらゆる道具を独占しようとしている。繋がる手を持つ者を、奴はいちばん恐れるのだ。',
+          '……繋ぐ先を、もう自分で見つけてくるんだね。だけど気をつけな――OVERSEERは、あらゆる道具を独占しようとしてる。繋がる手を持つ者を、アイツがいちばん恐れてるのさ。'
+        ),
       },
     ],
   };
@@ -267,8 +297,16 @@ export function buildChapter4(edition: Edition): Chapter {
     id: 'ch4',
     title: '第4章',
     subtitle: '道具をつなぐ ── 孤立を超えて',
-    power: '繋ぐ力',
-    recap: 'Playwrightで反復作業を自動化し、「トイル」を断ち切った。',
+    quest: '閉じた工房を、外の道具たちと繋げ',
+    afterword: {
+      world: '受付台帳と壁の予定表が、初めて同じ明日を指した。鉢合わせの怒鳴り声は、あの朝を最後に聞こえなくなった。',
+      partner: v(
+        'ねえ、気づいてた？ 繋ぐ道具を選ぶとき、きみは“何ができるか”じゃなくて“誰が困ってるか”から考えてた。前は機能の話しかしなかったのに。',
+        'なあ、気づいてたか？ 繋ぐ道具を選ぶとき、アンタは“何ができるか”じゃなく“誰が困ってるか”から考えてたぜ。前は機能の話ばっかりだったのにな。'
+      ),
+      seed: '――倉庫の隅では、あの夜の“配られなかった掲示板”が、静かに埃を被っていた。',
+    },
+    recap: '写字室の夜なべ仕事を、自動化でひと晩のうちに消した。気づけば、手順を確かめる前に手が動くようになっている。',
     keyTerms: ['mcp', 'plugin', 'api', 'database'],
     scene: 'guild',
     boss: { name: 'サイロ', glyph: 'wall', title: '孤立の壁', blurb: '道具と道具を断絶させる壁。繋ぐ術を持たぬAIを“話すだけ”に閉じ込める。' },

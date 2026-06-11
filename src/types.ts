@@ -72,8 +72,7 @@ export type DiagramKind =
   | 'delegate'
   | 'web-parts'
   | 'rpa-flow'
-  | 'ship-flow'
-  | 'journey';
+  | 'ship-flow';
 
 export interface ChoiceOption {
   id: string;
@@ -84,7 +83,7 @@ export interface ChoiceOption {
 }
 
 /** 成果物の見せ方 */
-export type ArtifactKind = 'web' | 'file' | 'terminal' | 'note';
+export type ArtifactKind = 'web' | 'file' | 'terminal' | 'note' | 'game' | 'dashboard';
 
 /** A snapshot of the artifact being built, shown in the live preview. */
 export interface ArtifactState {
@@ -96,6 +95,8 @@ export interface ArtifactState {
   hasButton?: boolean;
   buttonLabel?: string;
   fixed?: boolean;
+  /** web: ボタン押下後のトースト文言（省略時は既定の入室メッセージ） */
+  toast?: string;
 }
 
 export interface Challenge {
@@ -163,8 +164,13 @@ export interface Chapter {
   scene?: SceneId;
   /** 章ボス（歪み） */
   boss?: BossInfo;
-  /** この章をクリアして得る「力（バッジ）」の名。8つの力＝旅の道のり。序章/幕間/最終章には無い。 */
-  power?: string;
+  /** 章の“依頼”一行。ワールドマップのノードに表示（依頼のスケール拡大＝成長の体感） */
+  quest?: string;
+  /**
+   * 章クリアの余韻（静かな成長描写）。
+   * world=世界の変化ナレ ／ partner=相棒の成長言及（数値・称号は禁句） ／ seed=次章への種（伏線）
+   */
+  afterword?: { world: string; partner: string; seed?: string };
   /** 章開始時に出す「前回までの振り返り」 */
   recap?: string;
   /** この章で学ぶ重要用語（glossaryのid）。コーデックスでタップ解説に使う */
@@ -177,6 +183,7 @@ export interface Chapter {
 export type Screen =
   | 'title'
   | 'edition'
+  | 'opening'
   | 'world'
   | 'map'
   | 'story-intro'
@@ -187,9 +194,7 @@ export type Screen =
 
 export interface StageResult {
   cleared: boolean;
-  /** 0..1 quality, drives the rank */
+  /** 0..1 の品質（内部記録のみ。画面に数値・ランクは出さない＝新方針） */
   score: number;
   attempts: number;
 }
-
-export type Rank = 'S' | 'A' | 'B' | 'C';

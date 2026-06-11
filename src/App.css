@@ -406,33 +406,6 @@
   font-family: var(--f-head);
 }
 
-/* 章頭オリエンテーション：この章で得る力＋ゴールまでの距離（power を持つ章のみ） */
-.map__orient {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.45rem;
-  margin-top: 0.45rem;
-}
-.map__orient-power,
-.map__orient-goal {
-  font-family: var(--f-head);
-  font-size: 0.66rem;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-  color: var(--ink-dim);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-  padding: 0.3em 0.85em;
-  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
-  overflow-wrap: anywhere;
-}
-.map__orient-power b {
-  color: color-mix(in srgb, var(--accent) 82%, #fff);
-}
-.map__orient-goal {
-  border-color: color-mix(in srgb, var(--gold) 45%, transparent);
-}
-
 /* ============================ WORLD MAP ================================ */
 .world {
   gap: 1rem;
@@ -468,13 +441,6 @@
   color: var(--accent);
   border-color: var(--accent);
 }
-.world__stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-top: 0.2rem;
-}
-
 /* codex sheet rows */
 .codex__chapter {
   margin-bottom: 0.4rem;
@@ -535,68 +501,8 @@
   background: var(--accent);
   color: #000;
 }
-.world__bar {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  clip-path: polygon(0 0, 100% 0, 99% 100%, 1% 100%);
-  overflow: hidden;
-}
-.world__bar-fill {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-}
-.world__stat {
-  font-family: var(--f-head);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--ink-faint);
-}
-
-/* バッジケース：8つの力（集めるほど点灯し、現在地は脈打つ） */
-.badgecase {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem 0.5rem;
-  margin: 0.55rem 0 0.35rem;
-}
-.badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  width: calc((100% - 1.5rem) / 4);
-}
-.badge__gem {
-  width: 15px;
-  height: 15px;
-  transform: rotate(45deg);
-  border: 1.5px solid var(--ink-faint);
-  border-radius: 3px;
-  background: transparent;
-  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.badge.is-earned .badge__gem {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
-}
-.badge.is-current .badge__gem {
-  border-color: var(--accent);
-  animation: badge-pulse 1.5s ease-in-out infinite;
-}
-.badge__name {
-  font-family: var(--f-head);
-  font-size: 0.52rem;
-  line-height: 1.1;
-  text-align: center;
-  /* 未獲得でも「これから集める8つ」の名前が読める明度（獲得時との差は保つ） */
-  color: color-mix(in srgb, var(--ink) 52%, transparent);
-}
-.badge.is-earned .badge__name {
-  color: color-mix(in srgb, var(--accent) 80%, #fff);
-}
-@keyframes badge-pulse {
+/* 現在地ピルの鼓動（「▶ 次はここ」） */
+@keyframes here-pulse {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
   50% { box-shadow: 0 0 0 5px transparent; }
 }
@@ -673,13 +579,14 @@
   letter-spacing: 0.1em;
   color: var(--ink-faint);
 }
-.worldnode__power {
+/* 章の依頼一行：スケールが上がっていく依頼文そのものが“成長の物差し” */
+.worldnode__quest {
   font-family: var(--f-head);
   font-size: 0.72rem;
   color: color-mix(in srgb, var(--accent) 82%, #fff);
   overflow-wrap: anywhere;
 }
-.worldnode.is-clear .worldnode__power {
+.worldnode.is-clear .worldnode__quest {
   color: var(--gold);
 }
 .worldnode__here {
@@ -693,7 +600,7 @@
   padding: 1px 8px;
   border-radius: 999px;
   width: max-content;
-  animation: badge-pulse 1.5s ease-in-out infinite;
+  animation: here-pulse 1.5s ease-in-out infinite;
 }
 .worldnode.is-current {
   border-left-color: var(--accent);
@@ -981,11 +888,7 @@
   font-size: 1.6rem;
   color: var(--gold);
   transform: skewX(-6deg);
-}
-.ch__cleared-meta {
-  font-size: 0.8rem;
-  color: var(--ink-dim);
-  margin-right: auto;
+  margin-right: auto; /* ボタンを右端へ（数値メタは新方針で廃止） */
 }
 
 /* ============================ DIAGRAM（P5トーン） ===================== */
@@ -1101,19 +1004,22 @@
   width: 100%;
   text-align: center;
 }
-.result__rank {
+/* 達成スタンプ（ランク表示は新方針で廃止。やり遂げた事実だけを決める） */
+.result__stamp {
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 0.9;
 }
-.result__ranktag {
-  font-size: clamp(5rem, 22vw, 9rem);
+.result__stamptag {
+  font-size: clamp(3.6rem, 17vw, 6.5rem);
+  color: var(--accent);
   text-shadow: 6px 6px 0 rgba(0, 0, 0, 0.6);
 }
-.result__ranklabel {
+.result__stamplabel {
   letter-spacing: 0.3em;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: var(--accent);
 }
 .result__learn {
   width: 100%;
@@ -1154,27 +1060,86 @@
   transform: skewX(-7deg);
   color: var(--ink);
 }
-.chapclear__lead {
-  color: var(--ink-dim);
-  line-height: 1.9;
-  font-size: clamp(0.85rem, 2.6vw, 1rem);
-  /* 右端の用語集タブ(.glossfab)の帯域に中央寄せ文が入らないよう余白を確保 */
-  padding-inline: 1.6rem;
-}
-.chapclear__cols {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+/* 静かな余韻：成果物 → 世界の変化 → 相棒の一言 → 次章の種。
+   暗め・余白広め、accentは細い罫線だけ（バッジ/称号のような飾りは置かない） */
+.afterword {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
   width: 100%;
-  max-width: 880px;
+  max-width: 680px;
+  padding: 1.4rem 1.2rem 1.5rem;
+  background: rgba(8, 8, 12, 0.55);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   text-align: left;
 }
-@media (min-width: 760px) {
-  .chapclear__cols {
-    grid-template-columns: 1fr 1fr;
-  }
+.afterword__artifact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.afterword__world {
+  margin: 0;
+  text-align: center;
+  color: var(--ink-dim);
+  line-height: 2;
+  font-size: clamp(0.85rem, 2.6vw, 1rem);
+}
+.afterword__partner {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+.afterword__face {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+}
+.afterword__face svg {
+  width: 100%;
+  height: 100%;
+}
+.afterword__bubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0.95rem 0.9rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--accent);
+}
+.afterword__bubble p {
+  margin: 0;
+  line-height: 1.9;
+  font-size: clamp(0.84rem, 2.5vw, 0.98rem);
+  overflow-wrap: anywhere;
+}
+.afterword__name {
+  position: absolute;
+  top: -0.75rem;
+  left: 0.5rem;
+  color: #000;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  padding: 0.2em 0.9em;
+  white-space: nowrap;
+  transform: skewX(-9deg);
+}
+.afterword__seed {
+  margin: 0;
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  line-height: 1.9;
 }
 .chapclear__learned {
+  width: 100%;
+  max-width: 680px;
+  text-align: left;
   padding: 1.2rem 1.4rem;
   border-left: 4px solid var(--gold);
 }
@@ -1196,15 +1161,6 @@
   color: var(--gold);
   font-weight: 900;
 }
-.chapclear__avg {
-  margin-top: 1rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: var(--f-head);
-}
-.chapclear__avg b {
-  font-size: 1.4rem;
-}
 .chapclear__next {
   color: var(--ink-faint);
   font-family: var(--f-head);
@@ -1212,112 +1168,6 @@
   font-size: 0.82rem;
 }
 
-/* 「力」獲得カットイン：斜めバナー＋ジェム（バッジケースと同系の意匠でキメる） */
-.powerget {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.45rem;
-  max-width: 100%;
-  min-width: 0;
-  padding: 0.55rem 1.4rem 0.5rem 1rem;
-  background: linear-gradient(100deg, color-mix(in srgb, var(--accent) 28%, #120810), rgba(10, 8, 14, 0.88));
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  border-left: 4px solid var(--accent);
-  clip-path: polygon(3% 0, 100% 0, 97% 100%, 0 100%);
-  box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 28%, transparent);
-}
-.powerget__main {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
-  text-align: left;
-}
-.powerget__gem {
-  flex: 0 0 auto;
-  width: 17px;
-  height: 17px;
-  border-radius: 4px;
-  background: var(--accent);
-  border: 1.5px solid color-mix(in srgb, var(--accent) 55%, #fff);
-  /* 獲得の余韻：バッジケースと同じ鼓動 */
-  animation: badge-pulse 1.5s ease-in-out infinite;
-}
-.powerget__label {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-.powerget__kicker {
-  font-family: var(--f-head);
-  font-weight: 700;
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
-  color: color-mix(in srgb, var(--accent) 85%, #fff);
-}
-.powerget__name {
-  font-family: var(--f-head);
-  font-size: clamp(1rem, 4.4vw, 1.25rem);
-  color: var(--ink);
-  overflow-wrap: anywhere;
-}
-/* バッジケースのミニ版：8枠のどれが埋まったかを獲得の瞬間に見せる */
-.powerget__slots {
-  display: flex;
-  gap: 0.55rem;
-  padding: 0.15rem 0 0.1rem;
-}
-.powerget__slot {
-  width: 9px;
-  height: 9px;
-  border-radius: 2px;
-  transform: rotate(45deg);
-  border: 1.5px solid var(--ink-faint);
-  background: transparent;
-}
-.powerget__slot.is-lit {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
-}
-.powerget__slot.is-new {
-  background: var(--gold);
-  border-color: var(--gold);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--gold) 80%, transparent);
-}
-/* 進捗（獲得N/8・次の力）と称号の昇格表示（バナー内の下段） */
-.powerget__meta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  padding-top: 0.4rem;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  width: 100%;
-  font-family: var(--f-head);
-  font-size: 0.74rem;
-  color: var(--ink-dim);
-  overflow-wrap: anywhere;
-}
-.powerget__count b {
-  color: color-mix(in srgb, var(--accent) 85%, #fff);
-  font-size: 1.05em;
-}
-.powerget__rankup s {
-  color: var(--ink-faint);
-  text-decoration-thickness: 2px;
-}
-.powerget__arrow {
-  color: var(--accent);
-  margin: 0 0.1em;
-}
-.powerget__newrank {
-  color: var(--gold);
-  font-size: 1.1em;
-  text-shadow: 0 0 10px color-mix(in srgb, var(--gold) 50%, transparent);
-}
 .chapclear__btns {
   display: flex;
   gap: 0.6rem;
@@ -1978,4 +1828,340 @@
   .rotate-hint {
     display: none !important;
   }
+}
+
+/* ============================ OPENING（ムービー風OP） =================== */
+.opening {
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+}
+.opening__skip {
+  position: absolute;
+  top: calc(0.9rem + var(--safe-t));
+  right: 1rem;
+  z-index: 30;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-dim);
+  background: rgba(8, 8, 12, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.5em 1.1em;
+  transform: skewX(-8deg);
+}
+.opening__skip:hover,
+.opening__skip:active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.opening__cut {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding:
+    calc(clamp(18px, 6vw, 36px) + var(--safe-t))
+    clamp(18px, 6vw, 36px)
+    calc(clamp(18px, 6vw, 36px) + var(--safe-b));
+}
+.opening__text {
+  margin: 0;
+  max-width: 30rem;
+  line-height: 2.2;
+  font-size: clamp(1rem, 3.4vw, 1.3rem);
+  color: var(--ink-dim);
+  font-style: italic;
+}
+/* 主人公の独白：ナレーションより一段“近い”声 */
+.opening__cut--hero .opening__text {
+  color: var(--ink);
+  font-style: normal;
+  line-height: 2.05;
+}
+/* タイトルコール：accentに灯る */
+.opening__cut--title .opening__text {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-style: normal;
+  font-size: clamp(1.5rem, 7vw, 2.5rem);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  transform: skewX(-6deg);
+  text-shadow:
+    0 0 18px color-mix(in srgb, var(--accent) 60%, transparent),
+    3px 3px 0 rgba(0, 0, 0, 0.55);
+}
+.opening__advance {
+  position: absolute;
+  bottom: calc(0.9rem + var(--safe-b));
+  right: 1.4rem;
+  font-family: var(--f-head);
+  font-size: 0.74rem;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+/* ---- デモカット（打鍵チップ → フラッシュ → 成果物カットイン） -------- */
+.opening__cut--demo {
+  gap: 0.9rem;
+}
+.opening__cmd {
+  width: min(88vw, 420px);
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  text-align: left;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  padding: 0.7rem 0.9rem;
+  background: #05050a;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 18px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+/* CURSOR編：エディタタブ風 */
+.opening__cmd--editor {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+}
+.opening__cmd-tab {
+  display: block;
+  font-family: var(--f-head);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  padding: 0.4rem 0.9rem;
+  background: #16161c;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.opening__cmd--editor .opening__cmd-text {
+  padding: 0.7rem 0.9rem;
+}
+.opening__cmd-prompt {
+  color: var(--accent);
+  flex: 0 0 auto;
+}
+.opening__cmd-text {
+  display: block;
+  color: #cdd3de;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  min-height: 1.7em;
+}
+.opening__caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  vertical-align: -0.18em;
+  margin-left: 2px;
+  background: var(--accent);
+  animation: opening-caret 0.9s steps(1) infinite;
+}
+@keyframes opening-caret {
+  50% { opacity: 0; }
+}
+/* “言葉が形になる”瞬間のフラッシュ */
+.opening__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: var(--accent);
+  pointer-events: none;
+}
+/* 成果物カットイン：このカットの主役（画面の約6割） */
+.opening__artifact {
+  width: min(86vw, 400px);
+  text-align: left;
+  filter:
+    drop-shadow(0 20px 44px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 35%, transparent));
+}
+.opening__artifact .artifact {
+  margin-top: 0;
+}
+.opening__caption {
+  margin: 0;
+  max-width: 30rem;
+  min-height: 3.6em;
+  color: var(--ink-dim);
+  font-style: italic;
+  line-height: 1.95;
+  font-size: clamp(0.92rem, 2.9vw, 1.12rem);
+}
+/* 積み上がった成果物（左奥のスタック。消さずに圧倒を積む） */
+.opening__stack {
+  position: absolute;
+  top: calc(3.2rem + var(--safe-t));
+  left: 0.7rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: min(38vw, 170px);
+  pointer-events: none;
+}
+.opening__stack-item {
+  zoom: 0.42;
+  margin-bottom: -1.6rem;
+  filter: saturate(0.75) brightness(0.8);
+}
+.opening__stack-item .artifact {
+  margin-top: 0;
+}
+
+/* ---- 最終カット：ロゴ → 扉を開く ------------------------------------- */
+.opening__finale {
+  gap: 0.2rem;
+  cursor: default;
+}
+.opening__enter {
+  width: min(78%, 320px);
+  margin-top: 1.6rem;
+}
+
+/* ============================ ARTIFACT: game / dashboard =============== */
+/* game：ネオンシューティング（OP圧倒デモ用。生きて動いている画面） */
+.artifact__game {
+  position: relative;
+  height: clamp(180px, 34vh, 250px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 64% 8%, rgba(255, 255, 255, 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 84% 30%, rgba(255, 255, 255, 0.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 26%, rgba(255, 255, 255, 0.1) 0 1px, transparent 2px),
+    linear-gradient(180deg, #04040c 0%, #0a0a1e 55%, #12122c 100%);
+}
+.artifact__game-city {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 44%;
+  display: flex;
+}
+.artifact__game-city svg {
+  width: 50%;
+  height: 100%;
+  flex: 0 0 50%;
+}
+.artifact__game-foes {
+  position: absolute;
+  top: 16%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  color: var(--accent-2);
+  font-size: 0.85rem;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.artifact__game-ship {
+  position: absolute;
+  bottom: 16%;
+  left: 50%;
+  color: var(--accent);
+  font-size: 1.3rem;
+  line-height: 1;
+  text-shadow: 0 0 14px var(--accent);
+}
+.artifact__game-shot {
+  position: absolute;
+  bottom: 26%;
+  left: 50%;
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1;
+  text-shadow: 0 0 8px var(--accent);
+}
+.artifact__game-hud {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+.artifact__game-score {
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* dashboard：監視盤面（KPI 2×2 + バー + スパークライン） */
+.artifact__dash {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  background: #07070f;
+}
+.artifact__dash-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.artifact__dash-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  padding: 0.45rem 0.6rem;
+  background: #0e0e1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 2px solid var(--accent);
+}
+.artifact__dash-label {
+  font-family: var(--f-head);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.artifact__dash-value {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.artifact__dash-delta {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.6rem;
+}
+.artifact__dash-delta.is-up {
+  color: #7fe0a8;
+}
+.artifact__dash-delta.is-down {
+  color: #ff7a6e;
+}
+.artifact__dash-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.artifact__dash-bars span {
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.artifact__dash-spark {
+  width: 100%;
+  height: 34px;
+}
+.artifact__dash-spark path {
+  stroke: var(--accent);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 70%, transparent));
 }

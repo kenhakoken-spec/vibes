@@ -5,6 +5,7 @@ import { useSettings } from './store/settingsStore';
 import { bgm } from './engine/bgm';
 import { TitleScreen } from './screens/TitleScreen';
 import { EditionSelect } from './screens/EditionSelect';
+import { OpeningScene } from './screens/OpeningScene';
 import { WorldMap } from './screens/WorldMap';
 import { StageMap } from './screens/StageMap';
 import { StoryScene } from './screens/StoryScene';
@@ -27,6 +28,8 @@ function sceneFor(screen: Screen, stageScene?: SceneId, chapterScene?: SceneId):
       return 'city';
     case 'edition':
       return 'void';
+    case 'opening':
+      return 'city';
     case 'world':
       return 'city';
     case 'map':
@@ -62,7 +65,8 @@ export default function App() {
       } as React.CSSProperties)
     : undefined;
 
-  const showGlossButton = !['title', 'edition'].includes(screen);
+  // OP（ムービー）中はUIを出さず映画に徹する
+  const showGlossButton = !['title', 'edition', 'opening'].includes(screen);
   const stageScene = useGame((s) => s.currentStage()?.scene);
   const chapterScene = useGame((s) => s.chapter?.scene);
   const chapterIndex = useGame((s) => s.chapterIndex);
@@ -101,6 +105,7 @@ export default function App() {
       <AnimatePresence>
         {screen === 'title' && <TitleScreen key="title" />}
         {screen === 'edition' && <EditionSelect key="edition" />}
+        {screen === 'opening' && <OpeningScene key="opening" />}
         {screen === 'world' && <WorldMap key="world" />}
         {screen === 'map' && <StageMap key="map" />}
         {screen === 'story-intro' && <StoryScene key={`intro-${stageKey}`} phase="intro" />}

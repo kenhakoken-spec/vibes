@@ -3,19 +3,11 @@ import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { BossGlyph } from '../components/BossGlyph';
 import { BossIntro } from '../components/BossIntro';
-import { rankFor, RANK_COLOR } from '../engine/rank';
-import { skillChapters } from '../data/journey';
 
 export function StageMap() {
   const { chapter, chapters, chapterIndex, edition, results, enterStage, isUnlocked, toWorld } = useGame();
   const clearedAll = chapter ? chapter.stages.every((s) => results[s.id]?.cleared) : false;
   const [showIntro, setShowIntro] = useState(!!chapter?.boss && !clearedAll);
-
-  // 旅の本道（8つの力）の中での現在位置と、ゴールまでの距離（幕間は数えず“力”基準で示す）
-  const skills = skillChapters(chapters);
-  const powerNo = skills.findIndex((x) => x.index === chapterIndex) + 1;
-  const remainingPowers = skills.filter((x) => x.index > chapterIndex).length;
-  const nextSkill = skills.find((x) => x.index > chapterIndex);
   const isFinalChapter = chapterIndex >= chapters.length - 1;
 
   useEffect(() => {
@@ -46,28 +38,6 @@ export function StageMap() {
         <h2 className="display map__title">{chapter.title}</h2>
         <p className="map__subtitle">{chapter.subtitle}</p>
         {chapter.recap && <p className="map__recap">前回まで ── {chapter.recap}</p>}
-        {/* 章頭オリエンテーション：この章で得る力と、ゴールまでの距離（“力”基準で数える） */}
-        {chapter.power && (
-          <div className="map__orient">
-            <span className="map__orient-power">
-              この章で得る力: <b>{chapter.power}</b>（{powerNo}/{skills.length}）
-            </span>
-            <span className="map__orient-goal">
-              ゴールまで ── 残りの力 {remainingPowers}つ ＋ OVERSEER
-            </span>
-          </div>
-        )}
-        {/* 幕間：力は増えない“心得”の回り道であることを正直に示す */}
-        {!chapter.power && !isFinalChapter && chapterIndex > 0 && nextSkill && (
-          <div className="map__orient">
-            <span className="map__orient-power">
-              この章は“心得”の回り道 ── 力は増えないが、旅の土台になる
-            </span>
-            <span className="map__orient-goal">
-              次の力「{nextSkill.chapter.power}」は、この先の{nextSkill.chapter.title}で
-            </span>
-          </div>
-        )}
       </header>
 
       {chapter.boss && (
@@ -95,7 +65,6 @@ export function StageMap() {
           const res = results[stage.id];
           const unlocked = isUnlocked(i);
           const cleared = !!res?.cleared;
-          const rank = res ? rankFor(res.score, res.attempts) : null;
           return (
             <motion.button
               key={stage.id}
@@ -113,9 +82,8 @@ export function StageMap() {
               <span className="node__state">
                 {!unlocked && '🔒 LOCKED'}
                 {unlocked && !cleared && '▶ 挑戦する'}
-                {cleared && rank && (
-                  <b style={{ color: RANK_COLOR[rank] }}>CLEAR ・ {rank}</b>
-                )}
+                {/* ランクは出さない（新方針：成績表ではなく“済んだ”事実だけ） */}
+                {cleared && <b style={{ color: 'var(--accent)' }}>CLEAR ✓</b>}
               </span>
             </motion.button>
           );
@@ -125,12 +93,10 @@ export function StageMap() {
       <footer className="map__foot">
         {clearedAll ? (
           <span className="map__done">
-            {/* 章ごとに動的な制覇メッセージ（得た力 ＞ 最終決戦 ＞ その他） */}
-            {chapter.power
-              ? `${chapter.title} 制覇 ── きみは「${chapter.power}」を手に入れた。`
-              : isFinalChapter
-                ? `${chapter.title} 制覇 ── 「人とAIが共に創る自由」を取り戻した。`
-                : `${chapter.title} 制覇 ── 物語は次の地へ続く。`}
+            {/* 制覇の一言＝「世界がどう変わったか」で締める（数値や称号は出さない） */}
+            {chapter.title} 制覇 ──{' '}
+            {chapter.afterword?.world ??
+              (isFinalChapter ? '「人とAIが共に創る自由」を取り戻した。' : '物語は次の地へ続く。')}
           </span>
         ) : (
           <span className="map__hint">ノードを選んで依頼に挑め。クリアで次が解放される。</span>
