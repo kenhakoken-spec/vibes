@@ -275,14 +275,14 @@ function HeroSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
       {/* 肩・マント */}
-      <path d="M30 420 Q44 320 92 290 Q150 300 208 290 Q256 320 270 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+      <path d="M30 420 Q44 308 92 278 Q150 288 208 278 Q256 308 270 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
       {/* 下ろしたフード（肩の後ろにたたまれた布） */}
-      <path d="M92 294 Q150 258 208 294 Q204 314 150 308 Q96 314 92 294 Z" fill="#11111a" stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
-      <path d="M104 296 Q150 270 196 296" fill="none" stroke="#000" strokeOpacity="0.5" strokeWidth="1.6" />
+      <path d="M92 282 Q150 246 208 282 Q204 302 150 296 Q96 302 92 282 Z" fill="#11111a" stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="M104 284 Q150 258 196 284" fill="none" stroke="#000" strokeOpacity="0.5" strokeWidth="1.6" />
 
-      {/* 髪：後ろの自然な短髪シルエット */}
+      {/* 髪：後ろの自然な短髪シルエット（クラウンに量感） */}
       <path
-        d="M101 124 Q94 50 150 40 Q206 50 199 124 Q199 142 194 154 Q189 162 186 150 Q184 136 184 122 L116 122 Q116 136 114 150 Q111 162 106 154 Q101 142 101 124 Z"
+        d="M97 128 Q90 42 150 33 Q210 42 203 128 Q203 148 197 160 Q192 168 189 154 Q187 140 187 124 L113 124 Q113 140 111 154 Q108 168 103 160 Q97 148 97 128 Z"
         fill={`url(#hairH-${uid})`}
         stroke={INK}
         strokeWidth="2.4"
@@ -290,7 +290,7 @@ function HeroSvg({ accent, uid, expr }: SvgProps) {
       />
 
       {/* 首 */}
-      <path d="M134 192 L133 240 Q150 252 167 240 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M134 192 L133 226 Q150 238 167 226 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <path d="M134 196 Q150 214 166 196 L166 192 L134 192 Z" fill="#000" opacity="0.22" />
 
       {/* 耳 */}
@@ -313,16 +313,16 @@ function HeroSvg({ accent, uid, expr }: SvgProps) {
       />
       <CastShadow d="M168 70 Q192 76 192 122 Q192 152 183 172 Q173 192 159 199 Q172 180 176 152 Q180 106 168 70 Z" opacity={0.12} />
 
-      {/* もみあげ（耳の上半分に自然にかぶせる） */}
+      {/* もみあげ（こめかみ〜耳の上に自然にかぶせる） */}
       <g fill={`url(#hairH-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M107 110 Q102 134 105 156 Q110 164 114 154 Q111 132 114 116 Z" />
-        <path d="M193 110 Q198 134 195 156 Q190 164 186 154 Q189 132 186 116 Z" />
+        <path d="M105 106 Q99 134 102 158 Q108 167 113 155 Q109 132 113 114 Z" />
+        <path d="M195 106 Q201 134 198 158 Q192 167 187 155 Q191 132 187 114 Z" />
       </g>
 
       {/* 前髪：ゆるいセンターパート（左右非対称の毛流れ・額の三角形を見せる） */}
       {/* 左バンク（小さい側） */}
       <path
-        d="M147 62 Q141 46 128 47 Q105 53 102 92 Q101 112 104 123 Q109 129 112 116 Q114 109 113 102 Q118 113 124 105 Q127 99 126 91 Q131 101 136 93 Q139 86 138 78 Q142 69 147 62 Z"
+        d="M147 64 Q139 45 125 46 Q100 53 98 96 Q97 117 102 130 Q107 136 111 128 Q115 120 114 110 Q120 123 128 113 Q133 105 131 95 Q138 102 142 92 Q145 84 143 76 Q144 69 147 64 Z"
         fill={`url(#hairH-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
@@ -330,26 +330,21 @@ function HeroSvg({ accent, uid, expr }: SvgProps) {
       />
       {/* 右バンク（大きい側） */}
       <path
-        d="M147 62 Q154 45 166 46 Q197 52 199 94 Q200 112 196 124 Q191 130 188 118 Q186 111 187 103 Q182 114 176 106 Q173 100 174 92 Q168 102 163 93 Q160 86 161 78 Q156 70 150 64 Q148 63 147 62 Z"
+        d="M147 64 Q156 43 170 45 Q202 53 203 96 Q204 117 199 130 Q194 136 190 128 Q186 120 187 110 Q181 123 173 113 Q169 105 171 95 Q164 103 159 94 Q156 86 158 77 Q153 69 149 66 Q147 65 147 64 Z"
         fill={`url(#hairH-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
-      {/* 若さの跳ね毛（クラウンに少しだけ） */}
-      <g fill={`url(#hairH-${uid})`} stroke={INK} strokeWidth="1.5" strokeLinejoin="round">
-        <path d="M126 46 Q118 38 108 39 Q118 44 123 50 Z" />
-        <path d="M172 45 Q181 36 191 39 Q181 43 175 50 Z" />
-      </g>
       {/* 毛流れ（分け目から左右へ掃く） */}
       <g fill="none" stroke="#1c120a" strokeOpacity="0.45" strokeWidth="1.2" strokeLinecap="round">
-        <path d="M141 66 Q127 74 117 92" />
-        <path d="M135 58 Q119 64 109 84" />
-        <path d="M153 66 Q169 74 179 94" />
-        <path d="M159 58 Q179 64 189 86" />
+        <path d="M140 68 Q124 78 114 98" />
+        <path d="M132 57 Q113 66 104 90" />
+        <path d="M154 66 Q172 76 183 98" />
+        <path d="M162 56 Q184 64 193 90" />
       </g>
       {/* ツヤ */}
-      <path d="M118 64 Q148 48 182 64 L176 80 Q150 66 124 80 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
+      <path d="M116 60 Q148 42 184 60 L178 76 Q150 60 122 76 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
 
       {/* タレ目気味の優しい目（プレイヤーの分身＝癖は控えめ） */}
       <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.36} iris="#8e93a6" />
@@ -365,11 +360,11 @@ function HeroSvg({ accent, uid, expr }: SvgProps) {
 
       {/* 襟元の留め具（白アクセント） */}
       <g fill={accent} stroke={INK} strokeWidth="1.5">
-        <path d="M150 300 L138 320 L150 330 L162 320 Z" />
+        <path d="M150 288 L138 308 L150 318 L162 308 Z" />
       </g>
-      <path d="M118 296 Q150 308 182 296" fill="none" stroke={accent} strokeWidth="2.5" opacity="0.7" strokeLinecap="round" />
+      <path d="M118 284 Q150 296 182 284" fill="none" stroke={accent} strokeWidth="2.5" opacity="0.7" strokeLinecap="round" />
       {/* リムライト（髪の左上から） */}
-      <path d="M101 124 Q94 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.75" strokeLinecap="round" />
+      <path d="M97 128 Q90 36 150 33" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.75" strokeLinecap="round" />
     </Frame>
   );
 }
@@ -480,14 +475,14 @@ function ClaudeSvg({ accent, uid, expr }: SvgProps) {
 
       {/* ローブの襟（V字・緋のアクセント） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
-        <path d="M150 282 L116 304 L130 384 L150 342 Z" fill="#1a1a24" />
-        <path d="M150 282 L184 304 L170 384 L150 342 Z" fill="#101019" />
+        <path d="M150 270 L116 292 L130 376 L150 332 Z" fill="#1a1a24" />
+        <path d="M150 270 L184 292 L170 376 L150 332 Z" fill="#101019" />
       </g>
-      <path d="M150 282 L116 304" stroke={accent} strokeWidth="2.4" opacity="0.85" strokeLinecap="round" />
-      <path d="M150 282 L184 304" stroke={accent} strokeWidth="2.4" opacity="0.85" strokeLinecap="round" />
-      <circle cx="150" cy="312" r="3.6" fill={accent} stroke={INK} strokeWidth="1.2" />
+      <path d="M150 270 L116 292" stroke={accent} strokeWidth="2.4" opacity="0.85" strokeLinecap="round" />
+      <path d="M150 270 L184 292" stroke={accent} strokeWidth="2.4" opacity="0.85" strokeLinecap="round" />
+      <circle cx="150" cy="300" r="3.6" fill={accent} stroke={INK} strokeWidth="1.2" />
       {/* リムライト（髪の左上・控えめに調和） */}
-      <path d="M100 126 Q93 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.6" strokeLinecap="round" />
+      <path d="M97 128 Q90 36 150 33" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.6" strokeLinecap="round" />
     </Frame>
   );
 }
@@ -499,11 +494,11 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
   return (
     <Frame accent={accent} uid={uid}>
       {/* 肩・ジャケット */}
-      <path d="M42 420 Q58 282 150 272 Q242 282 258 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+      <path d="M42 420 Q58 272 150 260 Q242 272 258 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
 
-      {/* 髪：後ろの自然な黒髪短髪シルエット */}
+      {/* 髪：後ろの自然な黒髪短髪シルエット（クラウンに量感・右サイドだけ少し長く） */}
       <path
-        d="M100 126 Q93 50 150 40 Q207 50 200 126 Q200 148 194 162 Q189 172 186 158 Q184 142 184 124 L116 124 Q116 138 114 152 Q111 166 106 158 Q100 146 100 126 Z"
+        d="M97 128 Q90 42 150 33 Q210 42 203 128 Q203 150 197 164 Q192 174 189 158 Q187 142 187 124 L113 124 Q113 140 111 154 Q108 168 103 160 Q97 148 97 128 Z"
         fill={`url(#hairK-${uid})`}
         stroke={INK}
         strokeWidth="2.4"
@@ -511,7 +506,7 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       />
 
       {/* 首 */}
-      <path d="M134 192 L133 238 Q150 250 167 238 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M134 192 L133 228 Q150 240 167 228 L166 192 Z" fill={`url(#skinSoft-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <path d="M134 196 Q150 214 166 196 L166 192 L134 192 Z" fill="#000" opacity="0.22" />
 
       {/* 耳＋シアンのピアス（パンクの名残り） */}
@@ -538,16 +533,16 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       <ellipse cx="127" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.06" />
       <ellipse cx="173" cy="167" rx="10" ry="4.5" fill={accent} opacity="0.04" />
 
-      {/* もみあげ */}
+      {/* もみあげ（こめかみ〜耳の上に自然にかぶせる） */}
       <g fill={`url(#hairK-${uid})`} stroke={INK} strokeWidth="1.6" strokeLinejoin="round">
-        <path d="M107 110 Q102 134 105 156 Q110 164 114 154 Q111 132 114 116 Z" />
-        <path d="M193 112 Q198 136 195 160 Q190 168 186 157 Q189 134 186 118 Z" />
+        <path d="M105 106 Q99 134 102 158 Q108 167 113 155 Q109 132 113 114 Z" />
+        <path d="M195 108 Q201 138 198 162 Q192 171 187 158 Q191 134 187 116 Z" />
       </g>
 
-      {/* 前髪：センターパート（分け目はやや右＝クロードと逆の非対称） */}
+      {/* 前髪：センターパート（分け目はやや右＝クロードと逆の非対称。カーテンはこめかみまで） */}
       {/* 左バンク（大きい側・分け目から左へ流す） */}
       <path
-        d="M156 62 Q148 45 136 46 Q104 52 101 94 Q100 114 104 126 Q109 132 112 119 Q114 112 113 104 Q119 116 124 107 Q128 100 127 92 Q133 102 138 93 Q141 86 140 78 Q146 72 152 66 Q155 64 156 62 Z"
+        d="M156 64 Q146 43 132 45 Q99 53 97 96 Q96 118 102 130 Q107 136 111 128 Q115 120 114 110 Q120 123 128 113 Q132 105 130 95 Q137 103 142 94 Q145 86 143 77 Q148 69 153 66 Q155 65 156 64 Z"
         fill={`url(#hairK-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
@@ -555,28 +550,28 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
       />
       {/* 右バンク（小さい側） */}
       <path
-        d="M156 62 Q162 47 174 47 Q196 52 199 92 Q200 112 197 124 Q192 130 189 117 Q187 110 188 103 Q183 114 177 106 Q174 100 175 92 Q170 102 165 94 Q162 88 163 80 Q160 70 156 62 Z"
+        d="M156 64 Q164 45 178 46 Q201 53 203 96 Q204 116 199 129 Q194 135 190 127 Q186 119 187 109 Q181 122 173 113 Q168 105 170 95 Q164 101 160 91 Q157 83 159 75 Q159 68 156 64 Z"
         fill={`url(#hairK-${uid})`}
         stroke={INK}
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
       {/* 分け目の影（根本の立ち上がり） */}
-      <path d="M156 62 Q155 54 153 48" fill="none" stroke="#22222c" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M156 64 Q155 55 152 48" fill="none" stroke="#22222c" strokeWidth="1.4" strokeLinecap="round" />
       {/* シアンのメッシュ（毛流れに沿う控えめな筋＝差し色） */}
       <g fill="none" strokeLinecap="round">
-        <path d="M140 56 Q122 64 111 86" stroke={accent} strokeWidth="2" opacity="0.55" />
-        <path d="M148 70 Q137 82 131 98" stroke={accent} strokeWidth="1.8" opacity="0.5" />
-        <path d="M170 56 Q183 64 189 84" stroke={accent} strokeWidth="1.8" opacity="0.45" />
+        <path d="M138 54 Q118 64 107 88" stroke={accent} strokeWidth="2" opacity="0.55" />
+        <path d="M147 72 Q135 86 129 102" stroke={accent} strokeWidth="1.8" opacity="0.5" />
+        <path d="M172 54 Q186 64 192 86" stroke={accent} strokeWidth="1.8" opacity="0.45" />
       </g>
       {/* 毛流れ（分け目から左右へ掃く） */}
       <g fill="none" stroke="#05050a" strokeOpacity="0.55" strokeWidth="1.3" strokeLinecap="round">
-        <path d="M150 66 Q132 74 121 94" />
-        <path d="M144 74 Q136 86 131 100" />
-        <path d="M163 64 Q176 72 184 92" />
+        <path d="M148 66 Q128 76 117 98" />
+        <path d="M143 76 Q134 90 129 104" />
+        <path d="M165 62 Q180 72 188 94" />
       </g>
       {/* ツヤ */}
-      <path d="M118 64 Q148 48 182 64 L176 80 Q150 66 124 80 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
+      <path d="M116 60 Q148 42 184 60 L178 76 Q150 60 122 76 Z" fill={`url(#sheen-${uid})`} opacity="0.2" />
 
       {/* タレ目気味の優しいアーモンド形の目 */}
       <Eye cx={130} cy={148} accent={accent} uid={uid} flip size={1.4} />
@@ -592,16 +587,16 @@ function CursorSvg({ accent, uid, expr }: SvgProps) {
 
       {/* ジャケット襟（鋭角ラペル） */}
       <g stroke={INK} strokeWidth="2.5" strokeLinejoin="round">
-        <path d="M150 282 L110 302 L130 384 L150 338 Z" fill="#15151e" />
-        <path d="M150 282 L190 302 L170 384 L150 338 Z" fill="#0e0e16" />
+        <path d="M150 270 L110 290 L130 372 L150 326 Z" fill="#15151e" />
+        <path d="M150 270 L190 290 L170 372 L150 326 Z" fill="#0e0e16" />
       </g>
-      <path d="M150 284 L150 338" stroke={accent} strokeWidth="2.4" strokeDasharray="3 4" opacity="0.9" />
-      <path d="M150 282 L110 302" stroke={accent} strokeWidth="2.2" opacity="0.75" strokeLinecap="round" />
-      <path d="M150 282 L190 302" stroke={accent} strokeWidth="2.2" opacity="0.75" strokeLinecap="round" />
+      <path d="M150 272 L150 326" stroke={accent} strokeWidth="2.4" strokeDasharray="3 4" opacity="0.9" />
+      <path d="M150 270 L110 290" stroke={accent} strokeWidth="2.2" opacity="0.75" strokeLinecap="round" />
+      <path d="M150 270 L190 290" stroke={accent} strokeWidth="2.2" opacity="0.75" strokeLinecap="round" />
       {/* 胸元のカーソル型マーク */}
-      <path d="M150 252 L162 282 L151 275 L140 283 Z" fill="#fff" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M150 240 L162 270 L151 263 L140 271 Z" fill="#fff" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
       {/* リムライト */}
-      <path d="M100 126 Q93 44 150 40" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
+      <path d="M97 128 Q90 36 150 33" fill="none" stroke={`url(#rim-${uid})`} strokeWidth="4" opacity="0.7" strokeLinecap="round" />
     </Frame>
   );
 }
@@ -614,11 +609,11 @@ function MentorSvg({ uid, expr }: SvgProps) {
   return (
     <Frame accent={gold} uid={uid}>
       {/* 肩・重厚なローブ */}
-      <path d="M24 420 Q50 286 150 276 Q250 286 276 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+      <path d="M24 420 Q50 276 150 266 Q250 276 276 420 Z" fill={`url(#cloth-${uid})`} stroke={INK} strokeWidth="3" strokeLinejoin="round" />
 
-      {/* 髪：後ろのシルエット（オールバックの量感） */}
+      {/* 髪：後ろのシルエット（オールバックの量感・広めの頭） */}
       <path
-        d="M102 118 Q97 42 150 36 Q203 42 198 118 Q198 138 193 150 Q188 158 185 146 Q184 134 184 118 L116 118 Q116 134 115 146 Q112 158 107 150 Q102 138 102 118 Z"
+        d="M99 120 Q93 38 150 30 Q207 38 201 120 Q201 142 196 154 Q191 162 188 150 Q186 136 186 118 L114 118 Q114 136 112 150 Q109 162 104 154 Q99 142 99 120 Z"
         fill={`url(#hairM-${uid})`}
         stroke={INK}
         strokeWidth="2.4"
@@ -626,7 +621,7 @@ function MentorSvg({ uid, expr }: SvgProps) {
       />
 
       {/* 首（大人の太さ） */}
-      <path d="M132 196 L131 242 Q150 254 169 242 L168 196 Z" fill={`url(#skin2-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M132 196 L131 230 Q150 242 169 230 L168 196 Z" fill={`url(#skin2-${uid})`} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <path d="M132 200 Q150 218 168 200 L168 196 L132 196 Z" fill="#000" opacity="0.24" />
 
       {/* 耳 */}
