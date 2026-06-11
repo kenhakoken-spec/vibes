@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { UPCOMING } from '../data/chapters';
 import { CodexSheet } from '../components/CodexSheet';
-import { keepKatakana } from '../components/keepKatakana';
+import { keepKatakana, noWidow } from '../components/keepKatakana';
 import { sfx } from '../engine/sfx';
 
 export function WorldMap() {
@@ -82,9 +82,9 @@ export function WorldMap() {
             >
               <span className="worldnode__no">{ch.title}</span>
               <span className="worldnode__body">
-                <b className="worldnode__sub">{keepKatakana(ch.subtitle)}</b>
+                <b className="worldnode__sub">{noWidow(ch.subtitle)}</b>
                 {/* 依頼の一行＝章のスケール感。回を追うごとに依頼が大きくなる＝成長の体感 */}
-                {ch.quest && <span className="worldnode__quest">依頼 ── {keepKatakana(ch.quest)}</span>}
+                {ch.quest && <span className="worldnode__quest">依頼 ── {noWidow(ch.quest)}</span>}
                 {ch.boss && (
                   <span className="worldnode__boss">
                     {isGoal ? '最終決戦:' : '歪み:'}「{ch.boss.name}」{keepKatakana(ch.boss.title)}
@@ -111,7 +111,7 @@ export function WorldMap() {
           >
             <span className="worldnode__no">{ch.title}</span>
             <span className="worldnode__body">
-              <b className="worldnode__sub">{keepKatakana(ch.subtitle)}</b>
+              <b className="worldnode__sub">{noWidow(ch.subtitle)}</b>
               <span className="worldnode__boss">
                 {ch.id === 'chF' ? '最終決戦:' : '歪み:'}「{ch.boss.name}」{keepKatakana(ch.boss.title)}
               </span>

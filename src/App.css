@@ -321,7 +321,6 @@
   font-size: 0.68rem;
   color: var(--ink-faint);
   line-height: 1.45;
-  overflow-wrap: anywhere;
 }
 
 .map__track {
@@ -480,7 +479,7 @@
   color: var(--gold);
 }
 .codex__learn {
-  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .codex__terms {
   display: flex;
@@ -557,9 +556,8 @@
 .worldnode__sub {
   font-family: var(--f-head);
   font-size: 0.92rem;
-  overflow-wrap: anywhere;
-  /* 1文字ぶら下がりの折返しを防ぐ（Chrome系で有効） */
-  text-wrap: balance;
+  /* ぶら下がり抑制は body の text-wrap:pretty を継承
+     （balance は右端が空いたまま均等割りされ「謎の早折れ」に見えるため不使用） */
 }
 /* カタカナ複合語の語中折返し防止（keepKatakana() が付与する span）。
    「バイブコ／ーディング」のような途中折返しを禁じ、語の前後でだけ折り返す */
@@ -569,7 +567,6 @@
 .worldnode__boss {
   font-size: 0.7rem;
   color: var(--ink-faint);
-  overflow-wrap: anywhere;
 }
 .worldnode__state {
   font-size: 1.3rem;
@@ -589,7 +586,6 @@
   font-family: var(--f-head);
   font-size: 0.72rem;
   color: color-mix(in srgb, var(--accent) 82%, #fff);
-  overflow-wrap: anywhere;
 }
 .worldnode.is-clear .worldnode__quest {
   color: var(--gold);
@@ -1130,7 +1126,6 @@
   margin: 0;
   line-height: 1.9;
   font-size: clamp(0.84rem, 2.5vw, 0.98rem);
-  overflow-wrap: anywhere;
 }
 .afterword__name {
   position: absolute;
@@ -1317,7 +1312,6 @@
   font-size: 0.86rem;
   line-height: 1.6;
   color: var(--ink);
-  overflow-wrap: anywhere;
 }
 .artifact__bar {
   display: flex;
@@ -1365,6 +1359,8 @@
   color: #111;
   font-size: clamp(1.1rem, 4vw, 1.6rem);
   text-align: center;
+  /* 見出しは2行になるとき行長を揃え、1文字ぶら下がりを防ぐ */
+  text-wrap: balance;
 }
 .artifact__btn {
   font-family: var(--f-head);
@@ -1576,7 +1572,8 @@
   min-height: 0;
 }
 .sheet__word {
-  font-size: clamp(2rem, 11vw, 3rem);
+  /* 最長9文字（バイブコーディング等）が360px幅でも1行に収まるサイズ */
+  font-size: clamp(1.8rem, 8.6vw, 2.5rem);
   color: var(--accent);
   transform: skewX(-6deg);
   margin: 0.1rem 0;
@@ -1724,22 +1721,9 @@
 .result__inner {
   min-width: 0;
 }
-.map__title,
-.story__text,
-.story__narration p,
-.ch__goal,
-.ch__qbubble p,
-.edition__desc,
-.edition__tag,
-.result__lesson,
-.node__title,
-.node__sub,
-.bubble p,
-.sheet__body,
-.abtn__label {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
+/* 本文系の折返しは body の overflow-wrap:break-word + line-break:strict +
+   text-wrap:pretty（index.css）に一本化。anywhere/break-all はコード・URL等の
+   等幅系（.dgm__code / .artifact__codeline / .artifact__term）だけに限定する。 */
 .map__head .chip {
   flex-shrink: 0;
   font-size: 0.6rem;
@@ -1753,7 +1737,6 @@
   color: var(--ink-dim);
   font-size: clamp(0.85rem, 3.4vw, 1.1rem);
   line-height: 1.4;
-  overflow-wrap: anywhere;
 }
 .map__recap {
   margin-top: 0.3rem;
@@ -1762,7 +1745,6 @@
   color: var(--ink-faint);
   border-left: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
   padding-left: 0.6rem;
-  overflow-wrap: anywhere;
 }
 .node {
   column-gap: 0.7rem;
@@ -1989,7 +1971,7 @@
   display: block;
   color: #cdd3de;
   line-height: 1.75;
-  overflow-wrap: anywhere;
+  /* 打鍵デモの中身は日本語の依頼文。語中折れさせない（break-wordはbody継承） */
   min-height: 1.7em;
 }
 .opening__caret {

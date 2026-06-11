@@ -5,6 +5,7 @@ import { buildOpening, type OpeningCut } from '../data/opening';
 import { ArtifactPreview } from '../components/ArtifactPreview';
 import { AngledButton } from '../components/AngledButton';
 import { useTypewriter } from '../hooks/useTypewriter';
+import { keepKatakana, noWidow } from '../components/keepKatakana';
 import { sfx } from '../engine/sfx';
 import type { ArtifactState } from '../types';
 
@@ -125,7 +126,7 @@ function TextCut({ cut, onAdvance }: { cut: OpeningCut; onAdvance: () => void })
       exit={{ opacity: 0, transition: { duration: 0.35 } }}
       onClick={() => (done ? onAdvance() : skip())}
     >
-      <p className="opening__text">{shown}</p>
+      <p className="opening__text">{keepKatakana(shown)}</p>
       <span className="opening__advance">{done ? '▶' : ''}</span>
     </motion.div>
   );
@@ -203,7 +204,7 @@ function DemoCut({
           <span className="opening__cmd-prompt">$</span>
         )}
         <span className="opening__cmd-text">
-          {cmdShown}
+          {noWidow(cmdShown)}
           <span className="opening__caret" />
         </span>
       </div>
@@ -251,7 +252,7 @@ function DemoCaption({ cut, onAdvance }: { cut: OpeningCut; onAdvance: () => voi
       animate={{ opacity: 1, y: 0 }}
       onClick={() => (done ? onAdvance() : skip())}
     >
-      {shown}
+      {keepKatakana(shown)}
     </motion.p>
   );
 }

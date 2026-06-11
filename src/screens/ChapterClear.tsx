@@ -6,6 +6,7 @@ import { AngledButton } from '../components/AngledButton';
 import { CharacterPortrait } from '../components/CharacterPortrait';
 import { ComicBurst } from '../components/ComicBurst';
 import { ScrollCue } from '../components/ScrollCue';
+import { keepKatakana, noWidow } from '../components/keepKatakana';
 
 export function ChapterClear() {
   const {
@@ -99,7 +100,7 @@ export function ChapterClear() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
-          {worldLine}
+          {keepKatakana(worldLine)}
         </motion.p>
 
         {partnerLine && (
@@ -118,7 +119,7 @@ export function ChapterClear() {
               <span className="afterword__name" style={{ background: edition.partner.color }}>
                 {edition.partner.name}
               </span>
-              <p>{partnerLine}</p>
+              <p>{keepKatakana(partnerLine)}</p>
             </div>
           </motion.div>
         )}
@@ -130,7 +131,7 @@ export function ChapterClear() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 2.2 }}
           >
-            {seedLine}
+            {keepKatakana(seedLine)}
           </motion.p>
         )}
       </motion.section>
@@ -151,7 +152,8 @@ export function ChapterClear() {
               transition={{ delay: 0.65 + i * 0.12 }}
             >
               <span className="chapclear__check">✓</span>
-              {l}
+              {/* li は display:flex なので、テキストは1つの span に包んで折り返す */}
+              <span>{noWidow(l)}</span>
             </motion.li>
           ))}
         </ul>
@@ -163,9 +165,11 @@ export function ChapterClear() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        {isFinal
-          ? '── 言葉で、ものを作る。その自由はもう、この手の中にある。相棒（Claude / Cursor）を呼んで、現実の「作りたい」を形にしよう。 ──'
-          : '── ワールドマップに、次なる地が開かれた。OVERSEER への道は続く。 ──'}
+        {keepKatakana(
+          isFinal
+            ? '── 言葉で、ものを作る。その自由はもう、この手の中にある。相棒（Claude / Cursor）を呼んで、現実の「作りたい」を形にしよう。 ──'
+            : '── ワールドマップに、次なる地が開かれた。OVERSEER への道は続く。 ──',
+        )}
       </motion.p>
 
       {isFinal ? (

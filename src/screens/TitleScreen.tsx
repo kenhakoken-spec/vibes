@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useGame, hasSave } from '../store/gameStore';
 import { useSettings } from '../store/settingsStore';
 import { AngledButton } from '../components/AngledButton';
+import { keepKatakana } from '../components/keepKatakana';
 
 export function TitleScreen() {
   const pressStart = useGame((s) => s.pressStart);
@@ -80,8 +81,9 @@ export function TitleScreen() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        コード未経験から、言葉でものを作れる自分へ。<br />
-        Claude / Cursor と学ぶ、スタイリッシュな学習アドベンチャー。
+        {keepKatakana('コード未経験から、言葉でものを作れる自分へ。')}
+        <br />
+        {keepKatakana('Claude / Cursor と学ぶ、スタイリッシュな学習アドベンチャー。')}
       </motion.p>
     </motion.div>
   );

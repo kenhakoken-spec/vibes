@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { MATCH_INDEX } from '../data/glossary';
 import { useGlossary } from '../store/glossaryStore';
+import { keepKatakana } from './keepKatakana';
 
 /**
  * 本文中の専門用語を見つけて、タップで説明が開く赤点線リンクにする。
@@ -14,7 +15,8 @@ export function RichText({ text }: { text: string }) {
 
   const flush = () => {
     if (buf) {
-      nodes.push(<Fragment key={`t${key++}`}>{buf}</Fragment>);
+      // カタカナ複合語の語中折返しを防止（台詞/依頼文/フィードバック等を一括保護）
+      nodes.push(<Fragment key={`t${key++}`}>{keepKatakana(buf)}</Fragment>);
       buf = '';
     }
   };

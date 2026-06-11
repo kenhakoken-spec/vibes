@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 import { sfx } from '../engine/sfx';
+import { keepKatakana } from './keepKatakana';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,9 @@ export function AngledButton({ children, onClick, variant = 'solid', disabled, f
     >
       <span className="abtn__fill" />
       {badge != null && <span className="abtn__badge">{badge}</span>}
-      <span className="abtn__label">{children}</span>
+      <span className="abtn__label">
+        {typeof children === 'string' ? keepKatakana(children) : children}
+      </span>
     </motion.button>
   );
 }

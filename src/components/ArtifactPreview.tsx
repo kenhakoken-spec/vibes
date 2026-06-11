@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useSettings } from '../store/settingsStore';
+import { keepKatakana } from './keepKatakana';
 import type { ArtifactKind, ArtifactState } from '../types';
 
 /** OS設定(prefers-reduced-motion) とアプリ内モーションOFF の両方に従う */
@@ -70,7 +71,7 @@ function WebView({ a }: { a: ArtifactState }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + i * 0.15, duration: 0.4 }}
             >
-              {line}
+              {keepKatakana(line)}
             </motion.h2>
           ))}
           {a.hasButton && (
@@ -451,7 +452,7 @@ function NoteView({ a }: { a: ArtifactState }) {
       <span className="artifact__note-title">{a.title}</span>
       <ul>
         {a.body.map((line, i) => (
-          <li key={i}>{line}</li>
+          <li key={i}>{keepKatakana(line)}</li>
         ))}
       </ul>
     </div>

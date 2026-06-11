@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import type { DiagramKind } from '../types';
+import { noWidow } from './keepKatakana';
 
 /* =========================================================================
    構造説明の図解。手順系はHTML、関係系はSVGで。
@@ -32,7 +33,7 @@ function Step({ n, title, lines }: { n: number; title: string; lines: (string | 
         {lines.map((l, i) =>
           typeof l === 'string' ? (
             <span key={i} className="dgm__note">
-              {l}
+              {noWidow(l)}
             </span>
           ) : (
             <code key={i} className="dgm__code">

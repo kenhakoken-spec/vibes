@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { EDITIONS } from '../data/editions';
 import { CharacterPortrait } from '../components/CharacterPortrait';
+import { keepKatakana } from '../components/keepKatakana';
 import type { EditionId } from '../types';
 
 const ORDER: EditionId[] = ['claude', 'cursor'];
@@ -46,10 +47,10 @@ export function EditionSelect() {
               </div>
               <div className="edition__meta">
                 <span className="edition__label display">{ed.label}</span>
-                <span className="edition__tag">{ed.tagline}</span>
-                <span className="edition__tech">{ed.techNote}</span>
+                <span className="edition__tag">{keepKatakana(ed.tagline)}</span>
+                <span className="edition__tech">{keepKatakana(ed.techNote)}</span>
                 <span className="edition__guild chip">{ed.guildName}</span>
-                <p className="edition__desc">{ed.description}</p>
+                <p className="edition__desc">{keepKatakana(ed.description)}</p>
                 <div className="edition__partner">
                   <b style={{ color: ed.accent }}>{ed.partner.name}</b>
                   <span>{ed.partner.role}</span>

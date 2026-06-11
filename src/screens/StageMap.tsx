@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { BossGlyph } from '../components/BossGlyph';
 import { BossIntro } from '../components/BossIntro';
+import { keepKatakana } from '../components/keepKatakana';
 
 export function StageMap() {
   const { chapter, chapters, chapterIndex, edition, results, enterStage, isUnlocked, toWorld } = useGame();
@@ -36,8 +37,8 @@ export function StageMap() {
         </div>
         <span className="kicker">{edition.guildName}</span>
         <h2 className="display map__title">{chapter.title}</h2>
-        <p className="map__subtitle">{chapter.subtitle}</p>
-        {chapter.recap && <p className="map__recap">前回まで ── {chapter.recap}</p>}
+        <p className="map__subtitle">{keepKatakana(chapter.subtitle)}</p>
+        {chapter.recap && <p className="map__recap">前回まで ── {keepKatakana(chapter.recap)}</p>}
       </header>
 
       {chapter.boss && (
@@ -52,9 +53,9 @@ export function StageMap() {
           <span className="bossbar__tag">{clearedAll ? '撃破' : '歪み'}</span>
           <div className="bossbar__info">
             <b className="bossbar__name">
-              「{chapter.boss.name}」<span>{chapter.boss.title}</span>
+              「{chapter.boss.name}」<span>{keepKatakana(chapter.boss.title)}</span>
             </b>
-            <span className="bossbar__blurb">{chapter.boss.blurb}</span>
+            <span className="bossbar__blurb">{keepKatakana(chapter.boss.blurb)}</span>
           </div>
         </motion.div>
       )}
@@ -77,8 +78,8 @@ export function StageMap() {
               whileHover={unlocked ? { scale: 1.06, y: -4 } : undefined}
             >
               <span className="node__no">{String(i + 1).padStart(2, '0')}</span>
-              <span className="node__title">{stage.title}</span>
-              <span className="node__sub">{stage.subtitle}</span>
+              <span className="node__title">{keepKatakana(stage.title)}</span>
+              <span className="node__sub">{keepKatakana(stage.subtitle)}</span>
               <span className="node__state">
                 {!unlocked && '🔒 LOCKED'}
                 {unlocked && !cleared && '▶ 挑戦する'}
@@ -95,8 +96,10 @@ export function StageMap() {
           <span className="map__done">
             {/* 制覇の一言＝「世界がどう変わったか」で締める（数値や称号は出さない） */}
             {chapter.title} 制覇 ──{' '}
-            {chapter.afterword?.world ??
-              (isFinalChapter ? '「人とAIが共に創る自由」を取り戻した。' : '物語は次の地へ続く。')}
+            {keepKatakana(
+              chapter.afterword?.world ??
+                (isFinalChapter ? '「人とAIが共に創る自由」を取り戻した。' : '物語は次の地へ続く。'),
+            )}
           </span>
         ) : (
           <span className="map__hint">ノードを選んで依頼に挑め。クリアで次が解放される。</span>

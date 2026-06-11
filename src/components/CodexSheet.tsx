@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useGame } from '../store/gameStore';
 import { useGlossary } from '../store/glossaryStore';
 import { TERM_BY_ID } from '../data/glossary';
+import { keepKatakana } from './keepKatakana';
 
 /**
  * 学びの記録（コーデックス）。この作品で学べることの一覧＋習得チェック＋重要用語。
@@ -43,14 +44,14 @@ export function CodexSheet({ open, onClose }: { open: boolean; onClose: () => vo
               {chapters.map((ch) => (
                 <div key={ch.id} className="codex__chapter">
                   <div className="codex__chtitle">
-                    {ch.title} <span>{ch.subtitle}</span>
+                    {ch.title} <span>{keepKatakana(ch.subtitle)}</span>
                   </div>
                   {ch.stages.map((s) => {
                     const got = !!results[s.id]?.cleared;
                     return (
                       <div key={s.id} className={`codex__row ${got ? 'is-got' : ''}`}>
                         <span className="codex__check">{got ? '✓' : '○'}</span>
-                        <span className="codex__learn">{s.challenge.learn}</span>
+                        <span className="codex__learn">{keepKatakana(s.challenge.learn)}</span>
                       </div>
                     );
                   })}

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useGlossary } from '../store/glossaryStore';
 import { GLOSSARY, TERM_BY_ID } from '../data/glossary';
+import { keepKatakana } from './keepKatakana';
 
 /** 常時の「？用語」フローティングボタン＋ボトムシート。 */
 export function Glossary({ showButton = true }: { showButton?: boolean }) {
@@ -49,7 +50,7 @@ export function Glossary({ showButton = true }: { showButton?: boolean }) {
                     {GLOSSARY.map((t) => (
                       <button key={t.id} className="sheet__row" onClick={() => openTerm(t.id)}>
                         <b>{t.term}</b>
-                        <span>{t.short}</span>
+                        <span>{keepKatakana(t.short)}</span>
                       </button>
                     ))}
                   </div>
@@ -62,9 +63,9 @@ export function Glossary({ showButton = true }: { showButton?: boolean }) {
                     <div className="sheet__term">
                       <span className="kicker">用語</span>
                       <h3 className="display sheet__word">{t.term}</h3>
-                      <p className="sheet__short">{t.short}</p>
-                      <p className="sheet__body">{t.body}</p>
-                      {t.example && <p className="sheet__example">{t.example}</p>}
+                      <p className="sheet__short">{keepKatakana(t.short)}</p>
+                      <p className="sheet__body">{keepKatakana(t.body)}</p>
+                      {t.example && <p className="sheet__example">{keepKatakana(t.example)}</p>}
                       <button className="sheet__more" onClick={openIndex}>
                         ← 用語集の一覧へ
                       </button>
